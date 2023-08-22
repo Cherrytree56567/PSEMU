@@ -1,5 +1,5 @@
 # PSEMU
-An experimental PS1 Emulator made in C++20.
+An experimental PS1 Emulator made in C++20.<br>
 [![MSBuild](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml)
 
 # Goals
