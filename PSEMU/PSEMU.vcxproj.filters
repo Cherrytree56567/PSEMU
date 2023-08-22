@@ -13,10 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\CPU">
+      <UniqueIdentifier>{a88b7610-a9bc-452b-a9bd-a4d7f3bc922b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CPU\Memory">
+      <UniqueIdentifier>{d97e8d2b-a87a-4998-998f-04e106651ebf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CPU\CPU Registers">
+      <UniqueIdentifier>{dc196ffa-82bb-4a13-be84-33eb92912d87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Logging">
+      <UniqueIdentifier>{a4be8a67-7c42-4970-829f-5b2c23faeb8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Memory.cpp">
+      <Filter>Source Files\CPU\Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="CPURegisters.cpp">
+      <Filter>Source Files\CPU\CPU Registers</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging.cpp">
+      <Filter>Source Files\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="CPU.cpp">
+      <Filter>Source Files\CPU</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CPURegisters.h">
+      <Filter>Source Files\CPU\CPU Registers</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory.h">
+      <Filter>Source Files\CPU\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Source Files\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU.h">
+      <Filter>Source Files\CPU</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
