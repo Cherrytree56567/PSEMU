@@ -7,19 +7,21 @@
 
 */
 #include <iostream>
-#include "CPURegisters.h"
-#include "Memory.h"
+#include "CPU.h"
 
 int main()
 {
-    CPURegisters registers;
-    Memory memory(2048);
-    std::cout << "PSEMU v1.0\n";
+    const uint32_t biosCode[] = {
+        0b10100010100101000000011111010000,
+    };
+    size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    /* 
-    Example usage
-        registers.pc = 0x100;
-        uint8_t opcode = memory.readByte(registers.pc);
-        uint32_t wordValue = memory.readWord(registers.pc);
-    */
+    // Create a CPU instance
+    CPU cpu(2048); // Specify the memory size
+
+    // Load BIOS code into the CPU's memory
+    cpu.loadInstructions(biosCode, numInstructions);
+
+    // Run the CPU to execute the loaded BIOS code
+    cpu.run();
 }

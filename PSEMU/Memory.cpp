@@ -1,3 +1,11 @@
+/*
+ *************************************
+ *           PSEMU Licence           *
+ *************************************
+
+ PSEMU © 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
+
+*/
 #include "Memory.h"
 
 uint8_t Memory::readByte(uint32_t address) const {
