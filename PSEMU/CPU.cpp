@@ -7,6 +7,7 @@
 
 */
 #include "CPU.h"
+#pragma warning(disable : 4996)
 
 void CPU::op_add(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
@@ -42,12 +43,52 @@ void CPU::op_storebyte(uint32_t instruction) {
     std::cout << "STOREBYTE: Value = " << std::to_string(valueToStore) << ", RS = " << std::to_string(rs) << ", Immediate = " << std::to_string(imm) << std::endl;
 }
 
+void CPU::loadBIOS(const char* filename) {
+    FILE* file = fopen(filename, "rb");
+    if (!file) {
+        perror("Unable to open file");
+    }
 
-void CPU::loadInstructions(const uint32_t* binaryCode, size_t numInstructions) {
-    this->numInstructions = numInstructions;
+    // Get the file size
+    fseek(file, 0, SEEK_END);
+    long int fileSize = ftell(file);
+    fseek(file, 0, SEEK_SET);
 
+    // Calculate the number of 32-bit chunks
+    size_t numChunks = (fileSize + sizeof(uint32_t) - 1) / sizeof(uint32_t);
+
+    Logging console;
+    console.log("NumChunks " + std::to_string(numChunks));
+
+    // Allocate memory for the array
+    uint32_t* aBiosCode = (uint32_t*)malloc(numChunks * sizeof(uint32_t));
+    if (!aBiosCode) {
+        fprintf(stderr, "Memory allocation error\n");
+        fclose(file);
+    }
+
+    // Read and separate the content into 32-bit chunks
+    size_t bytesRead = fread(aBiosCode, sizeof(uint32_t), numChunks, file);
+    if (bytesRead < numChunks) {
+        fprintf(stderr, "Error reading file\n");
+        free(aBiosCode);
+        fclose(file);
+    }
+
+    fclose(file);
+
+    BiosCode = aBiosCode;
+    this->numInstructions = sizeof(aBiosCode);
+}
+
+void CPU::loadBiosCode(uint32_t* binaryCode) {
+    this->numInstructions = sizeof(binaryCode) / sizeof(uint32_t);
+    BiosCode = binaryCode;
+}
+
+void CPU::loadInstructions() {
     for (size_t i = 0; i < numInstructions; ++i) {
-        memory.writeWord(i * 4, binaryCode[i]); // Each instruction is 4 bytes
+        memory.writeWord(i * 4, BiosCode[i]); // Each instruction is 4 bytes
     }
 }
 
@@ -182,7 +223,7 @@ void CPU::run() {
             default:
                 // Handle invalid funct code
                 Logging console;
-                console.warn("Invalid Function code");
+                console.warn("Invalid Function code: " + std::to_string(funct));
                 break;
             }
             break;
@@ -267,7 +308,6 @@ void CPU::run() {
         case 0b101000:
             // sb
             console.log("CPU INSTRUCTION :: SB");
-            op_storebyte(instruction);
             break;
 
         case 0b101001:
@@ -292,7 +332,7 @@ void CPU::run() {
 
         default:
             Logging console;
-            console.warn("Invalid Opcode");
+            console.warn("Invalid Opcode: " + std::to_string(opcode));
             break;
         }
 

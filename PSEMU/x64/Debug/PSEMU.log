@@ -1,2 +1,3 @@
-﻿  PSEMU.cpp
+﻿  CPU.cpp
+C:\rd2\PSEMU\PSEMU\CPU.cpp(91,28): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
   PSEMU.vcxproj -> C:\rd2\PSEMU\x64\Debug\PSEMU.exe

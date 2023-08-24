@@ -7,6 +7,7 @@
 
 */
 #pragma once
+#include <fstream>
 #include "Memory.h"
 #include "CPURegisters.h"
 
@@ -17,14 +18,18 @@ public:
     void op_add(uint32_t instruction);
     void op_storebyte(uint32_t instruction);
 
-    void loadInstructions(const uint32_t* binaryCode, size_t numInstructions);
+    void loadInstructions();
+    void loadBiosCode(uint32_t* binaryCode);
 
     void run();
+
+    void loadBIOS(const char* filename);
 
 private:
     CPURegisters registers;
     Memory memory;
     size_t numInstructions;
+    uint32_t* BiosCode;
     bool checkForInterrupts() {
         // Return true if an interrupt is pending, otherwise return false
         return false;

@@ -11,7 +11,7 @@
 
 int main()
 {
-    const uint32_t biosCode[] = {
+    uint32_t biosCode[] = {
         0b10100010100101000000011111010000,
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
@@ -20,7 +20,9 @@ int main()
     CPU cpu(2048); // Specify the memory size
 
     // Load BIOS code into the CPU's memory
-    cpu.loadInstructions(biosCode, numInstructions);
+    //cpu.loadBiosCode(biosCode);
+    cpu.loadBIOS("scph1001.bin");
+    cpu.loadInstructions();
 
     // Run the CPU to execute the loaded BIOS code
     cpu.run();
