@@ -36,4 +36,6 @@ jobs:
     - name: Run PSEMU
       shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: x64/Release/PSEMU.exe
+      run: |
+          cd x64/Release/
+          PSEMU.exe
