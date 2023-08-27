@@ -1,13 +1,16 @@
+
 /*
  *************************************
  *           PSEMU Licence           *
  *************************************
 
- PSEMU � 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
+ PSEMU © 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
 
 */
 #include "CPU.h"
 #pragma warning(disable : 4996)
+
+// First Add rs and rt then store in rd (register)
 
 void CPU::op_add(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
