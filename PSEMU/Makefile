@@ -1,17 +1,13 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -std=c++2a
+CC = g++
+CFLAGS = 
 
 SRCS = $(wildcard *.cpp)
-OBJS = $(SRCS:.cpp=.o)
 EXECUTABLE = PSEMU.elf
 
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $@
-
-%.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(SRCS) -o $@
 
 clean:
-	rm -f $(OBJS) $(EXECUTABLE)
+	rm -f $(EXECUTABLE)
