@@ -1,0 +1,24 @@
+name: LinuxBuild
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Build
+      run: |
+           cd PSEMU
+           make
+      
+    - name: Run PSEMU.elf
+      run: |
+           cd PSEMU
+           ./PSEMU.elf
