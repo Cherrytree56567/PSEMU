@@ -8,4 +8,4 @@
 
 ## Reporting a Vulnerability
 
-To report a vulnerability, go to the Issues page and create an issue on the vulnerability you have found. If you want to submit a patch, fork this repo, add your changes and pull a merge request. Make sure you explain the code you have changed and the vulnerability you have patched.
+If you have a vulnerability you would like to report, please report it using the ```Report Vulnerability``` Button above.
