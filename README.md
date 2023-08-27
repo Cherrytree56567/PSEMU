@@ -1,6 +1,6 @@
 # PSEMU
 An experimental PS1 Emulator made in C++20.<br><br>
-[![MSBuild](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml) [![LinuxBuild](https://github.com/Cherrytree56567/PSEMU/actions/workflows/LinuxBuild.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/LinuxBuild.yml) [![CodeQL](https://github.com/Cherrytree56567/PSEMU/actions/workflows/codeql.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/codeql.yml)
+[![MSBuild](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/msbuild.yml) [![LinuxBuild](https://github.com/Cherrytree56567/PSEMU/actions/workflows/LinuxBuild.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/LinuxBuild.yml) [![CodeQL](https://github.com/Cherrytree56567/PSEMU/actions/workflows/codeql.yml/badge.svg)](https://github.com/Cherrytree56567/PSEMU/actions/workflows/codeql_forWin.yml)
 
 # Goals
 - [ ] Emulate R3000A PS1 CPU
