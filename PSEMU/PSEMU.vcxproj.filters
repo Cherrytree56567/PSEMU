@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Logging">
       <UniqueIdentifier>{a4be8a67-7c42-4970-829f-5b2c23faeb8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Testing">
+      <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
@@ -56,5 +59,10 @@
     <ClInclude Include="CPU.h">
       <Filter>Source Files\CPU</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Testing\OP_ADD\ADD_TEST.asm">
+      <Filter>Source Files\Testing</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -141,6 +141,11 @@
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Memory.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Testing\OP_ADD\ADD_TEST.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
