@@ -10,6 +10,13 @@
 #include "CPU.h"
 #pragma warning(disable : 4996)
 
+/* 
+* Notes: 
+*        Warning: none of the op_* functions have been tested.
+*        TODO:    Make the op_lui function (lui is used to load a value into a register. example: "lui $t0, 0x1234")
+*/
+
+
 // First Add rs and rt then store in rd (register)
 
 void CPU::op_add(uint32_t instruction) {
@@ -22,10 +29,12 @@ void CPU::op_add(uint32_t instruction) {
     registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
 }
 
+// First take the data from RT (Register) and stores it in IMM + RS (memory)
+
 void CPU::op_storebyte(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
-    int16_t imm = instruction & 0xFFFF;       // Extract the immediate value
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
     uint32_t rsValue = registers.reg[rs];
     uint8_t valueToStore = rsValue & 0xFF;    // Extract the least significant byte
@@ -37,6 +46,18 @@ void CPU::op_storebyte(uint32_t instruction) {
     memory[effectiveAddress] = valueToStore;
 
     std::cout << "STOREBYTE: Value = " << std::to_string(valueToStore) << ", RS = " << std::to_string(rs) << ", Immediate = " << std::to_string(imm) << std::endl;
+}
+
+// lui is used to load a value into a register. example: "lui $t0, 0x1234"
+
+void CPU::op_lui(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+
+    registers.reg[rs] = imm;
+
+    std::cout << "Loading Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
 }
 
 void CPU::loadBIOS(const char* filename) {
@@ -288,6 +309,7 @@ void CPU::run() {
 
         case 0b001111:
             // lui
+            op_lui(instruction);
             console.log("CPU INSTRUCTION :: LUI");
             break;
 
@@ -303,6 +325,7 @@ void CPU::run() {
 
         case 0b101000:
             // sb
+            op_storebyte(instruction);
             console.log("CPU INSTRUCTION :: SB");
             break;
 
@@ -328,7 +351,7 @@ void CPU::run() {
 
         default:
             Logging console;
-            console.warn("Invalid Opcode: " + std::to_string(opcode));
+            console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
         }
 
@@ -344,6 +367,6 @@ void CPU::run() {
         console.log("Register " + std::to_string(i) + ": " + std::to_string(registers.reg[i]));
     }
     for (int i = 0; i < memory.memory.size(); ++i) {
-        console.log("MEMORY " + std::to_string(i) + ": " + std::to_string(memory.memory[i]));
+        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.memory[i]).to_string());
     }
 }

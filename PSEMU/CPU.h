@@ -8,6 +8,7 @@
 */
 #pragma once
 #include <fstream>
+#include <bitset>
 #include "Memory.h"
 #include "CPURegisters.h"
 
@@ -17,6 +18,7 @@ public:
 
     void op_add(uint32_t instruction);
     void op_storebyte(uint32_t instruction);
+    void op_lui(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode);
