@@ -12,8 +12,9 @@
 
 /* 
 * Notes: 
-*        Warning: none of the op_* functions have been tested.
-*        TODO:    Make the op_lui function (lui is used to load a value into a register. example: "lui $t0, 0x1234")
+*        Warning: none of the op_* functions have been tested except the op_lui function.
+*        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction other one. I think it is something about me not exiting properly.
+*        TODO: Test the op_add function
 */
 
 
