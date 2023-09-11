@@ -13,7 +13,7 @@
 /* 
 * Notes: 
 *        Warning: none of the op_* functions have been tested except the op_lui function.
-*        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction. I think it is something about me not exiting properly.
+*        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction. I think it is something about the program not exiting properly.
 *        TODO: Test the op_add function
 */
 
