@@ -124,8 +124,8 @@ void CPU::run() {
             switch (funct) {
             case 0b100000:
                 // Add
-                console.log("CPU INSTRUCTION :: ADD");
                 op_add(instruction);
+                console.log("CPU INSTRUCTION :: ADD");
                 break;
 
             case 0b100001:
