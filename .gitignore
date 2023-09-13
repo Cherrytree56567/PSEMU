@@ -2,3 +2,5 @@
 x64
 .o
 PSEMU/scph1001.bin
+output.txt
+PSEMU.elf
