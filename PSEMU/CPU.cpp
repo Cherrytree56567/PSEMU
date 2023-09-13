@@ -15,6 +15,7 @@
 *        Warning: none of the op_* functions have been tested except the op_lui function.
 *        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction. I think it is something about the program not exiting properly.
 *        TODO: Test the op_add, op_addi and op_addu function
+*        TODO: Raise exception if overflow in op_add, op_addi
 */
 
 // First Add rs and rt then store in rd (register)
@@ -24,10 +25,14 @@ void CPU::op_add(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "ADDING: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
+    if (rt > 32) {
+        Logging console;
+        console.err("Overflow Exception: RT is greater than 32. RT = " + std::to_string(rt));
+    } else {
+        std::cout << "ADDING: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 
-    registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
-    // raise exception if overflow
+        registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+    }
 }
 
 // First take the data from RT (Register) and stores it in IMM + RS (memory)
@@ -67,10 +72,15 @@ void CPU::op_addi(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    
+    if (rt > 32) {
+        Logging console;
+        console.err("Overflow Exception: RT is greater than 32. RT = " + std::to_string(rt));
+    } else {
+        registers.reg[rt] = imm + registers.reg[rs];
 
-    registers.reg[rt] = imm + registers.reg[rs];
-
-    std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
+        std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
+    }
 }
 
 // op_addu adds values in two registers and stores in another. No overflow exception raised.
@@ -80,9 +90,31 @@ void CPU::op_addu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "ADDING Unsigned: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
+    if (rt > 32) {
+        Logging console;
+        console.log("INFO: Overflow Exception: RT is greater than 32. THIS iS NOT CONCERNING BECAUSE WE ARE USING ADDU. RT = " + std::to_string(rt));
+    } else {
+        std::cout << "ADDING Unsigned: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 
-    registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+        registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+    }
+}
+
+// op_addiu adds imm and rs, and stores the result in rt. No overflow exception raised.
+
+void CPU::op_addiu(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+
+    if (rt > 32) {
+        Logging console;
+        console.log("INFO: Overflow Exception: RT is greater than 32. THIS iS NOT CONCERNING BECAUSE WE ARE USING ADDIU. RT = " + std::to_string(rt));
+    } else {
+        registers.reg[rt] = imm + registers.reg[rs];
+
+        std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
+    }
 }
 
 void CPU::loadBIOS(const char* filename) {
