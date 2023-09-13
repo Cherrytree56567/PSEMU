@@ -14,10 +14,8 @@
 * Notes: 
 *        Warning: none of the op_* functions have been tested except the op_lui function.
 *        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction. I think it is something about the program not exiting properly.
-*        TODO: Test the op_add function
-*        TODO: Test the op_addi function
+*        TODO: Test the op_add, op_addi and op_addu function
 */
-
 
 // First Add rs and rt then store in rd (register)
 
@@ -156,6 +154,7 @@ void CPU::run() {
 
             case 0b100001:
                 // Addu
+                op_addu(instruction);
                 console.log("CPU INSTRUCTION :: ADDU");
                 break;
 
