@@ -15,6 +15,7 @@
 *        Warning: none of the op_* functions have been tested except the op_lui function.
 *        TODO: Fix the warning about opcode 51. it gives opcode 51 not found error even though there is no other instruction. I think it is something about the program not exiting properly.
 *        TODO: Test the op_add function
+*        TODO: Test the op_addi function
 */
 
 
@@ -59,6 +60,18 @@ void CPU::op_lui(uint32_t instruction) {
     registers.reg[rs] = imm;
 
     std::cout << "Loading Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
+} 
+
+// The op_addi function adds imm to rs, and stores the result in rt.
+
+void CPU::op_addi(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+
+    registers.reg[rt] = imm + rs;
+
+    std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
 }
 
 void CPU::loadBIOS(const char* filename) {
