@@ -29,6 +29,7 @@ void CPU::op_add(uint32_t instruction) {
     std::cout << "ADDING: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 
     registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+    // raise exception if overflow
 }
 
 // First take the data from RT (Register) and stores it in IMM + RS (memory)
@@ -62,17 +63,19 @@ void CPU::op_lui(uint32_t instruction) {
     std::cout << "Loading Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
 } 
 
-// The op_addi function adds imm to rs, and stores the result in rt.
+// The op_addi function adds imm and rs, and stores the result in rt.
 
 void CPU::op_addi(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    registers.reg[rt] = imm + rs;
+    registers.reg[rt] = imm + registers.reg[rs];
 
     std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
 }
+
+// op_addu adds values in two registers and stores in another. No overflow exception raised.
 
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
