@@ -273,6 +273,7 @@ void CPU::run() {
         // I Type Instructions
         case 0b001000:
             // addi
+            op_addi(instruction);
             console.log("CPU INSTRUCTION :: ADDI");
             break;
 
