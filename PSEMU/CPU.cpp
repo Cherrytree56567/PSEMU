@@ -77,6 +77,16 @@ void CPU::op_addi(uint32_t instruction) {
 
 // op_addu adds values in two registers and stores in another. No overflow exception raised.
 
+void CPU::op_addu(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+
+    std::cout << "ADDING Unsigned: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
+
+    registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {

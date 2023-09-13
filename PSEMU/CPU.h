@@ -17,6 +17,7 @@ public:
     CPU(size_t memorySize) : memory(memorySize), numInstructions(0) {}
 
     void op_add(uint32_t instruction);
+    void op_addu(uint32_t instruction);
     void op_storebyte(uint32_t instruction);
     void op_lui(uint32_t instruction);
     void op_addi(uint32_t instruction);
