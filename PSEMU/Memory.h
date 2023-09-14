@@ -36,6 +36,8 @@ public:
 
     void writeWord(uint32_t address, uint32_t value);
 
+    void writeHalfword(uint32_t address, uint16_t value);
+
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
     
     std::vector<uint8_t> memory;

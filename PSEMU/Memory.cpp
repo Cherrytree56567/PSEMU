@@ -55,3 +55,18 @@ void Memory::writeWord(uint32_t address, uint32_t value) {
         console.warn("Out of bounds memory access");
     }
 }
+
+void Memory::writeHalfword(uint32_t address, uint16_t value) {
+    if (address % 2 != 0) {
+        std::cerr << "Error: Address must be halfword-aligned." << std::endl;
+        return;
+    }
+
+    if (address >= memory.size()) {
+        std::cerr << "Error: Address out of range." << std::endl;
+        return;
+    }
+
+    memory[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
+    memory[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
+}

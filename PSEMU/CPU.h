@@ -11,6 +11,7 @@
 #include <bitset>
 #include "Memory.h"
 #include "CPURegisters.h"
+#include "Coprocessor.h"
 
 class CPU {
 public:
@@ -76,6 +77,7 @@ private:
     Memory memory;
     size_t numInstructions;
     uint32_t* BiosCode;
+    Coprocessor0 coprocessor0;
     bool checkForInterrupts() {
         // Return true if an interrupt is pending, otherwise return false
         return false;
