@@ -116,6 +116,8 @@ void CPU::op_addiu(uint32_t instruction) {
     }
 }
 
+// op_and compares rs and rd and stores 1 in rd if they are equal, otherwise 0.
+
 void CPU::op_and(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
@@ -130,44 +132,77 @@ void CPU::op_and(uint32_t instruction) {
     std::cout << "Boolean: RESULT = " << std::to_string(registers.reg[rd]) << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 }
 
+// op_and compares rs and imm and stores 1 in rt if they are equal, otherwise 0.
+
 void CPU::op_andi(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    if (registers.reg[rs] == imm){
+        registers.reg[rt] = 1;
+    } else {
+        registers.reg[rt] = 0;
+    }
+
+    std::cout << "Boolean: RESULT = " << std::to_string(registers.reg[rt]) << ", RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
+
 }
+
+// Compare rs and rt, if they are equal, jump to the target address (imm)
 
 void CPU::op_beq(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    if (registers.reg[rs] == registers.reg[rt]) {
+        registers.pc += imm; // Branch to the target address if the values are equal
+    }
+
+    std::cout << "BEQ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
 }
+
+// Branches to imm if the value in rs is less than or equal to 0
 
 void CPU::op_blez(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    if (registers.reg[rs] <= 0) {
+        registers.pc += imm;
+    }
+
+    std::cout << "BLEZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
 }
+
+// Branches to imm if the values in rs and rt are not equal
 
 void CPU::op_bne(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    if (registers.reg[rs] != registers.reg[rt]) {
+        registers.pc += imm;
+    }
+
+    std::cout << "BNE: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
 }
+
+// Branches to imm if the value in rs is greater than 0
 
 void CPU::op_bgtz(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    if (registers.reg[rs] > 0) {
+        registers.pc += imm; 
+    }
+
+    std::cout << "BGTZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
 }
 
 void CPU::op_div(uint32_t instruction) {
@@ -175,7 +210,15 @@ void CPU::op_div(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t dividend = static_cast<uint32_t>(registers.reg[rs]); // Convert the register value to an unsigned integer
+    uint32_t divisor = static_cast<uint32_t>(registers.reg[rt]); // Convert the register value to an unsigned integer
+
+    if (divisor != 0) {
+        registers.lo = dividend / divisor; // Store the quotient in LO
+        registers.hi = dividend % divisor; // Store the remainder in HI
+    }
+
+    std::cout << "DIVU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 }
 
 void CPU::op_divu(uint32_t instruction) {
@@ -183,15 +226,33 @@ void CPU::op_divu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t dividend = static_cast<uint32_t>(registers.reg[rs]); // Convert the register value to an unsigned integer
+    uint32_t divisor = static_cast<uint32_t>(registers.reg[rt]); // Convert the register value to an unsigned integer
+
+    if (divisor != 0) {
+        registers.lo = dividend / divisor; // Store the quotient in LO
+        registers.hi = dividend % divisor; // Store the remainder in HI
+    }
+
+    std::cout << "DIVU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 }
 
 void CPU::op_j(uint32_t instruction) {
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t target = (instruction & 0x03FFFFFF) << 2; // Extract the target address and shift it left by 2 bits
+    uint32_t pc_upper = registers.pc & 0xF0000000; // Extract the upper 4 bits of the current PC value
+    registers.pc = pc_upper | target; // Set the PC to the target address
+
+    std::cout << "J: TARGET = " << std::to_string(target) << std::endl;
 }
 
 void CPU::op_jal(uint32_t instruction) {
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t target = (instruction & 0x03FFFFFF) << 2; // Extract the target address and shift it left by 2 bits
+    uint32_t pc_plus_4 = registers.pc + 4; // Calculate the address of the instruction after the JAL
+    registers.reg[31] = pc_plus_4; // Store the return address in RA
+    uint32_t pc_upper = registers.pc & 0xF0000000; // Extract the upper 4 bits of the current PC value
+    registers.pc = pc_upper | target; // Set the PC to the target address
+
+    std::cout << "JAL: TARGET = " << std::to_string(target) << ", RA = " << std::to_string(registers.reg[31]) << std::endl;
 }
 
 void CPU::op_jalr(uint32_t instruction) {
@@ -199,7 +260,12 @@ void CPU::op_jalr(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t target = registers.reg[rs]; // Get the target address from the specified register
+    uint32_t pc_plus_4 = registers.pc + 4; // Calculate the address of the instruction after the JALR
+    registers.reg[31] = pc_plus_4; // Store the return address in RA
+    registers.pc = target; // Set the PC to the target address
+
+    std::cout << "JALR: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", TARGET = " << std::to_string(target) << ", RA = " << std::to_string(registers.reg[31]) << std::endl;
 }
 
 void CPU::op_jr(uint32_t instruction) {
@@ -207,15 +273,22 @@ void CPU::op_jr(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t target = registers.reg[rs]; // Get the target address from the specified register
+    registers.pc = target; // Set the PC to the target address
+
+    std::cout << "JR: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", TARGET = " << std::to_string(target) << std::endl;
 }
 
 void CPU::op_lbu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
-    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm = instruction & 0xFFFF; // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint8_t value = memory.readByte(address); // Read the byte from memory
+    registers.reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
+
+    std::cout << "LBU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(value) << std::endl;
 }
 
 void CPU::op_lhu(uint32_t instruction) {
@@ -223,7 +296,12 @@ void CPU::op_lhu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint32_t value = memory.readWord(address); // Read the word from memory
+    uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
+    registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
+
+    std::cout << "LHU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(halfword) << std::endl;
 }
 
 void CPU::op_lw(uint32_t instruction) {
@@ -231,7 +309,11 @@ void CPU::op_lw(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    std::cout << "Warning: The function for this instruction is not implemented yet. " << std::endl;
+    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint32_t value = memory.readWord(address); // Read the word from memory
+    registers.reg[rt] = value; // Store the value in the specified register
+
+    std::cout << "LW: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(value) << std::endl;
 }
 
 void CPU::op_mfhi(uint32_t instruction) {
