@@ -13,6 +13,7 @@ int main()
 {
     uint32_t biosCode[] = {
         0b00111100000000010000000000000001,
+        0b00000000001000010000100000100100,
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 

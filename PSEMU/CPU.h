@@ -22,6 +22,7 @@ public:
     void op_lui(uint32_t instruction);
     void op_addi(uint32_t instruction);
     void op_addiu(uint32_t instruction);
+    void op_and(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode);

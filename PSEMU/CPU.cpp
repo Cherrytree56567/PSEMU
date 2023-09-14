@@ -117,6 +117,20 @@ void CPU::op_addiu(uint32_t instruction) {
     }
 }
 
+void CPU::op_and(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+
+    if (registers.reg[rs] == registers.reg[rt]){
+        registers.reg[rd] = 1;
+    } else {
+        registers.reg[rd] = 0;
+    }
+
+    std::cout << "Boolean: RESULT = " << std::to_string(registers.reg[rd]) << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -192,6 +206,7 @@ void CPU::run() {
 
             case 0b100100:
                 // and
+                op_and(instruction);
                 console.log("CPU INSTRUCTION :: AND");
                 break;
 
@@ -323,6 +338,7 @@ void CPU::run() {
 
         case 0b001001:
             // addiu
+            op_addiu(instruction);
             console.log("CPU INSTRUCTION :: ADDIU");
             break;
 
