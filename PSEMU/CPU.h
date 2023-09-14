@@ -39,7 +39,6 @@ public:
     void op_lbu(uint32_t instruction);
     void op_lh(uint32_t instruction);
     void op_lhu(uint32_t instruction);
-    void op_lui(uint32_t instruction);
     void op_lw(uint32_t instruction);
     void op_mfhi(uint32_t instruction);
     void op_mthi(uint32_t instruction);
