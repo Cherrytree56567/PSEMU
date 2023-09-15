@@ -12,7 +12,7 @@ An experimental PS1 Emulator made in C++20.<br><br>
 - [ ] Add Wifi Support
 
 # Future Goals
-- [ ] Emulate PS2 (COMMING SOON)
+- [ ] Emulate PS2 (COMING SOON)
 - [ ] Emulate PS3
 - [ ] Emulate PS4
 - [ ] Emulate PS5
