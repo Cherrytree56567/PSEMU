@@ -596,14 +596,14 @@ void CPU::loadBIOS(const char* filename) {
     // Allocate memory for the array
     uint32_t* aBiosCode = (uint32_t*)malloc(numChunks * sizeof(uint32_t));
     if (!aBiosCode) {
-        console.err(std::to_string(stderr) + "Memory allocation error\n");
+        console.err("Memory allocation error\n");
         fclose(file);
     }
 
     // Read and separate the content into 32-bit chunks
     size_t bytesRead = fread(aBiosCode, sizeof(uint32_t), numChunks, file);
     if (bytesRead < numChunks) {
-        console.err(std::to_string(stderr) + "Error reading file\n");
+        console.err("Error reading file\n");
         free(aBiosCode);
         fclose(file);
     }
