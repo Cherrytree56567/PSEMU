@@ -611,11 +611,12 @@ void CPU::loadBIOS(const char* filename) {
     fclose(file);
 
     BiosCode = aBiosCode;
-    this->numInstructions = sizeof(aBiosCode);
+    this->numInstructions = numChunks;
 }
 
-void CPU::loadBiosCode(uint32_t* binaryCode) {
-    this->numInstructions = sizeof(binaryCode) / sizeof(uint32_t);
+void CPU::loadBiosCode(uint32_t* binaryCode, size_t numI) {
+    this->numInstructions = numI;
+    std::cout << "dff" << this->numInstructions;
     BiosCode = binaryCode;
 }
 
@@ -922,7 +923,7 @@ void CPU::run() {
     for (int i = 0; i < 32; ++i) {
         console.log("Register " + std::to_string(i) + ": " + std::to_string(registers.reg[i]));
     }
-    for (int i = 0; i < memory.memory.size(); ++i) {
+    /*for (int i = 0; i < memory.memory.size(); ++i) {
         console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.memory[i]).to_string());
-    }
+    }*/
 }

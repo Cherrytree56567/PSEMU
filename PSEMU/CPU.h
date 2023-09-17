@@ -9,6 +9,7 @@
 #pragma once
 #include <fstream>
 #include <bitset>
+#include <type_traits>
 #include "Memory.h"
 #include "CPURegisters.h"
 #include "Coprocessor.h"
@@ -65,7 +66,7 @@ public:
     void op_sw(uint32_t instruction);
 
     void loadInstructions();
-    void loadBiosCode(uint32_t* binaryCode);
+    void loadBiosCode(uint32_t* binaryCode, size_t numI);
 
     void run();
 

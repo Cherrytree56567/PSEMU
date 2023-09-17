@@ -18,11 +18,11 @@ int main()
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
     // Create a CPU instance
-    CPU cpu(2048); // Specify the memory size
+    CPU cpu(2097152); // Specify the memory size in Bytes
 
     // Load BIOS code into the CPU's memory
-    cpu.loadBiosCode(biosCode);
-    //cpu.loadBIOS("OP_ADD.bin");
+    //cpu.loadBiosCode(biosCode, numInstructions);
+    cpu.loadBIOS("scph1001.bin");
     cpu.loadInstructions();
 
     // Run the CPU to execute the loaded BIOS code
