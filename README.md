@@ -5,11 +5,13 @@ An experimental PS1 Emulator made in C++20.<br><br>
 
 # Goals
 - [X] Emulate R3000A PS1 CPU
+- [ ] Map the PS1 GTE VRAM memory addresses
 - [ ] Convert PS1 GPU instructions into code so it can show in a window in opengl
-- [ ] Add PS1 BIOS Support
+- [X] Add PS1 BIOS Support
 - [ ] Add support for PS1 Custom Sound Chip
-- [ ] Add Linux Support
-- [ ] Add Wifi Support
+- [X] Add Linux Support
+- [ ] Add Networking Support
+- [ ] Add Input Support 
 
 # Future Goals
 - [ ] Emulate PS2 (COMING SOON)
