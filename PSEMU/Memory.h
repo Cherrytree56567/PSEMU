@@ -39,6 +39,7 @@ public:
     void writeHalfword(uint32_t address, uint16_t value);
 
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
+    // TODO: Map GPU memory
     
     std::vector<uint8_t> memory;
 };
