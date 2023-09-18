@@ -16,7 +16,7 @@
 
 class CPU {
 public:
-    CPU(size_t memorySize) : memory(memorySize), numInstructions(0) {}
+    CPU(Memory& memorya) : memory(memorya), numInstructions(0) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -71,13 +71,12 @@ public:
     void run();
 
     void loadBIOS(const char* filename);
-
 private:
     CPURegisters registers;
-    Memory memory;
     size_t numInstructions;
     uint32_t* BiosCode;
     Coprocessor0 coprocessor0;
+    Memory& memory;
     bool checkForInterrupts() {
         // Return true if an interrupt is pending, otherwise return false
         return false;

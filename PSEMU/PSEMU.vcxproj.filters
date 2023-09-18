@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GPU">
+      <UniqueIdentifier>{5f2c8556-ddb9-436e-bf3e-900b41357eba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
@@ -45,6 +48,9 @@
     <ClCompile Include="CPU.cpp">
       <Filter>Source Files\CPU</Filter>
     </ClCompile>
+    <ClCompile Include="GPU.cpp">
+      <Filter>Source Files\GPU</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPURegisters.h">
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="CPU.h">
       <Filter>Source Files\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="GPU.h">
+      <Filter>Source Files\GPU</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

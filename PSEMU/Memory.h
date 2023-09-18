@@ -10,16 +10,18 @@
 #include <cstdint>
 #include <vector>
 #include "Logging.h"
+#include "GPU.h"
 
 class Memory {
 public:
-    Memory(size_t size) : memory(size) {}
+    Memory(size_t size, GPU& gpua) : memory(size), gpu(gpua) {}
 
     uint8_t& operator[](uint32_t address) {
         if (address < memory.size()) {
             return memory[address];
-        }
-        else {
+        } else if (address >= GPU_VRAM_START && address <= GPU_VRAM_END) {
+            return gpu[address - GPU_VRAM_START];
+        } else {
             std::cerr << "Memory access out of bounds: " << address << std::endl;
             // You might want to handle this error situation accordingly.
             // For now, returning a reference to a static variable to indicate an error.
@@ -40,6 +42,11 @@ public:
 
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
     // TODO: GPU VRAM memory address range; 520,093,696 + 2 MB = 522,190,848
-    
+private:
+    GPU& gpu;
     std::vector<uint8_t> memory;
+
+    // Define GPU VRAM address range
+    static const uint32_t GPU_VRAM_START = 520093696;  // Start address
+    static const uint32_t GPU_VRAM_END = 522190848;    // End address
 };

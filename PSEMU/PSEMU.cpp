@@ -8,6 +8,8 @@
 */
 #include <iostream>
 #include "CPU.h"
+#include "Memory.h"
+#include "GPU.h"
 
 int main()
 {
@@ -17,8 +19,9 @@ int main()
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    // Create a CPU instance
-    CPU cpu(2097152); // Specify the memory size in Bytes
+    GPU gpu(2097152);
+    Memory memory(2097152, gpu);
+    CPU cpu(memory); // Specify the memory size in Bytes
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);

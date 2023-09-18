@@ -10,5 +10,18 @@ public:
 	// [For GPU Memory]
 	GPU(size_t gpmemsize) : GPUmemory(gpmemsize) {}
 
+    uint8_t& operator[](uint32_t address) {
+        if (address < GPUmemory.size()) {
+            return GPUmemory[address];
+        }
+        else {
+            std::cerr << "Memory access out of bounds: " << address << std::endl;
+            // You might want to handle this error situation accordingly.
+            // For now, returning a reference to a static variable to indicate an error.
+            static uint8_t dummy_error_value = 0;
+            return dummy_error_value;
+        }
+    }
+private:
 	std::vector<uint8_t> GPUmemory;
 };
