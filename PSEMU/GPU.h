@@ -5,7 +5,7 @@
 class GPU {
 public:
 	// [For GPU Memory]
-	GPU(size_t memsize) : GPUmemory(memsize) {}
+	GPU(size_t gpmemsize) : GPUmemory(gpmemsize) {}
 
 	std::vector<uint8_t> GPUmemory;
 };
