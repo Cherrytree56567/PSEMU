@@ -1,6 +1,9 @@
 #pragma once
 #include <cstdint>
 #include <vector>
+#include <iostream>
+#include <climits>
+#include <stddef.h>
 
 class GPU {
 public:
