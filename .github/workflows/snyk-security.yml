@@ -27,7 +27,7 @@ jobs:
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
       
       - name: Snyk Code test
-        run: snyk code test --unmanaged --sarif > snyk-code.sarif
+        run: snyk code test --unmanaged --sarif-file-output=snyk-code.sarif
 
       - name: List files
         run: ls PSEMU
