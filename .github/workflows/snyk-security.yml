@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Snyk CLI to check for security issues
+        uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Snyk Scan
         run: snyk test --all-projects
         env:
