@@ -24,7 +24,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       
       - name: Snyk Code test
-        run: snyk code test --unmanaged --sarif > snyk-code.sarif
+        run: snyk code test --unmanaged --sarif
 
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
