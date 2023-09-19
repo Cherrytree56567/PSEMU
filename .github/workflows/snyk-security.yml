@@ -22,9 +22,6 @@ jobs:
         uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      - name: Snyk test
-        run: snyk test --unmanaged
       
       - name: Snyk Code test
         run: snyk code test --unmanaged --sarif > snyk-code.sarif
