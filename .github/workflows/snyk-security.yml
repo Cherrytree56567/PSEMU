@@ -29,6 +29,9 @@ jobs:
       - name: Snyk Code test
         run: snyk code test --unmanaged --sarif > snyk-code.sarif
 
+      - name: Read Sarif File
+        run: cat snyk-code.sarif
+
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v2
         with:
