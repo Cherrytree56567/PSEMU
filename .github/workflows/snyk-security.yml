@@ -13,14 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup C++
-        uses: actions/setup-cxx@v1
-
-      - name: Install dependencies
-        run: |
-          # Install your C++ dependencies here
-
       - name: Snyk Scan
-        run: npx snyk test --all-projects
+        run: snyk test --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
