@@ -23,6 +23,9 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
       - name: Snyk Code test
         working-directory: ${{ github.workspace }}/PSEMU
         run: snyk code test --sarif > snyk-code.sarif
