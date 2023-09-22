@@ -41,8 +41,9 @@ public:
 
     void writeHalfword(uint32_t address, uint16_t value);
 
+    uint32_t read32(uint32_t address) const;
+
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
-    // TODO: GPU VRAM memory address range; 520,093,696 + 2 MB = 522,190,848
 private:
     GPU& gpu;
     std::vector<uint8_t> memory;

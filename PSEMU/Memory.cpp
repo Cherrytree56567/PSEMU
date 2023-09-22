@@ -72,3 +72,8 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
     memory[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
     memory[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
 }
+
+uint32_t Memory::read32(uint32_t address) const {
+    const uint32_t value = *(const uint32_t*)&memory[address];
+    return value;
+}

@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Coprocessor.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="CPURegisters.cpp" />
     <ClCompile Include="GPU.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="Memory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Coprocessor.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="CPURegisters.h" />
     <ClInclude Include="GPU.h" />

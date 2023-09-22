@@ -1,9 +1,7 @@
-﻿  CPU.cpp
+﻿  Coprocessor.cpp
+  CPU.cpp
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(626,28): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
   CPURegisters.cpp
-  GPU.cpp
-  Logging.cpp
   PSEMU.cpp
-  Memory.cpp
   Generating Code...
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe

@@ -78,13 +78,28 @@ private:
     Coprocessor0 coprocessor0;
     Memory& memory;
     bool checkForInterrupts() {
-        // Return true if an interrupt is pending, otherwise return false
-        return false;
+        // Check if there is an interrupt request
+        uint32_t status = registers.getC0Register(coprocessor0.STATUS);
+        bool interruptRequest = (status & 0x0000ff00) != 0;
+
+        return interruptRequest;
     }
 
     void handleInterrupts() {
-        // Update the program counter and other relevant registers based on the interrupt
-        // You might also need to save the current state and jump to the interrupt handler
+        // Check if there is an interrupt request
+        bool interruptRequest = checkForInterrupts();
+        if (interruptRequest) {
+            // Save the current state and jump to the interrupt handler
+            uint32_t epc = registers.pc;
+            uint32_t status = registers.getC0Register(coprocessor0.STATUS);
+            uint32_t cause = registers.getC0Register(coprocessor0.CAUSE);
+            uint32_t bad_address = registers.getC0Register(coprocessor0.BAD_ADDRESS);
+            uint32_t handler = memory.read32(0x80000180); // Interrupt handler address
+            registers.setC0Register(coprocessor0.STATUS, status | 0x00100000); // Set the exception level
+            registers.setC0Register(coprocessor0.CAUSE, cause | 0x80000000); // Set the exception code
+            registers.setC0Register(coprocessor0.EPC, epc); // Save the old program counter
+            registers.pc = handler; // Jump to the handler
+        }
     }
 };
 
