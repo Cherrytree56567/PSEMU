@@ -4,6 +4,7 @@
 #include <iostream>
 #include <climits>
 #include <stddef.h>
+#include "Logging.h"
 
 class GPU {
 public:
