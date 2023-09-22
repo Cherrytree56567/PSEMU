@@ -19,12 +19,12 @@ jobs:
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
-           cmake --build ${{env.GITHUB_WORKSPACE}}/PSEMU/cmake-build-debug --target PSEMU -j 6
+           cmake --build PSEMU/cmake-build-debug --target PSEMU -j 6
            dir -s
 
     - name: Run PSEMU
       shell: cmd
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
-          cd ${{env.GITHUB_WORKSPACE}}/PSEMU/cmake-build-debug
+          cd PSEMU/cmake-build-debug
           PSEMU.exe
