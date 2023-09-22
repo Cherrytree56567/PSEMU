@@ -15,7 +15,8 @@ public:
             return GPUmemory[address];
         }
         else {
-            std::cerr << "Memory access out of bounds: " << address << std::endl;
+            Logging Console;
+            Console.err(54);
             // You might want to handle this error situation accordingly.
             // For now, returning a reference to a static variable to indicate an error.
             static uint8_t dummy_error_value = 0;

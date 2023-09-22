@@ -16,7 +16,7 @@ public:
 	bool warnstatus = true;
 	bool errstatus = true;
 	bool infostatus = true;
-	void err(std::string message);
+	void err(int message);
 	void warn(std::string message);
 	void log(std::string message);
 };

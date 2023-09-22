@@ -26,7 +26,8 @@ void CPU::op_add(uint32_t instruction) {
 
     if (rt > 32) {
         Logging console;
-        console.err("Overflow Exception: RT is greater than 32. RT = " + std::to_string(rt));
+        // Overflow Exception: RT is greater than 32.
+        console.err(51);
     } else {
         std::cout << "ADDING: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 
@@ -34,7 +35,7 @@ void CPU::op_add(uint32_t instruction) {
     }
 }
 
-// First take the data from RT (Register) and stores it in IMM + RS (memory)
+// First take the data from RT (Register) and store it in IMM + RS (memory)
 
 void CPU::op_storebyte(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
@@ -74,7 +75,7 @@ void CPU::op_addi(uint32_t instruction) {
     
     if (rt > 32) {
         Logging console;
-        console.err("Overflow Exception: RT is greater than 32. RT = " + std::to_string(rt));
+        console.err(51);
     } else {
         registers.reg[rt] = imm + registers.reg[rs];
 
@@ -596,14 +597,14 @@ void CPU::loadBIOS(const char* filename) {
     // Allocate memory for the array
     uint32_t* aBiosCode = (uint32_t*)malloc(numChunks * sizeof(uint32_t));
     if (!aBiosCode) {
-        console.err("Memory allocation error\n");
+        console.err(52);
         fclose(file);
     }
 
     // Read and separate the content into 32-bit chunks
     size_t bytesRead = fread(aBiosCode, sizeof(uint32_t), numChunks, file);
     if (bytesRead < numChunks) {
-        console.err("Error reading file\n");
+        console.err(53);
         free(aBiosCode);
         fclose(file);
     }

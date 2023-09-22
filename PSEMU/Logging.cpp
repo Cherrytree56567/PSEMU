@@ -8,11 +8,9 @@
 */
 #include "Logging.h"
 
-void Logging::err(std::string message) {
+void Logging::err(int message) {
     if (errstatus) {
-        system("Color 0A");
-        std::cout << "ERROR: " << message << std::endl;
-        system("Color 7A");
+        exit(message);
     }
 }
 

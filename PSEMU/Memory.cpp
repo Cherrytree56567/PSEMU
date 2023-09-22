@@ -14,7 +14,7 @@ uint8_t Memory::readByte(uint32_t address) const {
     }
     else {
         Logging console;
-        console.warn("Out of bounds memory access");
+        console.err(54);
         return 0;
     }
 }
@@ -25,7 +25,7 @@ void Memory::writeByte(uint32_t address, uint8_t value) {
     }
     else {
         Logging console;
-        console.warn("Out of bounds memory access");
+        console.err(54);
     }
 }
 
@@ -39,7 +39,7 @@ uint32_t Memory::readWord(uint32_t address) const {
     }
     else {
         Logging console;
-        console.warn("Out of bounds memory access");
+        console.err(54);
         return 0;
     }
 }
@@ -52,18 +52,20 @@ void Memory::writeWord(uint32_t address, uint32_t value) {
     }
     else {
         Logging console;
-        console.warn("Out of bounds memory access");
+        console.err(54);
     }
 }
 
 void Memory::writeHalfword(uint32_t address, uint16_t value) {
     if (address % 2 != 0) {
-        std::cerr << "Error: Address must be halfword-aligned." << std::endl;
+        Logging console;
+        console.err(55);
         return;
     }
 
     if (address >= memory.size()) {
-        std::cerr << "Error: Address out of range." << std::endl;
+        Logging console;
+        console.err(56);
         return;
     }
 
