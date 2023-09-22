@@ -3,4 +3,4 @@ project(PSEMU)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(PSEMU Coprocessor.cpp CPU.cpp CPURegisters.cpp GPU.cpp Logging.cpp Memory.cpp)
+add_executable(PSEMU Coprocessor.cpp CPU.cpp CPURegisters.cpp GPU.cpp Logging.cpp Memory.cpp PSEMU.cpp)
