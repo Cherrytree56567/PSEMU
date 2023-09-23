@@ -1,5 +1,5 @@
-CC = g++
-CFLAGS = 
+CC = g++-10 
+CFLAGS = -std=c++20
 
 SRCS = $(wildcard *.cpp)
 EXECUTABLE = PSEMU.elf
