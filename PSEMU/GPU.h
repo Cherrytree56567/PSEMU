@@ -8,7 +8,7 @@
 
 class GPU {
 public:
-	// [For GPU Memory]
+	// [ For GPU Memory ]
 	GPU(size_t gpmemsize) : GPUmemory(gpmemsize) {}
 
     uint8_t& operator[](uint32_t address) {
@@ -18,10 +18,8 @@ public:
         else {
             Logging Console;
             Console.err(54);
-            // You might want to handle this error situation accordingly.
-            // For now, returning a reference to a static variable to indicate an error.
-            static uint8_t dummy_error_value = 0;
-            return dummy_error_value;
+            static uint8_t eval = 0;
+            return eval;
         }
     }
 private:

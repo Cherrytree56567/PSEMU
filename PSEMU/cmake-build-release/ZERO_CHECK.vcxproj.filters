@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-release\CMakeFiles\868894ec70d039845bd40a4a3579cc34\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F0BDC145-AB14-3832-9F66-8022F63F7AB1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
