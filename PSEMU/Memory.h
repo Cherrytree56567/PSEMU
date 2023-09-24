@@ -20,7 +20,7 @@ public:
         if (address < memory.size()) {
             return memory[address];
         } else if (address >= GPU_VRAM_START && address <= GPU_VRAM_END) {
-            return gpu[address - GPU_VRAM_START];
+            return gpu.gpuVRAM[address - GPU_VRAM_START];
         } else {
             Logging console;
             console.err(54);
