@@ -16,51 +16,90 @@ events:
       - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
-      Compiler:  
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
       Build flags: 
       Id flags:  
       
       The output was:
+      2
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCCompilerId.c
+      Microsoft (R) Incremental Linker Version 14.37.32824.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      /out:CMakeCCompilerId.exe 
+      CMakeCCompilerId.obj 
+      LINK : fatal error LNK1104: cannot open file 'kernel32.lib'
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
       0
-      MSBuild version 17.7.2+d6990bcfa for .NET Framework
-      Build started 23/09/2023 4:50:21 PM.
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
       
-      Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
-      PrepareForBuild:
-        Creating directory "Debug\\".
-        Creating directory "Debug\\CompilerIdC.tlog\\".
-      InitializeBuildStatus:
-        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-        Touching "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
-      ClCompile:
-        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
-        CMakeCCompilerId.c
-      Link:
-        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
-        CompilerIdC.vcxproj -> C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.exe
-      PostBuildEvent:
-        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
-        :VCEnd
-        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
-      FinalizeBuildStatus:
-        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
-        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
-      Done Building Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
-      
-      Build succeeded.
-          0 Warning(s)
-          0 Error(s)
-      
-      Time Elapsed 00:00:01.54
+      CMakeCCompilerId.c
       
       
-      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
-      
-      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
       
       The C compiler identification is MSVC, found in:
-        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/CompilerIdC.exe
+        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/CMakeCCompilerId.obj
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:1153 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:221 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Detecting C compiler /showIncludes prefix:
+        main.c
+        Note: including file: C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      2
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCXXCompilerId.cpp
+      Microsoft (R) Incremental Linker Version 14.37.32824.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      /out:CMakeCXXCompilerId.exe 
+      CMakeCXXCompilerId.obj 
+      LINK : fatal error LNK1104: cannot open file 'kernel32.lib'
+      
       
   -
     kind: "message-v1"
@@ -71,51 +110,36 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler:  
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
       Build flags: 
-      Id flags:  
+      Id flags: -c 
       
       The output was:
       0
-      MSBuild version 17.7.2+d6990bcfa for .NET Framework
-      Build started 23/09/2023 4:50:23 PM.
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
       
-      Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
-      PrepareForBuild:
-        Creating directory "Debug\\".
-        Creating directory "Debug\\CompilerIdCXX.tlog\\".
-      InitializeBuildStatus:
-        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
-      ClCompile:
-        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
-        CMakeCXXCompilerId.cpp
-      Link:
-        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
-        CompilerIdCXX.vcxproj -> C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdCXX\\CompilerIdCXX.exe
-      PostBuildEvent:
-        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
-        :VCEnd
-        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
-      FinalizeBuildStatus:
-        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
-        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
-      Done Building Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\3.26.4\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
-      
-      Build succeeded.
-          0 Warning(s)
-          0 Error(s)
-      
-      Time Elapsed 00:00:01.34
+      CMakeCXXCompilerId.cpp
       
       
-      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
-      
-      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
       
       The CXX compiler identification is MSVC, found in:
-        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CompilerIdCXX.exe
+        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.obj
       
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:1153 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:221 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Detecting CXX compiler /showIncludes prefix:
+        main.c
+        Note: including file: C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
   -
     kind: "try_compile-v1"
     backtrace:
@@ -125,8 +149,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uoo95s"
-      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uoo95s"
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-attbit"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-attbit"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -135,38 +159,200 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uoo95s
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-attbit
         
-        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_b41ce.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.7.2+d6990bcfa for .NET Framework
-        Build started 23/09/2023 4:50:25 PM.
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_acff6\\fast && 	"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_acff6.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_acff6.dir\\build
+        Building C object CMakeFiles/cmTC_acff6.dir/CMakeCCompilerABI.c.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_acff6.dir\\CMakeCCompilerABI.c.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-attbit --filter-prefix="Note: including file: " -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm3270.tmp
+        CMakeCCompilerABI.c
+        Linking C executable cmTC_acff6.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_acff6.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_acff6.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm32CF.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_acff6.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_acff6.dir/embed.manifest
+        RC Pass 1:
+        rc /fo CMakeFiles\\cmTC_acff6.dir/manifest.res CMakeFiles\\cmTC_acff6.dir/manifest.rc
+        RC Pass 1: command "rc /fo CMakeFiles\\cmTC_acff6.dir/manifest.res CMakeFiles\\cmTC_acff6.dir/manifest.rc" failed (exit code 0) with the following output:
+        The system cannot find the file specifiedNMAKE : fatal error U1077: '"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_acff6.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_acff6.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm32CF.tmp' : return code '0xffffffff'
+        Stop.
+        NMAKE : fatal error U1077: '"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_acff6.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_acff6.dir\\build' : return code '0x2'
+        Stop.
         
-        Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-uoo95s\\cmTC_b41ce.vcxproj" on node 1 (default targets).
-        PrepareForBuild:
-          Creating directory "cmTC_b41ce.dir\\Debug\\".
-          Creating directory "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-uoo95s\\Debug\\".
-          Creating directory "cmTC_b41ce.dir\\Debug\\cmTC_b41ce.tlog\\".
-        InitializeBuildStatus:
-          Creating "cmTC_b41ce.dir\\Debug\\cmTC_b41ce.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_b41ce.dir\\Debug\\cmTC_b41ce.tlog\\unsuccessfulbuild".
-        ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b41ce.dir\\Debug\\\\" /Fd"cmTC_b41ce.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
-          Copyright (C) Microsoft Corporation.  All rights reserved.
-          CMakeCCompilerABI.c
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b41ce.dir\\Debug\\\\" /Fd"cmTC_b41ce.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
-        Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-uoo95s\\Debug\\cmTC_b41ce.exe" /INCREMENTAL /ILK:"cmTC_b41ce.dir\\Debug\\cmTC_b41ce.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uoo95s/Debug/cmTC_b41ce.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-uoo95s/Debug/cmTC_b41ce.lib" /MACHINE:X64  /machine:x64 cmTC_b41ce.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_b41ce.vcxproj -> C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-uoo95s\\Debug\\cmTC_b41ce.exe
-        FinalizeBuildStatus:
-          Deleting file "cmTC_b41ce.dir\\Debug\\cmTC_b41ce.tlog\\unsuccessfulbuild".
-          Touching "cmTC_b41ce.dir\\Debug\\cmTC_b41ce.tlog\\cmTC_b41ce.lastbuildstate".
-        Done Building Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-uoo95s\\cmTC_b41ce.vcxproj" (default targets).
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:56 (try_compile)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Check for working C compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe"
+    directories:
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-k0na15"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-k0na15"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-k0na15
         
-        Build succeeded.
-            0 Warning(s)
-            0 Error(s)
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_74382\\fast && 	"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_74382.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_74382.dir\\build
+        Building C object CMakeFiles/cmTC_74382.dir/testCCompiler.c.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_74382.dir\\testCCompiler.c.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-k0na15 --filter-prefix="Note: including file: " -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm33C8.tmp
+        testCCompiler.c
+        Linking C executable cmTC_74382.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_74382.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_74382.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm3436.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_74382.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_74382.dir/embed.manifest
+        RC Pass 1:
+        rc /fo CMakeFiles\\cmTC_74382.dir/manifest.res CMakeFiles\\cmTC_74382.dir/manifest.rc
+        RC Pass 1: command "rc /fo CMakeFiles\\cmTC_74382.dir/manifest.res CMakeFiles\\cmTC_74382.dir/manifest.rc" failed (exit code 0) with the following output:
+        The system cannot find the file specifiedNMAKE : fatal error U1077: '"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_74382.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_74382.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nm3436.tmp' : return code '0xffffffff'
+        Stop.
+        NMAKE : fatal error U1077: '"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_74382.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_74382.dir\\build' : return code '0x2'
+        Stop.
         
-        Time Elapsed 00:00:01.26
+      exitCode: 2
+...
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
+      Build flags: /DWIN32;/D_WINDOWS
+      Id flags:  
+      
+      The output was:
+      0
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCCompilerId.c
+      Microsoft (R) Incremental Linker Version 14.37.32824.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      /out:CMakeCCompilerId.exe 
+      CMakeCCompilerId.obj 
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.obj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdC/CMakeCCompilerId.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:1153 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:221 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Detecting C compiler /showIncludes prefix:
+        main.c
+        Note: including file: C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      CMakeCXXCompilerId.cpp
+      Microsoft (R) Incremental Linker Version 14.37.32824.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      /out:CMakeCXXCompilerId.exe 
+      CMakeCXXCompilerId.obj 
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/3.26.4/CompilerIdCXX/CMakeCXXCompilerId.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:1153 (message)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerId.cmake:221 (CMAKE_DETERMINE_MSVC_SHOWINCLUDES_PREFIX)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Detecting CXX compiler /showIncludes prefix:
+        main.c
+        Note: including file: C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\ShowIncludes\\foo.h
+        
+      Found prefix "Note: including file: "
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.26/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-slfchp"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-slfchp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-slfchp
+        
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_622a8\\fast && 	"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_622a8.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_622a8.dir\\build
+        Building C object CMakeFiles/cmTC_622a8.dir/CMakeCCompilerABI.c.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_622a8.dir\\CMakeCCompilerABI.c.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-slfchp --filter-prefix="Note: including file: " -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmCF2F.tmp
+        CMakeCCompilerABI.c
+        Linking C executable cmTC_622a8.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_622a8.dir --rc=rc --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_622a8.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmCFDD.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_622a8.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_622a8.dir/embed.manifest
+        RC Pass 1:
+        rc /fo CMakeFiles\\cmTC_622a8.dir/manifest.res CMakeFiles\\cmTC_622a8.dir/manifest.rc
+        LINK Pass 1:
+        C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_622a8.dir\\objects1.rsp /out:cmTC_622a8.exe /implib:cmTC_622a8.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-slfchp\\cmTC_622a8.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_622a8.dir/intermediate.manifest CMakeFiles\\cmTC_622a8.dir/manifest.res
+        MT:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_622a8.dir/intermediate.manifest /out:CMakeFiles\\cmTC_622a8.dir/embed.manifest /notify_update
+        RC Pass 2:
+        rc /fo CMakeFiles\\cmTC_622a8.dir/manifest.res CMakeFiles\\cmTC_622a8.dir/manifest.rc
+        FINAL LINK:
+        C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_622a8.dir\\objects1.rsp /out:cmTC_622a8.exe /implib:cmTC_622a8.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-slfchp\\cmTC_622a8.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_622a8.dir/intermediate.manifest CMakeFiles\\cmTC_622a8.dir/manifest.res
         
       exitCode: 0
   -
@@ -178,8 +364,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q3sk33"
-      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q3sk33"
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-izq52z"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-izq52z"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -188,38 +374,27 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q3sk33
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-izq52z
         
-        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_b0694.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.7.2+d6990bcfa for .NET Framework
-        Build started 23/09/2023 4:50:27 PM.
-        
-        Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-q3sk33\\cmTC_b0694.vcxproj" on node 1 (default targets).
-        PrepareForBuild:
-          Creating directory "cmTC_b0694.dir\\Debug\\".
-          Creating directory "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-q3sk33\\Debug\\".
-          Creating directory "cmTC_b0694.dir\\Debug\\cmTC_b0694.tlog\\".
-        InitializeBuildStatus:
-          Creating "cmTC_b0694.dir\\Debug\\cmTC_b0694.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_b0694.dir\\Debug\\cmTC_b0694.tlog\\unsuccessfulbuild".
-        ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b0694.dir\\Debug\\\\" /Fd"cmTC_b0694.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
-          Microsoft (R) C/C++ Optimizing Compiler Version 19.37.32824 for x64
-          Copyright (C) Microsoft Corporation.  All rights reserved.
-          CMakeCXXCompilerABI.cpp
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b0694.dir\\Debug\\\\" /Fd"cmTC_b0694.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
-        Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-q3sk33\\Debug\\cmTC_b0694.exe" /INCREMENTAL /ILK:"cmTC_b0694.dir\\Debug\\cmTC_b0694.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q3sk33/Debug/cmTC_b0694.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-q3sk33/Debug/cmTC_b0694.lib" /MACHINE:X64  /machine:x64 cmTC_b0694.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_b0694.vcxproj -> C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-q3sk33\\Debug\\cmTC_b0694.exe
-        FinalizeBuildStatus:
-          Deleting file "cmTC_b0694.dir\\Debug\\cmTC_b0694.tlog\\unsuccessfulbuild".
-          Touching "cmTC_b0694.dir\\Debug\\cmTC_b0694.tlog\\cmTC_b0694.lastbuildstate".
-        Done Building Project "C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-q3sk33\\cmTC_b0694.vcxproj" (default targets).
-        
-        Build succeeded.
-            0 Warning(s)
-            0 Error(s)
-        
-        Time Elapsed 00:00:01.23
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_37a92\\fast && 	"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\nmake.exe"  -f CMakeFiles\\cmTC_37a92.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_37a92.dir\\build
+        Building CXX object CMakeFiles/cmTC_37a92.dir/CMakeCXXCompilerABI.cpp.obj
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_37a92.dir\\CMakeCXXCompilerABI.cpp.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-izq52z --filter-prefix="Note: including file: " -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmD430.tmp
+        CMakeCXXCompilerABI.cpp
+        Linking CXX executable cmTC_37a92.exe
+        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_37a92.dir --rc=rc --mt=C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_37a92.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmD4EC.tmp
+        Visual Studio Incremental Link with embedded manifests
+        Create CMakeFiles\\cmTC_37a92.dir/manifest.rc
+        Create empty: CMakeFiles\\cmTC_37a92.dir/embed.manifest
+        RC Pass 1:
+        rc /fo CMakeFiles\\cmTC_37a92.dir/manifest.res CMakeFiles\\cmTC_37a92.dir/manifest.rc
+        LINK Pass 1:
+        C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_37a92.dir\\objects1.rsp /out:cmTC_37a92.exe /implib:cmTC_37a92.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-izq52z\\cmTC_37a92.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_37a92.dir/intermediate.manifest CMakeFiles\\cmTC_37a92.dir/manifest.res
+        MT:
+        C:\\PROGRA~2\\WI3CF2~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_37a92.dir/intermediate.manifest /out:CMakeFiles\\cmTC_37a92.dir/embed.manifest /notify_update
+        RC Pass 2:
+        rc /fo CMakeFiles\\cmTC_37a92.dir/manifest.res CMakeFiles\\cmTC_37a92.dir/manifest.rc
+        FINAL LINK:
+        C:\\PROGRA~1\\MICROS~1\\2022\\COMMUN~1\\VC\\Tools\\MSVC\\1437~1.328\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_37a92.dir\\objects1.rsp /out:cmTC_37a92.exe /implib:cmTC_37a92.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-izq52z\\cmTC_37a92.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_37a92.dir/intermediate.manifest CMakeFiles\\cmTC_37a92.dir/manifest.res
         
       exitCode: 0
 ...
