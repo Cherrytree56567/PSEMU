@@ -22,7 +22,6 @@ public:
 
     //void RunComands();
 
-private:
 	VRAM gpuVRAM;
     // Command Counter
     //int cc;
