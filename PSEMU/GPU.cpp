@@ -8,7 +8,7 @@
 */
 #include "GPU.h"
 
-void GPU::RunComands() {
+/*void GPU::RunComands() {
     Logging console;
     cc = 0;
 
@@ -20,4 +20,4 @@ void GPU::RunComands() {
         // Command Counter
         cc += 4;
     }
-}
+}*/

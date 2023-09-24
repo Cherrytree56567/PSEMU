@@ -20,10 +20,10 @@ public:
 	// [ For GPU Memory ]
 	GPU(size_t gpmemsize) : gpuVRAM(gpmemsize) {}
 
-    void RunComands();
+    //void RunComands();
 
 private:
 	VRAM gpuVRAM;
     // Command Counter
-    int cc;
+    //int cc;
 };

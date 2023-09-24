@@ -38,7 +38,6 @@ public:
     void op_jr(uint32_t instruction);
     void op_lb(uint32_t instruction);
     void op_lbu(uint32_t instruction);
-    void op_lh(uint32_t instruction);
     void op_lhu(uint32_t instruction);
     void op_lw(uint32_t instruction);
     void op_mfhi(uint32_t instruction);
@@ -52,7 +51,6 @@ public:
     void op_xor(uint32_t instruction);
     void op_or(uint32_t instruction);
     void op_ori(uint32_t instruction);
-    void op_sb(uint32_t instruction);
     void op_sh(uint32_t instruction);
     void op_slti(uint32_t instruction);
     void op_sltiu(uint32_t instruction);
