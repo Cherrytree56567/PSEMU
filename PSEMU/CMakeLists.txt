@@ -10,4 +10,6 @@ add_executable(PSEMU
         GPU.cpp
         Logging.cpp
         Memory.cpp
-        PSEMU.cpp)
+        PSEMU.cpp
+        VRAM.cpp
+        VRAM.h)

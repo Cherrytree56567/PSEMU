@@ -1,3 +1,11 @@
+/*
+ *************************************
+ *           PSEMU Licence           *
+ *************************************
+
+ PSEMU © 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-NoDerivatives 4.0 International
+
+*/
 #pragma once
 #include <cstdint>
 #include <vector>
@@ -5,23 +13,17 @@
 #include <climits>
 #include <stddef.h>
 #include "Logging.h"
+#include "VRAM.h"
 
 class GPU {
 public:
 	// [ For GPU Memory ]
-	GPU(size_t gpmemsize) : GPUmemory(gpmemsize) {}
+	GPU(size_t gpmemsize) : gpuVRAM(gpmemsize) {}
 
-    uint8_t& operator[](uint32_t address) {
-        if (address < GPUmemory.size()) {
-            return GPUmemory[address];
-        }
-        else {
-            Logging Console;
-            Console.err(54);
-            static uint8_t eval = 0;
-            return eval;
-        }
-    }
+    void RunComands();
+
 private:
-	std::vector<uint8_t> GPUmemory;
+	VRAM gpuVRAM;
+    // Command Counter
+    int cc;
 };

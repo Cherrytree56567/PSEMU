@@ -15,6 +15,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/Logging.cpp" "CMakeFiles/PSEMU.dir/Logging.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/Logging.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/Memory.cpp" "CMakeFiles/PSEMU.dir/Memory.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/Memory.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/PSEMU.cpp" "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj.d"
+  "C:/Users/ronit/Desktop/PSEMU/PSEMU/VRAM.cpp" "CMakeFiles/PSEMU.dir/VRAM.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/VRAM.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

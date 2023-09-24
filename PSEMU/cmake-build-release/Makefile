@@ -286,6 +286,30 @@ PSEMU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\PSEMU.cpp.s
 .PHONY : PSEMU.cpp.s
 
+VRAM.obj: VRAM.cpp.obj
+.PHONY : VRAM.obj
+
+# target to build an object file
+VRAM.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\VRAM.cpp.obj
+.PHONY : VRAM.cpp.obj
+
+VRAM.i: VRAM.cpp.i
+.PHONY : VRAM.i
+
+# target to preprocess a source file
+VRAM.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\VRAM.cpp.i
+.PHONY : VRAM.cpp.i
+
+VRAM.s: VRAM.cpp.s
+.PHONY : VRAM.s
+
+# target to generate assembly for a file
+VRAM.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\VRAM.cpp.s
+.PHONY : VRAM.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -316,6 +340,9 @@ help:
 	@echo ... PSEMU.obj
 	@echo ... PSEMU.i
 	@echo ... PSEMU.s
+	@echo ... VRAM.obj
+	@echo ... VRAM.i
+	@echo ... VRAM.s
 .PHONY : help
 
 

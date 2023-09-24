@@ -13,6 +13,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PSEMU.dir/Memory.cpp.obj.d"
   "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj"
   "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj.d"
+  "CMakeFiles/PSEMU.dir/VRAM.cpp.obj"
+  "CMakeFiles/PSEMU.dir/VRAM.cpp.obj.d"
   "PSEMU.exe"
   "PSEMU.exe.manifest"
   "PSEMU.lib"
