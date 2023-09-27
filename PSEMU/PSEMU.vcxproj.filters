@@ -28,9 +28,6 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GPU">
-      <UniqueIdentifier>{5f2c8556-ddb9-436e-bf3e-900b41357eba}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\CPU\Coprocessor">
       <UniqueIdentifier>{a97e7153-f159-4895-b5f8-3b40d802cf2e}</UniqueIdentifier>
     </Filter>
@@ -51,9 +48,6 @@
     <ClCompile Include="CPU.cpp">
       <Filter>Source Files\CPU</Filter>
     </ClCompile>
-    <ClCompile Include="GPU.cpp">
-      <Filter>Source Files\GPU</Filter>
-    </ClCompile>
     <ClCompile Include="Coprocessor.cpp">
       <Filter>Source Files\CPU\Coprocessor</Filter>
     </ClCompile>
@@ -70,9 +64,6 @@
     </ClInclude>
     <ClInclude Include="CPU.h">
       <Filter>Source Files\CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="GPU.h">
-      <Filter>Source Files\GPU</Filter>
     </ClInclude>
     <ClInclude Include="Coprocessor.h">
       <Filter>Source Files\CPU\Coprocessor</Filter>
