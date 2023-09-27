@@ -9,8 +9,8 @@
 #include "Memory.h"
 
 uint8_t Memory::readByte(uint32_t address) const {
-    if (address < memory.size()) {
-        return memory[address];
+    if (address < MainRAM.size()) {
+        return MainRAM[address];
     }
     else {
         Logging console;
@@ -20,8 +20,8 @@ uint8_t Memory::readByte(uint32_t address) const {
 }
 
 void Memory::writeByte(uint32_t address, uint8_t value) {
-    if (address < memory.size()) {
-        memory[address] = value;
+    if (address < MainRAM.size()) {
+        MainRAM[address] = value;
     }
     else {
         Logging console;
@@ -30,10 +30,10 @@ void Memory::writeByte(uint32_t address, uint8_t value) {
 }
 
 uint32_t Memory::readWord(uint32_t address) const {
-    if (address < memory.size() - 3) {
+    if (address < MainRAM.size() - 3) {
         uint32_t value = 0;
         for (int i = 0; i < 4; ++i) {
-            value |= static_cast<uint32_t>(memory[address + i]) << (8 * i);
+            value |= static_cast<uint32_t>(MainRAM[address + i]) << (8 * i);
         }
         return value;
     }
@@ -45,9 +45,9 @@ uint32_t Memory::readWord(uint32_t address) const {
 }
 
 void Memory::writeWord(uint32_t address, uint32_t value) {
-    if (address < memory.size() - 3) {
+    if (address < MainRAM.size() - 3) {
         for (int i = 0; i < 4; ++i) {
-            memory[address + i] = static_cast<uint8_t>(value >> (8 * i));
+            MainRAM[address + i] = static_cast<uint8_t>(value >> (8 * i));
         }
     }
     else {
@@ -63,17 +63,17 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
         return;
     }
 
-    if (address >= memory.size()) {
+    if (address >= MainRAM.size()) {
         Logging console;
         console.err(56);
         return;
     }
 
-    memory[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
-    memory[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
+    MainRAM[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
+    MainRAM[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
 }
 
 uint32_t Memory::read32(uint32_t address) const {
-    const uint32_t value = *(const uint32_t*)&memory[address];
+    const uint32_t value = *(const uint32_t*)&MainRAM[address];
     return value;
 }
