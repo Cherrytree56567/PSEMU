@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.26"
@@ -19,7 +19,7 @@
 					]
 				}
 			],
-			"name" : "Debug",
+			"name" : "Release",
 			"projects" : 
 			[
 				{
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "PSEMU::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-PSEMU-Debug-d477277cbef0a3997bcb.json",
+					"jsonFile" : "target-PSEMU-Release-4c3efe3a9139df312b31.json",
 					"name" : "PSEMU",
 					"projectIndex" : 0
 				}
@@ -49,7 +49,7 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug",
+		"build" : "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-release",
 		"source" : "C:/Users/ronit/Desktop/PSEMU/PSEMU"
 	},
 	"version" : 

@@ -7,9 +7,11 @@ add_executable(PSEMU
         Coprocessor.cpp
         CPU.cpp
         CPURegisters.cpp
-        GPU.cpp
         Logging.cpp
         Memory.cpp
         PSEMU.cpp
         VRAM.cpp
-        VRAM.h)
+        VRAM.h
+        GTE.cpp
+        GTE.h
+        GTE.h)

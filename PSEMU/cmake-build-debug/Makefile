@@ -214,6 +214,30 @@ GPU.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.s
 .PHONY : GPU.cpp.s
 
+GTE.obj: GTE.cpp.obj
+.PHONY : GTE.obj
+
+# target to build an object file
+GTE.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GTE.cpp.obj
+.PHONY : GTE.cpp.obj
+
+GTE.i: GTE.cpp.i
+.PHONY : GTE.i
+
+# target to preprocess a source file
+GTE.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GTE.cpp.i
+.PHONY : GTE.cpp.i
+
+GTE.s: GTE.cpp.s
+.PHONY : GTE.s
+
+# target to generate assembly for a file
+GTE.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GTE.cpp.s
+.PHONY : GTE.cpp.s
+
 Logging.obj: Logging.cpp.obj
 .PHONY : Logging.obj
 
@@ -331,6 +355,9 @@ help:
 	@echo ... GPU.obj
 	@echo ... GPU.i
 	@echo ... GPU.s
+	@echo ... GTE.obj
+	@echo ... GTE.i
+	@echo ... GTE.s
 	@echo ... Logging.obj
 	@echo ... Logging.i
 	@echo ... Logging.s

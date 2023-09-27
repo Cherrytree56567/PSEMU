@@ -10,17 +10,16 @@
 #include <cstdint>
 #include <vector>
 #include "Logging.h"
-#include "GPU.h"
 
 class Memory {
 public:
-    Memory(size_t size, GPU& gpua) : memory(size), gpu(gpua) {}
+    // size = kilobytes
+    Memory(size_t size) : MainRAM((size * 8000) / sizeof(uint8_t)), MainRAMEnd(size * 8000) {}
 
+    // address = bits
     uint8_t& operator[](uint32_t address) {
-        if (address < memory.size()) {
-            return memory[address];
-        } else if (address >= GPU_VRAM_START && address <= GPU_VRAM_END) {
-            return gpu.gpuVRAM[address - GPU_VRAM_START];
+        if (address < MainRAM.size()) {
+            return MainRAM[address];
         } else {
             Logging console;
             console.err(54);
@@ -43,10 +42,8 @@ public:
 
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
 private:
-    GPU& gpu;
-    std::vector<uint8_t> memory;
-
-    // Define GPU VRAM address range
-    static const uint32_t GPU_VRAM_START = 520093696;  // Start address
-    static const uint32_t GPU_VRAM_END = 522190848;    // End address
+    std::vector<uint8_t> MainRAM;
+    int MainRAMStart = 0; // bits
+    int MainRAMEnd; // bits
+    // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
 };
