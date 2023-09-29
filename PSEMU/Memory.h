@@ -18,8 +18,8 @@ public:
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
-        if (address < MainRAM.size()) {
-            return MainRAM[address];
+        if (address < MainRAMEnd) {
+            return MainRAM[address - MainRAMStart];
         } else {
             Logging console;
             console.err(54);

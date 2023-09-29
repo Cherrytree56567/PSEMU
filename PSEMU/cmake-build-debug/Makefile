@@ -190,30 +190,6 @@ Coprocessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\Coprocessor.cpp.s
 .PHONY : Coprocessor.cpp.s
 
-GPU.obj: GPU.cpp.obj
-.PHONY : GPU.obj
-
-# target to build an object file
-GPU.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.obj
-.PHONY : GPU.cpp.obj
-
-GPU.i: GPU.cpp.i
-.PHONY : GPU.i
-
-# target to preprocess a source file
-GPU.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.i
-.PHONY : GPU.cpp.i
-
-GPU.s: GPU.cpp.s
-.PHONY : GPU.s
-
-# target to generate assembly for a file
-GPU.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.s
-.PHONY : GPU.cpp.s
-
 GTE.obj: GTE.cpp.obj
 .PHONY : GTE.obj
 
@@ -352,9 +328,6 @@ help:
 	@echo ... Coprocessor.obj
 	@echo ... Coprocessor.i
 	@echo ... Coprocessor.s
-	@echo ... GPU.obj
-	@echo ... GPU.i
-	@echo ... GPU.s
 	@echo ... GTE.obj
 	@echo ... GTE.i
 	@echo ... GTE.s
