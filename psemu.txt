@@ -1,0 +1,28 @@
+Getting Size of the UINT32_T array = (size * 1024) / sizeof(uint32_t)
+
+Memory Map
+
+Main Ram (first 64K reserved for BIOS) = 2048K
+Expansion region 1 (ROM/RAM) = 8192K
+Scratchpad (D-Cache used as Fast RAM) = 1K
+I/O Ports = 4K
+Expansion Region 2 (I/O Ports) = 8K
+Expansion Region 3 (SRAM BIOS region for DTL cards) = 2048K
+BIOS ROM (Kernel) (4096K max) = 512K
+Internal CPU control registers (Cache Control) = 0.5K
+
+Additional Memory (not mapped to the CPU bus)
+VRAM (Framebuffers, Textures, Palettes) (with 2KB Texture Cache) = 1024K
+Sound RAM (Capture Buffers, ADPCM Data, Reverb Workspace) = 512K
+CDROM controller RAM (see CDROM Test commands) = 0.5K
+CDROM controller ROM (Firmware and Bootstrap for MC68HC05 cpu) = 16.5K
+CDROM Buffer (IC303) (32Kx8) (BUG: only two sectors accessible?) = 32K
+External Memory Card(s) (EEPROMs) = 128K
+
+
+
+
+RAM = 2048Kilobytes
+
+
+It features 2 MB of main RAM, with an additional 1 MB being allocated to video memory. (https://en.wikipedia.org/wiki/PlayStation_(console)#:~:text=It%20features%202%20MB%20of,being%20allocated%20to%20video%20memory.)

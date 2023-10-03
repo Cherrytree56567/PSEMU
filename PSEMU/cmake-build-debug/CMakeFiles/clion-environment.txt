@@ -1,4 +1,3 @@
-ToolSet: 17.0 (local)@C:\Program Files\Microsoft Visual Studio\2022\Community
-Options: 
+ToolSet: 1.0 (local)Options: 
 
-Options:
+Options:-DCMAKE_C_COMPILER=C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe
