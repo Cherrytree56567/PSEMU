@@ -42,22 +42,22 @@
  */
 
 /*
- * /Add Bcond 0b000001
- * /Add Cop0 0b010000
- * /Add Cop2 0b010010
- * /Add lh   0b100001
- * Add xori 0b001110
- * Add swr  0b101110
- * Add swl  0b101010
- * Add lwl  0b100010
- * Add lwr  0b100110
- * Add lwc2 0b110010
- * Add swc2 0b111010
- * Add syscall 0b001100
- * Add sllv 0b000100
- * Add srav 0b000111
- * Add srlv 0b000110
- * Add break 0b001101
+ * /Add Bcond   0b000001
+ * /Add Cop0    0b010000
+ * /Add Cop2    0b010010
+ * /Add lh      0b100001
+ * /Add xori    0b001110
+ * /Add swr     0b101110
+ * /Add swl     0b101010
+ * /Add lwl     0b100010
+ * /Add lwr     0b100110
+ * /Add lwc2    0b110010
+ * /Add swc2    0b111010
+ * /Add syscall 0b001100
+ * /Add sllv    0b000100
+ * /Add srav    0b000111
+ * /Add srlv    0b000110
+ * /Add break   0b001101
  */
 
 
