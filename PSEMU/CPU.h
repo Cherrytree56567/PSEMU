@@ -75,6 +75,7 @@ private:
     uint32_t* BiosCode;
     Coprocessor0 coprocessor0;
     Memory& memory;
+    Logging console;
     bool checkForInterrupts() {
         // Check if there is an interrupt request
         uint32_t status = registers.getC0Register(coprocessor0.STATUS);

@@ -635,7 +635,6 @@ void CPU::loadBIOS(const char* filename) {
     // Calculate the number of 32-bit chunks
     size_t numChunks = (fileSize + sizeof(uint32_t) - 1) / sizeof(uint32_t);
 
-    Logging console;
     console.log("NumChunks " + std::to_string(numChunks));
 
     // Allocate memory for the array
@@ -672,7 +671,6 @@ void CPU::loadInstructions() {
 }
 
 void CPU::run() {
-    Logging console;
     registers.pc = 0; // Start from the beginning of memory
 
     while (registers.pc < numInstructions * 4) {
@@ -956,6 +954,7 @@ void CPU::run() {
             op_sw(instruction);
             console.log("CPU INSTRUCTION :: SW");
             break;
+            
 
         default:
             Logging console;
