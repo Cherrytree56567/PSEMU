@@ -276,13 +276,9 @@ void CPU::op_jalr(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-
-    uint32_t target = registers.reg[rs]; // Get the target address from the specified register
-    uint32_t pc_plus_4 = registers.pc + 4; // Calculate the address of the instruction after the JALR
-    registers.reg[31] = pc_plus_4; // Store the return address in RA
-    registers.pc = target; // Set the PC to the target address
-
-    std::cout << "JALR: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", TARGET = " << std::to_string(target) << ", RA = " << std::to_string(registers.reg[31]) << std::endl;
+    
+    registers.reg[rd] = pc;
+    op_jr(instruction);
 }
 
 void CPU::op_jr(uint32_t instruction) {
