@@ -59,7 +59,7 @@
  * /Add break   0b001101
  */
 
-
+using uint = std::uint32_t;
 // First Add rs and rt then store in rd (register)
 
 void CPU::op_add(uint32_t instruction) {
@@ -84,7 +84,7 @@ void CPU::op_storebyte(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     // Store the value in memory
     memory[registers.reg[rs] + imm_s] = registers.reg[rt];
@@ -106,7 +106,7 @@ void CPU::op_addi(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if (rt > 32) {
         Logging console;
@@ -132,7 +132,7 @@ void CPU::op_addiu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     registers.reg[rt] = imm_s + registers.reg[rs];
 }
@@ -179,7 +179,7 @@ void CPU::op_blez(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if ((int)registers.reg[rs] <= 0) {
         registers.pc = registers.pc + (imm_s << 2);
@@ -194,7 +194,7 @@ void CPU::op_bne(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if (registers.reg[rs] != registers.reg[rt]) {
         registers.pc = registers.pc + (imm_s << 2);
@@ -209,7 +209,7 @@ void CPU::op_bgtz(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if ((int)registers.reg[rs] > 0) {
         registers.pc = registers.pc + (imm_s << 2);
@@ -224,19 +224,19 @@ void CPU::op_div(uint32_t instruction) {
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
     if ((int)rt == 0){
-        registers.hi = (unsigned int)rs;
+        registers.hi = (uint)rs;
         if ((int)rs >= 0) {
             registers.lo = 0xFFFFFFFF;
         }
         else {
             registers.lo = 1;
         }
-    } else if ((unsigned int)rs == 0x80000000 && (int)rt == -1) {
+    } else if ((uint)rs == 0x80000000 && (int)rt == -1) {
         registers.hi = 0;
         registers.lo = 0x80000000;
     } else {
-        registers.hi = (unsigned int)((int)rs % (int)rt);
-        registers.lo = (unsigned int)((int)rs / (int)rt);
+        registers.hi = (uint)((int)rs % (int)rt);
+        registers.lo = (uint)((int)rs / (int)rt);
     }
 }
 
@@ -246,24 +246,22 @@ void CPU::op_divu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    
+    uint n = registers.reg[rs];
+    uint d = registers.reg[rt];
 
-    uint32_t dividend = static_cast<uint32_t>(registers.reg[rs]); // Convert the register value to an unsigned integer
-    uint32_t divisor = static_cast<uint32_t>(registers.reg[rt]); // Convert the register value to an unsigned integer
-
-    if (divisor != 0) {
-        registers.lo = dividend / divisor; // Store the quotient in LO
-        registers.hi = dividend % divisor; // Store the remainder in HI
+    if (d == 0) {
+      registers.hi = n;
+      registers.lo = 0xFFFFFFFF;
+    } else {
+      registers.hi = n % d;
+      registers.lo = n / d;
     }
-
-    std::cout << "DIVU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 }
 
 void CPU::op_j(uint32_t instruction) {
-    uint32_t target = (instruction & 0x03FFFFFF) << 2; // Extract the target address and shift it left by 2 bits
-    uint32_t pc_upper = registers.pc & 0xF0000000; // Extract the upper 4 bits of the current PC value
-    registers.pc = pc_upper | target; // Set the PC to the target address
-
-    std::cout << "J: TARGET = " << std::to_string(target) << std::endl;
+    uint addr = instruction & 0x3FFFFFF;
+    next_pc = (next_pc & 0xF0000000) | (instr.addr() << 2);
 }
 
 void CPU::op_jal(uint32_t instruction) {
