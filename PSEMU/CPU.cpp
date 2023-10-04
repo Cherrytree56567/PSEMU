@@ -297,26 +297,39 @@ void CPU::op_lbu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF; // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
-    uint8_t value = memory.readByte(address); // Read the byte from memory
+    uint8_t value = memory.readByte(registers.reg[rs] + imm_s; ); // Read the byte from memory
     registers.reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
 
     std::cout << "LBU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(value) << std::endl;
 }
 
+//
+
 void CPU::op_lhu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-
+    uint16_t imm_s = (uint)(int16_t)imm;
+    
     uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
     uint32_t value = memory.readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
     registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
-    std::cout << "LHU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(halfword) << std::endl;
+    uint addr = registers.reg[rs] + imm_s;
+
+        if ((addr & 0x1) == 0) {
+            uint value = memory.readWord(addr);
+            registers.reg[rt] = value;
+        }
+        else {
+            // error
+        }
 }
+
+//
 
 void CPU::op_lw(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
