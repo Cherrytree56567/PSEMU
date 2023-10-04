@@ -261,18 +261,16 @@ void CPU::op_divu(uint32_t instruction) {
 
 void CPU::op_j(uint32_t instruction) {
     uint addr = instruction & 0x3FFFFFF;
-    next_pc = (next_pc & 0xF0000000) | (instr.addr() << 2);
+    registers.pc = (registers.pc & 0xF0000000) | (addr << 2);
 }
 
 void CPU::op_jal(uint32_t instruction) {
-    uint32_t target = (instruction & 0x03FFFFFF) << 2; // Extract the target address and shift it left by 2 bits
-    uint32_t pc_plus_4 = registers.pc + 4; // Calculate the address of the instruction after the JAL
-    registers.reg[31] = pc_plus_4; // Store the return address in RA
-    uint32_t pc_upper = registers.pc & 0xF0000000; // Extract the upper 4 bits of the current PC value
-    registers.pc = pc_upper | target; // Set the PC to the target address
-
-    std::cout << "JAL: TARGET = " << std::to_string(target) << ", RA = " << std::to_string(registers.reg[31]) << std::endl;
+    uint addr = instruction & 0x3FFFFFF;
+    registers.reg[31] = registers.pc;
+    op_j(instruction);
 }
+
+//
 
 void CPU::op_jalr(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
