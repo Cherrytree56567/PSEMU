@@ -10,6 +10,7 @@
 #include <fstream>
 #include <bitset>
 #include <type_traits>
+#include <stdafx.hpp>
 #include "Memory.h"
 #include "CPURegisters.h"
 #include "Coprocessor.h"
@@ -62,6 +63,7 @@ public:
     void op_sub(uint32_t instruction);
     void op_subu(uint32_t instruction);
     void op_sw(uint32_t instruction);
+    void op_lh(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode, size_t numI);

@@ -45,7 +45,6 @@
  * /Add Bcond   0b000001
  * /Add Cop0    0b010000
  * /Add Cop2    0b010010
- * /Add lh      0b100001
  * /Add xori    0b001110
  * /Add swr     0b101110
  * /Add swl     0b101010
@@ -67,14 +66,14 @@ void CPU::op_add(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    rs = registers.reg[rs];
+    rt = registers.reg[rt];
 
     if (rt > 32) {
         Logging console;
         // Overflow Exception: RT is greater than 32.
         console.err(51);
     } else {
-        std::cout << "ADDING: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
-
         registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
     }
 }
@@ -85,17 +84,10 @@ void CPU::op_storebyte(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-
-    uint32_t rsValue = registers.reg[rs];
-    uint8_t valueToStore = rsValue & 0xFF;    // Extract the least significant byte
-
-    // Calculate the effective memory address
-    uint32_t effectiveAddress = rsValue + imm;
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
     // Store the value in memory
-    memory[effectiveAddress] = valueToStore;
-
-    std::cout << "STOREBYTE: Value = " << std::to_string(valueToStore) << ", RS = " << std::to_string(rs) << ", Immediate = " << std::to_string(imm) << std::endl;
+    memory[registers.reg[rs] + imm_s] = registers.reg[rt];
 }
 
 // lui is used to load a value into a register. example: "lui $t0, 0x1234"
@@ -105,9 +97,7 @@ void CPU::op_lui(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    registers.reg[rs] = imm;
-
-    std::cout << "Loading Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
+    registers.reg[rt] = imm << 16;
 } 
 
 // The op_addi function adds imm and rs, and stores the result in rt.
@@ -116,14 +106,13 @@ void CPU::op_addi(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-    
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
+
     if (rt > 32) {
         Logging console;
         console.err(51);
     } else {
-        registers.reg[rt] = imm + registers.reg[rs];
-
-        std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
+        registers.reg[rt] = imm_s + rs;
     }
 }
 
@@ -134,14 +123,7 @@ void CPU::op_addu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    if (rt > 32) {
-        Logging console;
-        console.log("INFO: Overflow Exception: RT is greater than 32. THIS iS NOT CONCERNING BECAUSE WE ARE USING ADDU. RT = " + std::to_string(rt));
-    } else {
-        std::cout << "ADDING Unsigned: RESULT = " << registers.reg[rs] + registers.reg[rt] << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
-
-        registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
-    }
+    registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
 }
 
 // op_addiu adds imm and rs, and stores the result in rt. No overflow exception raised.
@@ -150,15 +132,9 @@ void CPU::op_addiu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
-    if (rt > 32) {
-        Logging console;
-        console.log("INFO: Overflow Exception: RT is greater than 32. THIS iS NOT CONCERNING BECAUSE WE ARE USING ADDIU. RT = " + std::to_string(rt));
-    } else {
-        registers.reg[rt] = imm + registers.reg[rs];
-
-        std::cout << "Adding Immediate Value: RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << ", RT = " << std::to_string(rt) << std::endl;
-    }
+    registers.reg[rt] = imm_s + registers.reg[rs];
 }
 
 // op_and compares rs and rd and stores 1 in rd if they are equal, otherwise 0.
@@ -168,14 +144,9 @@ void CPU::op_and(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    if (registers.reg[rs] == registers.reg[rt]){
-        registers.reg[rd] = 1;
-    } else {
-        registers.reg[rd] = 0;
-    }
-
-    std::cout << "Boolean: RESULT = " << std::to_string(registers.reg[rd]) << ", RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
+    registers.reg[rd] = registers.reg[rs] & registers.reg[rt];
 }
+//g
 
 // op_and compares rs and imm and stores 1 in rt if they are equal, otherwise 0.
 
@@ -184,15 +155,10 @@ void CPU::op_andi(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    if (registers.reg[rs] == imm){
-        registers.reg[rt] = 1;
-    } else {
-        registers.reg[rt] = 0;
-    }
-
-    std::cout << "Boolean: RESULT = " << std::to_string(registers.reg[rt]) << ", RS = " << std::to_string(rs) << ", IMM = " << std::to_string(imm) << std::endl;
-
+    registers.reg[rt] = registers.reg[rs] & registers.reg[imm];
 }
+
+//
 
 // Compare rs and rt, if they are equal, jump to the target address (imm)
 
@@ -621,6 +587,19 @@ void CPU::op_sw(uint32_t instruction) {
     std::cout << "SW: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << std::endl;
 }
 
+void CPU::op_lh(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+
+    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint32_t value = memory.readWord(address); // Read the word from memory
+    uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
+    registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
+
+    std::cout << "LH: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(halfword) << std::endl;
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -954,7 +933,12 @@ void CPU::run() {
             op_sw(instruction);
             console.log("CPU INSTRUCTION :: SW");
             break;
-            
+
+        case 0b100001:
+            // lh
+            op_lh(instruction);
+            console.log("CPU INSTRUCTION :: LH");
+            break;
 
         default:
             Logging console;
