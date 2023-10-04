@@ -169,7 +169,7 @@ void CPU::op_beq(uint32_t instruction) {
     uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
     if (registers.reg[rs] == registers.reg[rt]) {
-        registers.pc = registers.pc + (imm_s << 2); // Branch to the target address if the values are equal
+        registers.next_pc = registers.pc + (imm_s << 2); // Branch to the target address if the values are equal
     }
 }
 
@@ -182,7 +182,7 @@ void CPU::op_blez(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if ((int)registers.reg[rs] <= 0) {
-        registers.pc = registers.pc + (imm_s << 2);
+        registers.next_pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BLEZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -197,7 +197,7 @@ void CPU::op_bne(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if (registers.reg[rs] != registers.reg[rt]) {
-        registers.pc = registers.pc + (imm_s << 2);
+        registers.next_pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BNE: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -212,7 +212,7 @@ void CPU::op_bgtz(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     if ((int)registers.reg[rs] > 0) {
-        registers.pc = registers.pc + (imm_s << 2);
+        registers.next_pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BGTZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -261,12 +261,12 @@ void CPU::op_divu(uint32_t instruction) {
 
 void CPU::op_j(uint32_t instruction) {
     uint addr = instruction & 0x3FFFFFF;
-    registers.pc = (registers.pc & 0xF0000000) | (addr << 2);
+    registers.next_pc = (registers.next_pc & 0xF0000000) | (addr << 2);
 }
 
 void CPU::op_jal(uint32_t instruction) {
     uint addr = instruction & 0x3FFFFFF;
-    registers.reg[31] = registers.pc;
+    registers.reg[31] = registers.next_pc;
     op_j(instruction);
 }
 
@@ -277,20 +277,21 @@ void CPU::op_jalr(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
     
-    registers.reg[rd] = pc;
+    registers.reg[rd] = registers.next_pc;
     op_jr(instruction);
 }
+
+//
 
 void CPU::op_jr(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    uint32_t target = registers.reg[rs]; // Get the target address from the specified register
-    registers.pc = target; // Set the PC to the target address
-
-    std::cout << "JR: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", TARGET = " << std::to_string(target) << std::endl;
+    registers.next_pc = registers.reg[rs];
 }
+
+//
 
 void CPU::op_lbu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
