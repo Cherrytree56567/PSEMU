@@ -10,7 +10,6 @@
 #include <fstream>
 #include <bitset>
 #include <type_traits>
-#include <stdafx.hpp>
 #include "Memory.h"
 #include "CPURegisters.h"
 #include "Coprocessor.h"
