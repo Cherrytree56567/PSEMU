@@ -652,7 +652,8 @@ void CPU::loadInstructions() {
 }
 
 void CPU::run() {
-    registers.pc = 0; // Start from the beginning of memory
+    registers.pc = 0xbfc00000; // Start from the beginning of memory
+    registers.next_pc = pc + 4;
 
     while (registers.pc < numInstructions * 4) {
         uint32_t instruction = memory.readWord(registers.pc);
@@ -949,7 +950,8 @@ void CPU::run() {
         }
 
         // Program Counter
-        registers.pc += 4; // 4 Bytes = 32 Bits
+        registers.pc = registers.next_pc; // 4 Bytes = 32 Bits
+        registers.next_pc += 4;
 
         // Interrupts
         if (checkForInterrupts()) {
