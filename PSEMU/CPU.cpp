@@ -166,12 +166,11 @@ void CPU::op_beq(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
     if (registers.reg[rs] == registers.reg[rt]) {
-        registers.pc += imm; // Branch to the target address if the values are equal
+        registers.pc = registers.pc + (imm_s << 2); // Branch to the target address if the values are equal
     }
-
-    std::cout << "BEQ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
 }
 
 // Branches to imm if the value in rs is less than or equal to 0
@@ -180,9 +179,10 @@ void CPU::op_blez(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
-    if (registers.reg[rs] <= 0) {
-        registers.pc += imm;
+    if ((int)registers.reg[rs] <= 0) {
+        registers.pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BLEZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -194,9 +194,10 @@ void CPU::op_bne(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
     if (registers.reg[rs] != registers.reg[rt]) {
-        registers.pc += imm;
+        registers.pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BNE: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -208,9 +209,10 @@ void CPU::op_bgtz(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 
-    if (registers.reg[rs] > 0) {
-        registers.pc += imm; 
+    if ((int)registers.reg[rs] > 0) {
+        registers.pc = registers.pc + (imm_s << 2);
     }
 
     std::cout << "BGTZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -221,16 +223,24 @@ void CPU::op_div(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    uint32_t dividend = static_cast<uint32_t>(registers.reg[rs]); // Convert the register value to an unsigned integer
-    uint32_t divisor = static_cast<uint32_t>(registers.reg[rt]); // Convert the register value to an unsigned integer
-
-    if (divisor != 0) {
-        registers.lo = dividend / divisor; // Store the quotient in LO
-        registers.hi = dividend % divisor; // Store the remainder in HI
+    if ((int)rt == 0){
+        registers.hi = (unsigned int)rs;
+        if ((int)rs >= 0) {
+            registers.lo = 0xFFFFFFFF;
+        }
+        else {
+            registers.lo = 1;
+        }
+    } else if ((unsigned int)rs == 0x80000000 && (int)rt == -1) {
+        registers.hi = 0;
+        registers.lo = 0x80000000;
+    } else {
+        registers.hi = (unsigned int)((int)rs % (int)rt);
+        registers.lo = (unsigned int)((int)rs / (int)rt);
     }
-
-    std::cout << "DIVU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << std::endl;
 }
+
+//
 
 void CPU::op_divu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
