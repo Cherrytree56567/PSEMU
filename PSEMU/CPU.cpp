@@ -528,72 +528,79 @@ void CPU::op_sll(uint32_t instruction) {
 
     registers.reg[rd] = registers.reg[rt] << sa; // Shift the bits in the specified register to the left by the specified amount, and store the result in the specified register
 }
-
+//
 void CPU::op_srl(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t sa = (instruction >> 6) & 0x1F;  // Extract bits 10 to 6
+uint8_t rd = (instruction >> 11) & 0x1F;
 
-    registers.reg[rt] = static_cast<uint32_t>(registers.reg[rs]) >> sa; // Shift the bits in the specified register to the right by the specified amount, and store the result in the specified register
-
-    std::cout << "SRL: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", SA = " << std::to_string(sa) << ", RESULT = " << std::to_string(registers.reg[rt]) << std::endl;
+    registers.reg[rd] = registers.reg[rt] >> sa;
 }
 
 void CPU::op_sra(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t sa = (instruction >> 6) & 0x1F;  // Extract bits 10 to 6
+uint8_t rd = (instruction >> 11) & 0x1F;
 
-    registers.reg[rt] = static_cast<int32_t>(registers.reg[rs]) >> sa; // Shift the bits in the specified register to the right by the specified amount, filling the vacated bits with the sign bit, and store the result in the specified register
-
-    std::cout << "SRA: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", SA = " << std::to_string(sa) << ", RESULT = " << std::to_string(registers.reg[rt]) << std::endl;
+    registers.reg[rd] = registers.reg[rt] >> sa;
+    
 }
-
+//
 void CPU::op_sub(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    int32_t result = static_cast<int32_t>(registers.reg[rs]) - static_cast<int32_t>(registers.reg[rt]); // Subtract the value in rt from the value in rs, and store the result in a signed 32-bit integer
-
-    registers.reg[rd] = static_cast<uint32_t>(result); // Store the result in the specified register
-
-    std::cout << "SUB: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", RESULT = " << std::to_string(registers.reg[rd]) << std::endl;
+    registers.reg[rd] = registers.reg[rs] - registers.reg[rt];
 }
-
+//
 void CPU::op_subu(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] - registers.reg[rt]; // Subtract the value in rt from the value in rs, and store the result in the specified register
-
-    std::cout << "SUBU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", RD = " << std::to_string(rd) << ", RESULT = " << std::to_string(registers.reg[rd]) << std::endl;
+    registers.reg[rd] = registers.reg[rs] - registers.reg[rt];
 }
 
 void CPU::op_sw(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+    
+    uint r = rs;
+        uint i = imm_s;
+        uint addr = registers.reg[r] + i;
 
-    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address by adding the value in rs to the immediate value
-
-    memory.writeWord(address, registers.reg[rt]); // Write the value in rt to memory at the calculated address
-
-    std::cout << "SW: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << std::endl;
+        if ((addr & 0x3) == 0) {
+            memory.writeWord(addr,registers.reg[rt])
+        }
+        else {
+          
+        }
 }
 
 void CPU::op_lh(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-
+uint16_t imm_s = (uint)(int16_t)imm;
     uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
     uint32_t value = memory.readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
     registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
-    std::cout << "LH: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(halfword) << std::endl;
+    uint addr = registers.reg[rs] + imm_s;
+
+        if ((addr & 0x1) == 0) {
+            uint value = (uint)(short)memory.readWord(addr);
+            registers.reg[rt] = value;
+        }
+        else {
+            
+        }
 }
 
 void CPU::loadBIOS(const char* filename) {
