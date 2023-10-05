@@ -576,9 +576,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         if ((addr & 0x3) == 0) {
             memory.writeWord(addr,registers.reg[rt]);
         }
-        else {
-          
-        }
+        //err
 }
 
 void CPU::op_lh(uint32_t instruction) {
