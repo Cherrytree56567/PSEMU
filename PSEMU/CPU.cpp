@@ -61,6 +61,7 @@
 
 using uint = std::uint32_t;
 using ulong = std::uint64_t;
+using byte = std::int8_t;
 // First Add rs and rt then store in rd (register)
 
 void CPU::op_add(uint32_t instruction) {
@@ -300,10 +301,8 @@ void CPU::op_lbu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF; // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint8_t value = memory.readByte(registers.reg[rs] + imm_s; ); // Read the byte from memory
+    uint8_t value = memory.readByte(registers.reg[rs] + imm_s); // Read the byte from memory
     registers.reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
-
-    std::cout << "LBU: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << ", ADDRESS = " << std::to_string(address) << ", VALUE = " << std::to_string(value) << std::endl;
 }
 
 //
@@ -384,7 +383,7 @@ void CPU::op_mfc0(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-
+uint mfc = rd;
     if (mfc == 3 || mfc >= 5 && mfc <= 9 || mfc >= 11 && mfc <= 15) {
         registers.reg[rt] = coprocessor0.readRegister(mfc);
     }
@@ -475,7 +474,7 @@ void CPU::op_sh(uint32_t instruction) {
     uint addr = registers.reg[rs] + imm_s;
 
     if ((addr & 0x1) == 0) {
-        memory.writeHalfword(addr, (ushort)registers.reg[rt])
+        memory.writeHalfword(addr, (ushort)registers.reg[rt]);
     }
     else {
         
@@ -575,7 +574,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         uint addr = registers.reg[r] + i;
 
         if ((addr & 0x3) == 0) {
-            memory.writeWord(addr,registers.reg[rt])
+            memory.writeWord(addr,registers.reg[rt]);
         }
         else {
           
@@ -654,7 +653,7 @@ void CPU::loadInstructions() {
 
 void CPU::run() {
     registers.pc = 0xbfc00000; // Start from the beginning of memory
-    registers.next_pc = pc + 4;
+    registers.next_pc = registers.pc + 4;
 
     while (registers.pc < numInstructions * 4) {
         uint32_t instruction = memory.readWord(registers.pc);
