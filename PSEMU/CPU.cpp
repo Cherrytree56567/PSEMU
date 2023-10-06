@@ -629,6 +629,37 @@ void CPU::op_sllv(uint32_t instruction) {
     registers.reg[rd] = registers.reg[rt] << (int)(registers.reg[rs] & 0x1F);
 }
 
+void CPU::op_lwl(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+    
+    uint addr = registers.reg[rs] + imm_s;
+    uint aligned_addr = addr & 0xFFFFFFFC;
+    uint aligned_load = memory.read32(aligned_addr);
+
+    uint value = 0;
+    uint LRValue = registers.reg[rt];
+
+    switch (addr & 0b11) {
+    case 0:
+        value = (LRValue & 0x00FFFFFF) | (aligned_load << 24);
+        break;
+    case 1:
+        value = (LRValue & 0x0000FFFF) | (aligned_load << 16);
+        break;
+    case 2:
+        value = (LRValue & 0x000000FF) | (aligned_load << 8);
+        break;
+    case 3:
+        value = aligned_load;
+        break;
+    }
+    
+    registers.reg[rt] = value;
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -994,9 +1025,14 @@ void CPU::run() {
             op_lh(instruction);
             console.log("CPU INSTRUCTION :: LH");
             break;
+        
+        case 0b100010:
+            //lwl
+            op_lwl(instruction);
+            console.log("CPU INSTRUCTION :: LWL");
+            break;
 
         default:
-            Logging console;
             console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
         }
