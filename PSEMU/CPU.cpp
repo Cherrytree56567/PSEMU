@@ -580,6 +580,24 @@ uint16_t imm_s = (uint)(int16_t)imm;
         //err
 }
 
+void op_bcond(instruction){
+  uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+  uint op = rt;
+
+    bool should_link = (op & 0x1E) == 0x10;
+    bool should_branch = (int)(registers.reg[rs] ^ (op << 31)) < 0;
+
+    if (should_link) {
+      registers.reg[31] = next_pc;
+    }
+    if (should_branch) {
+      registers.next_pc = registers.pc + (imm_s << 2);
+    }
+}
+
 void CPU::op_lh(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
@@ -1031,7 +1049,12 @@ void CPU::run() {
             op_lwl(instruction);
             console.log("CPU INSTRUCTION :: LWL");
             break;
-
+            
+        case 0b000001:
+            // bcond
+            op_bcond(instruction);
+            console.log("CPU INSTRUCTION :: BCOND");
+            break;
         default:
             console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
