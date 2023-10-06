@@ -621,6 +621,8 @@ void CPU::op_srav(uint32_t instruction) {
     registers.reg[rd] = (uint)((int)registers.reg[rt] >> (int)(registers.reg[rs] & 0x1F));
 }
 
+
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
