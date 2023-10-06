@@ -14,6 +14,11 @@
 #include "CPURegisters.h"
 #include "Coprocessor.h"
 
+struct MEM {
+    uint reg = 0;
+    uint value = 0;
+};
+
 class CPU {
 public:
     CPU(Memory& memorya) : memory(memorya), numInstructions(0) {}
@@ -81,6 +86,7 @@ private:
     Coprocessor0 coprocessor0;
     Memory& memory;
     Logging console;
+    MEM memory_load;
     bool checkForInterrupts() {
         // Check if there is an interrupt request
         uint32_t status = registers.getC0Register(coprocessor0.STATUS);
