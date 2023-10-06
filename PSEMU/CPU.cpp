@@ -692,7 +692,7 @@ void CPU::run() {
                 op_srlv(instruction);
                 console.log("CPU INSTRUCTION :: SRLV");
                 break;
-            case 0b000110:
+            case 0b000111:
                 // srav
                 op_srav(instruction);
                 console.log("CPU INSTRUCTION :: SRAV");
