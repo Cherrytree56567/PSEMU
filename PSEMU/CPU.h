@@ -66,6 +66,7 @@ public:
     void op_break(uint32_t instruction);
     void op_srlv(uint32_t instruction);
     void op_srav(uint32_t instruction);
+void op_sllv(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode, size_t numI);
