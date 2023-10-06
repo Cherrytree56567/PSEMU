@@ -62,6 +62,7 @@
 using uint = std::uint32_t;
 using ulong = std::uint64_t;
 using byte = std::int8_t;
+using ushort = std::uint16_t;
 // First Add rs and rt then store in rd (register)
 
 void CPU::op_add(uint32_t instruction) {
@@ -477,7 +478,7 @@ void CPU::op_sh(uint32_t instruction) {
         memory.writeHalfword(addr, (ushort)registers.reg[rt]);
     }
     else {
-        
+        console.err("Memory Not Aligned. FUNCTION=op_sh");
     }
 }
 //11
