@@ -613,6 +613,14 @@ void CPU::op_srlv(uint32_t instruction) {
     registers.reg[rd] = registers.reg[rs] ^ registers.reg[rt];
 }
 
+void CPU::op_srav(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+
+    registers.reg[rd] = (uint)((int)registers.reg[rt] >> (int)(registers.reg[rs] & 0x1F));
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -683,6 +691,11 @@ void CPU::run() {
                 // srlv
                 op_srlv(instruction);
                 console.log("CPU INSTRUCTION :: SRLV");
+                break;
+            case 0b000110:
+                // srav
+                op_srav(instruction);
+                console.log("CPU INSTRUCTION :: SRAV");
                 break;
             case 0b100000:
                 // Add
