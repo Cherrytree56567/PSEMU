@@ -478,7 +478,7 @@ void CPU::op_sh(uint32_t instruction) {
         memory.writeHalfword(addr, (ushort)registers.reg[rt]);
     }
     else {
-        console.err("Memory Not Aligned. FUNCTION=op_sh");
+        console.err(55);
     }
 }
 //11
