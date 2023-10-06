@@ -605,6 +605,14 @@ void CPU::op_break(instruction) {
    console.err(57);
 }
 
+void CPU::op_srlv(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+
+    registers.reg[rd] = registers.reg[rs] ^ registers.reg[rt];
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -670,6 +678,11 @@ void CPU::run() {
                 // break
                 op_break(instruction);
                 console.log("CPU INSTRUCTION :: BREAK");
+                break;
+            case 0b000110:
+                // srlv
+                op_srlv(instruction);
+                console.log("CPU INSTRUCTION :: SRLV");
                 break;
             case 0b100000:
                 // Add
