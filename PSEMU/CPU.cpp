@@ -580,7 +580,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         //err
 }
 
-void op_bcond(instruction){
+void CPU::op_bcond(instruction){
   uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
