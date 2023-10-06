@@ -710,6 +710,11 @@ void CPU::run() {
                 op_sllv(instruction);
                 console.log("CPU INSTRUCTION :: SLLV");
                 break;
+            case 0b000100:
+                // syscall
+                console.err(58);
+                console.log("CPU INSTRUCTION :: SYSCALL");
+                break;
             case 0b100000:
                 // Add
                 op_add(instruction);
