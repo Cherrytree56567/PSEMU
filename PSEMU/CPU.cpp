@@ -601,6 +601,10 @@ uint16_t imm_s = (uint)(int16_t)imm;
         }
 }
 
+void CPU::op_break(instruction) {
+   console.err(57);
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -662,6 +666,11 @@ void CPU::run() {
         switch (opcode) {
         case 0b000000: // R-type instructions
             switch (funct) {
+            case 0b001101:
+                // break
+                op_break(instruction);
+                console.log("CPU INSTRUCTION :: BREAK");
+                break;
             case 0b100000:
                 // Add
                 op_add(instruction);
