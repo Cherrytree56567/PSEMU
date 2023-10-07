@@ -580,7 +580,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         //err
 }
 
-void CPU::op_bcond(instruction){
+void CPU::op_bcond(uint32_t instruction){
   uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
@@ -619,7 +619,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         }
 }
 
-void CPU::op_break(instruction) {
+void CPU::op_break(uint32_t instruction) {
    console.err(57);
 }
 
@@ -855,7 +855,7 @@ void CPU::run() {
                 op_sllv(instruction);
                 console.log("CPU INSTRUCTION :: SLLV");
                 break;
-            case 0b000100:
+            case 0b001100:
                 // syscall
                 console.err(58);
                 console.log("CPU INSTRUCTION :: SYSCALL");
