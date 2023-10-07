@@ -678,6 +678,37 @@ uint16_t imm_s = (uint)(int16_t)imm;
     registers.reg[rt] = value;
 }
 
+void CPU::op_lwr(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+    
+    uint addr = registers.reg[rs] + imm_s;
+    uint aligned_addr = addr & 0xFFFFFFFC;
+    uint aligned_load = memory.read32(aligned_addr);
+
+    uint value = 0;
+    uint LRValue = registers.reg[rt];
+
+    switch (addr & 0b11) {
+    case 0:
+        value = aligned_load;
+        break;
+    case 1:
+        value = (LRValue & 0xFF000000) | (aligned_load >> 8);
+        break;
+    case 2:
+        value = (LRValue & 0xFFFF0000) | (aligned_load >> 16);
+        break;
+    case 3:
+        value = (LRValue & 0xFFFFFF00) | (aligned_load >> 24);
+        break;
+    }
+    
+    registers.reg[rt] = value;
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -1048,6 +1079,12 @@ void CPU::run() {
             //lwl
             op_lwl(instruction);
             console.log("CPU INSTRUCTION :: LWL");
+            break;
+        
+        case 0b100110:
+            //lwr
+            op_lwr(instruction);
+            console.log("CPU INSTRUCTION :: LWR");
             break;
             
         case 0b000001:
