@@ -71,6 +71,7 @@ void op_lwl(uint32_t instruction);
 void op_lwr(uint32_t instruction);
 void op_bcond(uint32_t instruction);
 void op_xori(uint32_t instruction);
+void op_swl(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode, size_t numI);
