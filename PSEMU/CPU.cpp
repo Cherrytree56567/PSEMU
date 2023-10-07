@@ -709,6 +709,15 @@ uint16_t imm_s = (uint)(int16_t)imm;
     registers.reg[rt] = value;
 }
 
+void CPU::op_xori(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+    
+    registers.reg[rt] = registers.reg[rs] ^ imm;
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
@@ -1092,6 +1101,13 @@ void CPU::run() {
             op_bcond(instruction);
             console.log("CPU INSTRUCTION :: BCOND");
             break;
+        
+        case 0b001110:
+            // xori
+            op_xori(instruction);
+            console.log("CPU INSTRUCTION :: XORI");
+            break;
+        
         default:
             console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
