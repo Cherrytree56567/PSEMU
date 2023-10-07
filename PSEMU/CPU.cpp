@@ -706,6 +706,34 @@ uint16_t imm_s = (uint)(int16_t)imm;
     memory.writeWord(aligned_addr, value);
 }
 
+void CPU::op_swr(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+    
+    uint addr = registers.reg[rs] + imm_s;
+    uint aligned_addr = addr & 0xFFFFFFFC;
+    uint aligned_load = memory.read32(aligned_addr);
+
+    uint value = 0;
+    switch (addr & 0b11) {
+    case 0:
+        value = registers.reg[rt]; break;
+    case 1:
+        value = (aligned_load & 0x000000FF) | (registers.reg[rt] << 8);
+        break;
+    case 2:
+        value = (aligned_load & 0x0000FFFF) | (registers.reg[rt] << 16);
+        break;
+    case 3:
+        value = (aligned_load & 0x00FFFFFF) | (registers.reg[rt] << 24);
+        break;
+    }
+
+    memory.writeWord(aligned_addr, value);
+}
+
 void CPU::op_lwr(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
@@ -1140,6 +1168,12 @@ void CPU::run() {
             // swl
             op_swl(instruction);
             console.log("CPU INSTRUCTION :: SWL");
+            break;
+        
+        case 0b101110:
+            // swr
+            op_swr(instruction);
+            console.log("CPU INSTRUCTION :: SWR");
             break;
         
         default:
