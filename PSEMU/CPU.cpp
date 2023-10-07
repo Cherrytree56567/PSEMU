@@ -591,7 +591,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     bool should_branch = (int)(registers.reg[rs] ^ (op << 31)) < 0;
 
     if (should_link) {
-      registers.reg[31] = next_pc;
+      registers.reg[31] = registers.next_pc;
     }
     if (should_branch) {
       registers.next_pc = registers.pc + (imm_s << 2);
