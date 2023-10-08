@@ -135,7 +135,7 @@ private:
 
     /* Select exception address. */
           registers.pc = exception_addr[cop0.sr.BEV];
-          registers.next_pc = registerspc + 4;
+          registers.next_pc = registers.pc + 4;
         }
     }
 };
