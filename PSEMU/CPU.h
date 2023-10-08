@@ -102,7 +102,7 @@ private:
           return;
         }
         
-        bool pending = (i_stat & i_mask) != 0;
+        bool pending = (registers.i_stat & registers.i_mask) != 0;
         if (pending) cop0.cause.IP |= (1 << 0);
 		    else cop0.cause.IP &= ~(1 << 0);
         
@@ -116,7 +116,7 @@ private:
           cop0.sr.raw |= (mode << 2) & 0x3F;
 
           uint copy = cop0.cause.raw & 0xff00;
-          cop0.cause.exc_code = (uint)cause;
+          cop0.cause.exc_code = (uint)0x0;
           cop0.cause.CE = 1;
 
           cop0.epc = registers.pc;
