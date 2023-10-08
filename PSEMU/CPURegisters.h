@@ -25,8 +25,4 @@ public:
             reg[i] = 0;
         }
     }
-
-    void setC0Register(Coprocessor0::C0Register rega, uint32_t value);
-
-    uint32_t getC0Register(Coprocessor0::C0Register rega);
 };
