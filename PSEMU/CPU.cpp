@@ -1167,12 +1167,6 @@ void CPU::run() {
             console.log("CPU INSTRUCTION :: LW");
             break;
 
-        case 0b010000:
-            // mfc0
-            op_mfc0(instruction);
-            console.log("CPU INSTRUCTION :: MFC0");
-            break;
-
         case 0b001101:
             // ori
             op_ori(instruction);
