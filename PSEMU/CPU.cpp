@@ -898,6 +898,7 @@ void CPU::loadInstructions() {
 }
 
 void CPU::run() {
+    cop0.PRId = 0x2;
     registers.pc = 0xbfc00000; // Start from the beginning of memory
     registers.next_pc = registers.pc + 4;
 
