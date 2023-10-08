@@ -1250,6 +1250,12 @@ void CPU::run() {
             console.log("CPU INSTRUCTION :: SWR");
             break;
         
+        case 0b010000:
+            // cop0
+            op_cop0(instruction);
+            console.log("CPU INSTRUCTION :: COP0");
+            break;
+        
         default:
             console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
