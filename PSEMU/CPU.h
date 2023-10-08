@@ -45,6 +45,7 @@ public:
     void op_mflo(uint32_t instruction);
     void op_mtlo(uint32_t instruction);
     void op_mfc0(uint32_t instruction);
+    void op_rfe(uint32_t instruction);
     void op_mtc0(uint32_t instruction);
     void op_mult(uint32_t instruction);
     void op_multu(uint32_t instruction);
