@@ -90,6 +90,7 @@ private:
     bool is_branch, is_delay_slot;
     bool took_branch;
     bool in_delay_slot_took_branch;
+    uint exception_addr[2] = { 0x80000080, 0xBFC00180 };
 
     void handleInterrupts() {
         uint32_t instr = memory.readWord(registers.pc) >> 26;
@@ -107,7 +108,34 @@ private:
         uint irq_pending = (cop0.cause.raw >> 8) & 0xFF;
         
         if (irq_enabled && (irq_mask & irq_pending) > 0) {
-          //exception(ExceptionType::Interrupt);
+          uint mode = cop0.sr.raw & 0x3F;
+          cop0.sr.raw &= ~(uint)0x3F;
+          cop0.sr.raw |= (mode << 2) & 0x3F;
+
+          uint copy = cop0.cause.raw & 0xff00;
+          cop0.cause.exc_code = (uint)cause;
+          cop0.cause.CE = 1;
+
+          cop0.epc = registers.pc;
+
+        /* Hack: related to the delay of the ex interrupt*/
+          is_delay_slot = is_branch;
+          in_delay_slot_took_branch = took_branch;
+
+          if (is_delay_slot) {
+             cop0.epc -= 4;
+
+             cop0.cause.BD = true;
+             cop0.TAR = registers.pc;
+
+             if (in_delay_slot_took_branch) {
+                 cop0.cause.BT = true;
+             }
+          }
+
+    /* Select exception address. */
+          registers.pc = exception_addr[cop0.sr.BEV];
+          registers.next_pc = registerspc + 4;
         }
     }
 };
