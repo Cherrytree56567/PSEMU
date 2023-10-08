@@ -803,7 +803,7 @@ void CPU::op_mtc0(uint32_t instruction) {
     cop0.sr.raw |= (mode << 2) & 0x3F;
 
     uint copy = cop0.cause.raw & 0xff00;
-    cop0.cause.exc_code = (uint)cause;
+    cop0.cause.exc_code = (uint)0x0;
     cop0.cause.CE = id;
         cop0.epc = registers.pc;
 
@@ -1261,9 +1261,7 @@ void CPU::run() {
         registers.next_pc += 4;
 
         // Interrupts
-        if (checkForInterrupts()) {
-            handleInterrupts();
-        }
+        handleInterrupts();
     }
     for (int i = 0; i < 32; ++i) {
         console.log("Register " + std::to_string(i) + ": " + std::to_string(registers.reg[i]));
