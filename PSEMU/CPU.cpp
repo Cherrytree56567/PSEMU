@@ -776,6 +776,18 @@ uint16_t imm_s = (uint)(int16_t)imm;
     registers.reg[rt] = registers.reg[rs] ^ imm;
 }
 
+void CPU::op_mfc0() {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    uint mfc = rd;
+
+    if (mfc == 3 || mfc >= 5 && mfc <= 9 || mfc >= 11 && mfc <= 15) {
+        registers.reg[rt] = cop0.regs[mfc];
+    }
+    // Error IllegalInstr
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
