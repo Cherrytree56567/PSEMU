@@ -776,7 +776,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     registers.reg[rt] = registers.reg[rs] ^ imm;
 }
 
-void CPU::op_mfc0() {
+void CPU::op_mfc0(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
@@ -786,6 +786,61 @@ void CPU::op_mfc0() {
         registers.reg[rt] = cop0.regs[mfc];
     }
     // Error IllegalInstr
+}
+
+void CPU::op_mtc0(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    uint id = (instruction >> 26) & 0x3;
+    uint value = registers.reg[rt];
+    uint reg = rd;
+
+    bool prev_IEC = cop0.sr.IEc;
+
+    if (reg == 13) {
+        cop0.cause.raw &= ~(uint)0x300;
+        cop0.cause.raw |= value & 0x300;
+    }
+    else {
+        cop0.regs[reg] = value;
+    }
+
+    uint irq_mask = cop0.sr.Sw | (cop0.sr.Intr >> 2);
+    uint irq_pending = cop0.cause.Sw | (cop0.cause.IP >> 2);
+
+    if (!prev_IEC && cop0.sr.IEc && (irq_mask & irq_pending) > 0) {
+        registers.pc = registers.next_pc;
+        // Interrupts
+        uint mode = cop0.sr.raw & 0x3F;
+    cop0.sr.raw &= ~(uint)0x3F;
+    cop0.sr.raw |= (mode << 2) & 0x3F;
+
+    uint copy = cop0.cause.raw & 0xff00;
+    cop0.cause.exc_code = (uint)cause;
+    cop0.cause.CE = id;
+        cop0.epc = registers.pc;
+
+        /* Hack: related to the delay of the ex interrupt*/
+        is_delay_slot = is_branch;
+        in_delay_slot_took_branch = took_branch;
+
+    if (is_delay_slot) {
+        cop0.epc -= 4;
+
+        cop0.cause.BD = true;
+        cop0.TAR = registers.pc;
+
+        if (in_delay_slot_took_branch) {
+            cop0.cause.BT = true;
+        }
+    }
+
+    /* Select exception address. */
+    registers.pc = exception_addr[cop0.sr.BEV];
+    registers.next_pc = registers.pc + 4;
+    }
+    
 }
 
 void CPU::loadBIOS(const char* filename) {
