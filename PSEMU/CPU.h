@@ -13,6 +13,7 @@
 #include "Memory.h"
 #include "CPURegisters.h"
 #include "Coprocessor.h"
+#include "GTE.h"
 
 class CPU {
 public:
@@ -69,13 +70,20 @@ public:
     void op_break(uint32_t instruction);
     void op_srlv(uint32_t instruction);
     void op_srav(uint32_t instruction);
-void op_sllv(uint32_t instruction);
-void op_lwl(uint32_t instruction);
-void op_lwr(uint32_t instruction);
-void op_bcond(uint32_t instruction);
-void op_xori(uint32_t instruction);
-void op_swl(uint32_t instruction);
-void op_swr(uint32_t instruction);
+    void op_sllv(uint32_t instruction);
+    void op_lwl(uint32_t instruction);
+    void op_lwr(uint32_t instruction);
+    void op_bcond(uint32_t instruction);
+    void op_xori(uint32_t instruction);
+    void op_swl(uint32_t instruction);
+    void op_swr(uint32_t instruction);
+    void op_swc2(uint32_t instruction);
+    void op_lwc2(uint32_t instruction);
+    void op_mfc2(uint32_t instruction);
+    void op_mtc2(uint32_t instruction);
+    void op_cfc2(uint32_t instruction);
+    void op_ctc2(uint32_t instruction);
+    void op_cop2(uint32_t instruction);
 
     void loadInstructions();
     void loadBiosCode(uint32_t* binaryCode, size_t numI);
@@ -88,6 +96,7 @@ private:
     size_t numInstructions;
     uint32_t* BiosCode;
     Cop0 cop0;
+    GTE cop2;
     Memory& memory;
     Logging console;
     bool is_branch, is_delay_slot;

@@ -757,7 +757,7 @@ void CPU::op_xori(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-uint16_t imm_s = (uint)(int16_t)imm;
+    uint16_t imm_s = (uint)(int16_t)imm;
     
     registers.reg[rt] = registers.reg[rs] ^ imm;
 }
@@ -770,8 +770,9 @@ void CPU::op_mfc0(uint32_t instruction) {
 
     if (mfc == 3 || mfc >= 5 && mfc <= 9 || mfc >= 11 && mfc <= 15) {
         registers.reg[rt] = cop0.regs[mfc];
+    } else {
+        console.err(60);
     }
-    // Error IllegalInstr
 }
 
 void CPU::op_mtc0(uint32_t instruction) {
@@ -836,16 +837,98 @@ void CPU::op_rfe(uint32_t instruction) {
 }
 
 void CPU::op_cop0(uint32_t instruction) {
-  uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
-uint16_t imm_s = (uint)(int16_t)imm;
+    uint16_t imm_s = (uint)(int16_t)imm;
+
 	switch (rs) {
-	case 0b00000: op_mfc0(instruction); break;
-	case 0b00100: op_mtc0(instruction); break;
-	case 0b10000: op_rfe(instruction); break;
-	default: break; // IllegalInstr
+        case 0b00000: op_mfc0(instruction); break;
+        case 0b00100: op_mtc0(instruction); break;
+        case 0b10000: op_rfe(instruction); break;
+        default: console.err(60); break; // IllegalInstr
 	}
+}
+
+void CPU::op_swc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;
+
+    uint addr = registers.reg[rs] + imm_s;
+
+    if ((addr & 0x3) == 0) {
+        memory.writeWord(addr, cop2.read_data(rt));
+    } else {
+        cop0.BadA = addr;
+        // Coprocessor Error
+        console.err(59);
+    }
+}
+
+void CPU::op_lwc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+    uint16_t imm_s = (uint)(int16_t)imm;
+
+    uint addr = registers.reg[rs] + imm_s;
+
+    if ((addr & 0x3) == 0) {
+        uint data = memory.readWord(addr);
+        cop2.write_data(rt, data);
+    } else {
+        cop0.BadA = addr;
+        // Coprocessor Error
+        console.err(59);
+    }
+}
+
+void CPU::op_mfc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    registers.reg[rt] = cop2.read_data(rd);
+}
+
+void CPU::op_mtc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    cop2.write_data(rd, registers.reg[rt]);
+}
+
+void CPU::op_cfc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    registers.reg[rt] = cop2.read_control(rd);
+}
+
+void CPU::op_ctc2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
+    cop2.write_control(rd, registers.reg[rt]);
+}
+
+void CPU::op_cop2(uint32_t instruction) {
+    uint8_t rs = (instruction >> 21) & 0x1F;
+    switch (rs & 0x10) {
+        case 0x00:
+            switch (rs) {
+                case 0b00000: op_mfc2(instruction); break;
+                case 0b00010: op_cfc2(instruction); break;
+                case 0b00100: op_mtc2(instruction); break;
+                case 0b00110: op_ctc2(instruction); break;
+                default: console.err(60); break;
+            }
+            break;
+        case 0x10:
+            cop2.ExecuteCommand(instruction);
+            break;
+    }
 }
 
 void CPU::loadBIOS(const char* filename) {
@@ -1250,7 +1333,25 @@ void CPU::run() {
             op_cop0(instruction);
             console.log("CPU INSTRUCTION :: COP0");
             break;
-        
+
+        case 0b111010:
+            // swc2
+            op_swc2(instruction);
+            console.log("CPU INSTRUCTION :: SWC2");
+            break;
+
+        case 0b110010:
+            // lwc2
+            op_lwc2(instruction);
+            console.log("CPU INSTRUCTION :: LWC2");
+            break;
+
+        case 0b010010:
+            // cop2
+            op_cop2(instruction);
+            console.log("CPU INSTRUCTION :: COP2");
+            break;
+
         default:
             console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
             break;
@@ -1266,7 +1367,7 @@ void CPU::run() {
     for (int i = 0; i < 32; ++i) {
         console.log("Register " + std::to_string(i) + ": " + std::to_string(registers.reg[i]));
     }
-    /*for (int i = 0; i < memory.memory.size(); ++i) {
-        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.memory[i]).to_string());
+    /*for (int i = 0; i < (2048 * 8000) / sizeof(uint8_t); ++i) {
+        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.read32(i)).to_string());
     }*/
 }

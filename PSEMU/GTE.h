@@ -8,48 +8,96 @@
 */
 #pragma once
 #include <cstdint>
+#include "glm/glm/vec3.hpp"
+#include "glm/glm/vec2.hpp"
+#include "glm/glm/vec4.hpp"
+#include "logging.h"
+
+namespace glm {
+    typedef mat<3, 3, int16_t> i16mat3;
+}
+
+union Color {
+    uint32_t val;
+    glm::u8vec4 color;
+    struct { int8_t r, g, b, c; };
+};
+
+union Vec2i16 {
+    uint32_t val;
+    struct { int16_t x, y; };
+    glm::i16vec2 vector;
+
+    auto& operator[](int idx) { return vector[idx]; }
+};
+
+union Vec3i16 {
+    uint32_t xy;
+    struct { int16_t x, y, z; };
+    glm::i16vec3 vector;
+
+    auto& operator[](int idx) { return vector[idx]; }
+};
+
+struct Matrix {
+    Vec3i16 v1, v2, v3;
+};
 
 class GTE {
 public:
     GTE();
 
     // GTE Data Registers
-    // I think these like parameters, but like 1 variable with different types
-    int16_t VXY0[3];  // Vector 0 (X, Y, Z)
-    int16_t VXY1[3];  // Vector 1 (X, Y, Z)
-    int16_t VXY2[3];  // Vector 2 (X, Y, Z)
-    uint8_t RGBC[4];  // Color/code value
-    uint16_t OTZ;     // Average Z value
-    int16_t IR0;      // 16-bit Accumulator (Interpolate)
-    int16_t IR1[3];   // 16-bit Accumulator (Vector)
-    int16_t SXY0[2];  // Screen XY-coordinate FIFO (3 stages)
-    int16_t SXY1[2];
-    int16_t SXY2[2];
-    uint16_t SZ[4];   // Screen Z-coordinate FIFO (4 stages)
-    uint8_t RGB[3][3]; // Color CRGB-code/color FIFO (3 stages)
-    int32_t MAC0;      // 32-bit Math Accumulators (Value)
-    int32_t MAC1[3];   // 32-bit Math Accumulators (Vector)
-    uint16_t IRGB[2];  // Convert RGB Color (48-bit vs 15-bit)
-    int32_t LZCS;      // Count Leading Zeros (Sign Bits)
-    int32_t LZCR;      // Count Leading Ones (Sign Bits)
+    Vec3i16 V[3];   //R0-1 R2-3 R4-5 s16
+    Color RGBC;                     //R6
+    uint16_t OTZ;                     //R7
+    short IR[4];      //R8-11
+    Vec2i16 SXY[4]; //R12-15 FIFO
+    uint16_t SZ[4];    //R16-19 FIFO
+    Color RGB[3];     //R20-22 FIFO
+    uint32_t RES1;                      //R23 prohibited
+    int MAC0;                       //R24
+    int MAC1, MAC2, MAC3;           //R25-27
+    uint16_t IRGB;//, ORGB;           //R28-29 Orgb is readonly and read by irgb
+    int LZCS, LZCR;                 //R30-31
 
-    // GTE Control Registers
-    // I think these are also parameters
-    int16_t RT[9];     // Rotation matrix (3x3)
-    int32_t TR[3];     // Translation vector (X, Y, Z)
-    int16_t L[9];      // Light source matrix (3x3)
-    int32_t BKGRGB[3]; // Background color (R, G, B)
-    int16_t LR[9];     // Light color matrix source (3x3)
-    int32_t FARGB[3];  // Far color (R, G, B)
-    int32_t ScreenOffset[2]; // Screen offset (X, Y)
-    uint16_t ProjectionPlaneDistance; // Projection plane distance
-    int16_t DepthQueuingParamA; // Depth queuing parameter A
-    int32_t DepthQueuingParamB; // Depth queuing parameter B
-    int16_t AverageZScaleFactors[2]; // Average Z scale factors
-    uint32_t Flags;   // Calculation error flags
+    //Control Registers
+    Matrix RT, LM, LRGB;        //R32-36 R40-44 R48-52
+    int TRX, TRY, TRZ;          //R37-39
+    int RBK, GBK, BBK;          //R45-47
+    int RFC, GFC, BFC;          //R53-55
+    int OFX, OFY, DQB;          //R56 57 60
+    uint16_t H;                   //R58
+    short ZSF3, ZSF4, DQA;      //R61 62 59
+    uint32_t FLAG;
 
-    // GTE commands here
+    //Debuggers
+    Logging console;
+
+    // GTE commands
+    void op_rtps(uint32_t command);
+    void op_nclip(uint32_t command);
+    void op_op(uint32_t command);
+    void op_mvmva(uint32_t command);
+    void op_dpcs(uint32_t command);
+    void op_intpl(uint32_t command);
+    void op_cc(uint32_t command);
+    void op_rtpt(uint32_t command);
+    void op_ncds(uint32_t command);
+    void op_avsz3(uint32_t command);
+    void op_ncct(uint32_t command);
+    void op_gpf(uint32_t command);
+    void op_sqr(uint32_t command);
+    void op_avsz4(uint32_t command);
+    void op_nct(uint32_t command);
+    void op_ncdt(uint32_t command);
+    void op_nccs(uint32_t command);
+    void op_ncs(uint32_t command);
 
     // Execute GTE command
     void ExecuteCommand(uint32_t command);
+    uint32_t read_data(uint32_t reg);
+    void write_data(uint32_t reg, uint32_t v);
+    uint32_t read_control(uint32_t reg);
+    void write_control(uint32_t reg, uint32_t v);
 };

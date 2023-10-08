@@ -9,6 +9,7 @@
 #include <iostream>
 #include "CPU.h"
 #include "Memory.h"
+#include "GTE.h"
 
 int main()
 {
