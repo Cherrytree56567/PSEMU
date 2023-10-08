@@ -23,6 +23,7 @@ public:
     void op_storebyte(uint32_t instruction);
     void op_lui(uint32_t instruction);
     void op_addi(uint32_t instruction);
+    void op_cop0(uint32_t instruction);
     void op_addiu(uint32_t instruction);
     void op_and(uint32_t instruction);
     void op_andi(uint32_t instruction);
