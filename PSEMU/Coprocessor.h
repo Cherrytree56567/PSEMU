@@ -10,56 +10,25 @@
 #include <fstream>
 #include <bitset>
 
-class Coprocessor {
+class Coprocessor0 {
 public:
-    virtual uint32_t readRegister(uint8_t reg) = 0;
-    virtual void writeRegister(uint8_t reg, uint32_t value) = 0;
-};
+    uint regs[64];
 
-class Coprocessor0 : public Coprocessor {
-public:
-    enum C0Register {
-        STATUS = 12,
-        CAUSE = 13,
-        BAD_ADDRESS = 14,
-        EPC = 15
-    };
-
-    uint32_t readRegister(uint8_t reg) override {
-        switch (reg) {
-        case 12:
-            return status;
-        case 13:
-            return cause;
-        case 14:
-            return bad_address;
-        case 15:
-            return epc;
-        default:
-            return 0;
-        }
-    }
-
-    void writeRegister(uint8_t reg, uint32_t value) override {
-        switch (reg) {
-        case 12:
-            status = value;
-            break;
-        case 13:
-            cause = value;
-            break;
-        case 14:
-            bad_address = value;
-            break;
-        case 15:
-            epc = value;
-            break;
-        }
-    }
-
-private:
-    uint32_t status = 0;
-    uint32_t cause = 0;
-    uint32_t bad_address = 0;
-    uint32_t epc = 0;
+		uint r0;
+		uint r1;
+		uint r2;
+		uint Bpc;		/* Breakpoint Program Counter */
+		uint r4;
+		uint BDA;		/* Breakpoint Data Address */
+		uint TAR;		/* Target Address */
+		uint DCIC;		/* Debug and Cache Invalidate Control */
+		uint BadA;		/* Bad Address */
+		uint BDAM;		/* Breakpoint Data Address Mask */
+		uint r10;
+		uint BpcM;		/* Breakpoint Program Counter Mask */
+		Cop0STAT sr;	    /* Status */
+		Cop0CAUSE cause;	/* Cause */
+		uint epc;		/* Exception Program Counter */
+		uint PRId;		/* Processor Revision Identifier */
+		uint reserved[32];
 };
