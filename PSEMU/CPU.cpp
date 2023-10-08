@@ -170,7 +170,7 @@ void CPU::op_beq(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
-
+is_branch = true;
     if (registers.reg[rs] == registers.reg[rt]) {
         registers.next_pc = registers.pc + (imm_s << 2); // Branch to the target address if the values are equal
     }
@@ -183,7 +183,7 @@ void CPU::op_blez(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
-
+is_branch = true;
     if ((int)registers.reg[rs] <= 0) {
         registers.next_pc = registers.pc + (imm_s << 2);
     }
@@ -198,7 +198,7 @@ void CPU::op_bne(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
-
+is_branch = true;
     if (registers.reg[rs] != registers.reg[rt]) {
         registers.next_pc = registers.pc + (imm_s << 2);
     }
@@ -213,7 +213,7 @@ void CPU::op_bgtz(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
-
+is_branch = true;
     if ((int)registers.reg[rs] > 0) {
         registers.next_pc = registers.pc + (imm_s << 2);
     }
@@ -290,7 +290,8 @@ void CPU::op_jr(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-
+is_branch = true;
+    took_branch = true;
     registers.next_pc = registers.reg[rs];
 }
 
@@ -586,6 +587,7 @@ void CPU::op_bcond(uint32_t instruction){
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
   uint op = rt;
+  is_branch = true;
 
     bool should_link = (op & 0x1E) == 0x10;
     bool should_branch = (int)(registers.reg[rs] ^ (op << 31)) < 0;
