@@ -380,20 +380,6 @@ void CPU::op_mtlo(uint32_t instruction) {
 
     registers.lo = registers.reg[rs]; // Move the value in the specified register to the LO register
 }
-
-void CPU::op_mfc0(uint32_t instruction) {
-    uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
-    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
-    uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-uint mfc = rd;
-    if (mfc == 3 || mfc >= 5 && mfc <= 9 || mfc >= 11 && mfc <= 15) {
-        registers.reg[rt] = coprocessor0.readRegister(mfc);
-    }
-    else {
-        
-    }
-}
-
 //
 
 void CPU::op_mult(uint32_t instruction) {
