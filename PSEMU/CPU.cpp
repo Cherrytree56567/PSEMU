@@ -826,7 +826,13 @@ void CPU::op_mtc0(uint32_t instruction) {
     registers.pc = exception_addr[cop0.sr.BEV];
     registers.next_pc = registers.pc + 4;
     }
-    
+}
+
+void CPU::op_rfe(uint32_t instruction) {
+    uint mode = cop0.sr.raw & 0x3F;
+
+    cop0.sr.raw &= ~(uint)0xF;
+    cop0.sr.raw |= mode >> 2;
 }
 
 void CPU::loadBIOS(const char* filename) {
