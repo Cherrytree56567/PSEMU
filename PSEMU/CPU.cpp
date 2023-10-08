@@ -835,6 +835,19 @@ void CPU::op_rfe(uint32_t instruction) {
     cop0.sr.raw |= mode >> 2;
 }
 
+void CPU::op_cop0(uint32_t instruction) {
+  uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
+    uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
+    uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
+uint16_t imm_s = (uint)(int16_t)imm;
+	switch (rs) {
+	case 0b00000: op_mfc0(instruction); break;
+	case 0b00100: op_mtc0(instruction); break;
+	case 0b10000: op_rfe(instruction); break;
+	default: break; // IllegalInstr
+	}
+}
+
 void CPU::loadBIOS(const char* filename) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
