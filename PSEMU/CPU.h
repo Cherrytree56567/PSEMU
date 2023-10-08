@@ -84,31 +84,30 @@ private:
     CPURegisters registers;
     size_t numInstructions;
     uint32_t* BiosCode;
-    Coprocessor0 coprocessor0;
+    Cop0 cop0;
     Memory& memory;
     Logging console;
-    bool checkForInterrupts() {
-        // Check if there is an interrupt request
-        uint32_t status = registers.getC0Register(coprocessor0.STATUS);
-        bool interruptRequest = (status & 0x0000ff00) != 0;
-
-        return interruptRequest;
-    }
+    bool is_branch, is_delay_slot;
+    bool took_branch;
+    bool in_delay_slot_took_branch;
 
     void handleInterrupts() {
-        // Check if there is an interrupt request
-        bool interruptRequest = checkForInterrupts();
-        if (interruptRequest) {
-            // Save the current state and jump to the interrupt handler
-            uint32_t epc = registers.pc;
-            uint32_t status = registers.getC0Register(coprocessor0.STATUS);
-            uint32_t cause = registers.getC0Register(coprocessor0.CAUSE);
-            uint32_t bad_address = registers.getC0Register(coprocessor0.BAD_ADDRESS);
-            uint32_t handler = memory.read32(0x80000180); // Interrupt handler address
-            registers.setC0Register(coprocessor0.STATUS, status | 0x00100000); // Set the exception level
-            registers.setC0Register(coprocessor0.CAUSE, cause | 0x80000000); // Set the exception code
-            registers.setC0Register(coprocessor0.EPC, epc); // Save the old program counter
-            registers.pc = handler; // Jump to the handler
+        uint32_t instr = memory.readWord(registers.pc) >> 26;
+        
+        if (instr == 0x12) {
+          return;
+        }
+        
+        bool pending = (i_stat & i_mask) != 0;
+        if (pending) cop0.cause.IP |= (1 << 0);
+		    else cop0.cause.IP &= ~(1 << 0);
+        
+        bool irq_enabled = cop0.sr.IEc;
+        uint irq_mask = (cop0.sr.raw >> 8) & 0xFF;
+        uint irq_pending = (cop0.cause.raw >> 8) & 0xFF;
+        
+        if (irq_enabled && (irq_mask & irq_pending) > 0) {
+          //exception(ExceptionType::Interrupt);
         }
     }
 };
