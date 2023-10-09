@@ -12,6 +12,7 @@
 #include "glm/glm/vec2.hpp"
 #include "glm/glm/vec4.hpp"
 #include "Logging.h"
+#include <tuple>
 
 namespace glm {
     typedef mat<3, 3, int16_t> i16mat3;
