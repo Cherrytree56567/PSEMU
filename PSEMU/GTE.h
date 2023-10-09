@@ -43,6 +43,23 @@ struct Matrix {
     Vec3i16 v1, v2, v3;
 };
 
+union GTECommand {
+    uint32_t raw = 0;
+
+    struct {
+        uint32_t opcode : 6;
+        uint32_t : 4;
+        uint32_t lm : 1;
+        uint32_t : 2;
+        uint32_t mvmva_tr_vec : 2;
+        uint32_t mvmva_mul_vec : 2;
+        uint32_t mvmva_mul_matrix : 2;
+        uint32_t sf : 1;
+        uint32_t fake_opcode : 5;
+        uint32_t : 7;
+    };
+};
+
 class GTE {
 public:
     GTE();
@@ -93,6 +110,22 @@ public:
     void op_ncdt(uint32_t command);
     void op_nccs(uint32_t command);
     void op_ncs(uint32_t command);
+
+    // Set Commands For Flags
+    inline int32_t set_mac0_flag(int64_t value);
+    inline int64_t set_mac_flag(int num, int64_t value);
+    inline uint16_t set_sz3_flag(int64_t value);
+    inline int16_t set_sxy_flag(int i, int32_t value);
+    inline int16_t set_ir0_flag(int64_t value);
+    inline int16_t set_ir_flag(int i, int32_t value, bool lm);
+    inline uint8_t set_rgb(int i, int value);
+
+    // Mvmva commands
+    Matrix get_mvmva_matrix(uint32_t command);
+    Vec3i16 get_mvmva_vector(uint32_t command);
+    std::tuple<int, int, int> get_mvmva_translation(uint32_t command);
+
+    void interpolate(int32_t mac1, int32_t mac2, int32_t mac3, uint32_t command);
 
     // Execute GTE command
     void ExecuteCommand(uint32_t command);
