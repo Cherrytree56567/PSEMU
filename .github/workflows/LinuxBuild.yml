@@ -18,6 +18,7 @@ jobs:
     
     - name: Build
       run: |
+           git submodule init
            cd PSEMU
            make
       
