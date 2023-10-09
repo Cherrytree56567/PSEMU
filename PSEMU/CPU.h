@@ -91,6 +91,8 @@ public:
     void run();
 
     void loadBIOS(const char* filename);
+
+    Logging console;
 private:
     CPURegisters registers;
     size_t numInstructions;
@@ -98,7 +100,6 @@ private:
     Cop0 cop0;
     GTE cop2;
     Memory& memory;
-    Logging console;
     bool is_branch, is_delay_slot;
     bool took_branch;
     bool in_delay_slot_took_branch;

@@ -970,7 +970,6 @@ void CPU::loadBIOS(const char* filename) {
 
 void CPU::loadBiosCode(uint32_t* binaryCode, size_t numI) {
     this->numInstructions = numI;
-    std::cout << "dff" << this->numInstructions;
     BiosCode = binaryCode;
 }
 
@@ -982,7 +981,6 @@ void CPU::loadInstructions() {
 
 void CPU::run() {
     cop0.PRId = 0x2;
-    registers.pc = 0xbfc00000; // Start from the beginning of memory
     registers.next_pc = registers.pc + 4;
 
     while (registers.pc < numInstructions * 4) {

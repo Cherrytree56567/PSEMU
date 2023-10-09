@@ -573,7 +573,7 @@ CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\e
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4_sized.hpp
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4.hpp
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4_sized.hpp
-CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\logging.h
+CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.h
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\string
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\xstring
 CMakeFiles\PSEMU.dir\GTE.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\iosfwd
@@ -1681,8 +1681,6 @@ C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double4.hpp:
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4_sized.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\logging.h:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp:
 
