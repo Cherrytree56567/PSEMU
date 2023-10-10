@@ -14,4 +14,8 @@ add_executable(PSEMU
         VRAM.h
         GTE.cpp
         GTE.h
-        GTE.h)
+        GTE.h
+        GPU.h
+        gp0.cpp
+        gp1.cpp
+        GPU.cpp)

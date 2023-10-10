@@ -11,11 +11,14 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/CPU.cpp" "CMakeFiles/PSEMU.dir/CPU.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/CPU.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/CPURegisters.cpp" "CMakeFiles/PSEMU.dir/CPURegisters.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/CPURegisters.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/Coprocessor.cpp" "CMakeFiles/PSEMU.dir/Coprocessor.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/Coprocessor.cpp.obj.d"
+  "C:/Users/ronit/Desktop/PSEMU/PSEMU/GPU.cpp" "CMakeFiles/PSEMU.dir/GPU.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/GPU.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/GTE.cpp" "CMakeFiles/PSEMU.dir/GTE.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/GTE.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/Logging.cpp" "CMakeFiles/PSEMU.dir/Logging.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/Logging.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/Memory.cpp" "CMakeFiles/PSEMU.dir/Memory.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/Memory.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/PSEMU.cpp" "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/PSEMU.cpp.obj.d"
   "C:/Users/ronit/Desktop/PSEMU/PSEMU/VRAM.cpp" "CMakeFiles/PSEMU.dir/VRAM.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/VRAM.cpp.obj.d"
+  "C:/Users/ronit/Desktop/PSEMU/PSEMU/gp0.cpp" "CMakeFiles/PSEMU.dir/gp0.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/gp0.cpp.obj.d"
+  "C:/Users/ronit/Desktop/PSEMU/PSEMU/gp1.cpp" "CMakeFiles/PSEMU.dir/gp1.cpp.obj" "msvc" "CMakeFiles/PSEMU.dir/gp1.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -190,6 +190,30 @@ Coprocessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\Coprocessor.cpp.s
 .PHONY : Coprocessor.cpp.s
 
+GPU.obj: GPU.cpp.obj
+.PHONY : GPU.obj
+
+# target to build an object file
+GPU.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.obj
+.PHONY : GPU.cpp.obj
+
+GPU.i: GPU.cpp.i
+.PHONY : GPU.i
+
+# target to preprocess a source file
+GPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.i
+.PHONY : GPU.cpp.i
+
+GPU.s: GPU.cpp.s
+.PHONY : GPU.s
+
+# target to generate assembly for a file
+GPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\GPU.cpp.s
+.PHONY : GPU.cpp.s
+
 GTE.obj: GTE.cpp.obj
 .PHONY : GTE.obj
 
@@ -310,6 +334,54 @@ VRAM.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\VRAM.cpp.s
 .PHONY : VRAM.cpp.s
 
+gp0.obj: gp0.cpp.obj
+.PHONY : gp0.obj
+
+# target to build an object file
+gp0.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp0.cpp.obj
+.PHONY : gp0.cpp.obj
+
+gp0.i: gp0.cpp.i
+.PHONY : gp0.i
+
+# target to preprocess a source file
+gp0.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp0.cpp.i
+.PHONY : gp0.cpp.i
+
+gp0.s: gp0.cpp.s
+.PHONY : gp0.s
+
+# target to generate assembly for a file
+gp0.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp0.cpp.s
+.PHONY : gp0.cpp.s
+
+gp1.obj: gp1.cpp.obj
+.PHONY : gp1.obj
+
+# target to build an object file
+gp1.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp1.cpp.obj
+.PHONY : gp1.cpp.obj
+
+gp1.i: gp1.cpp.i
+.PHONY : gp1.i
+
+# target to preprocess a source file
+gp1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp1.cpp.i
+.PHONY : gp1.cpp.i
+
+gp1.s: gp1.cpp.s
+.PHONY : gp1.s
+
+# target to generate assembly for a file
+gp1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\gp1.cpp.s
+.PHONY : gp1.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -328,6 +400,9 @@ help:
 	@echo ... Coprocessor.obj
 	@echo ... Coprocessor.i
 	@echo ... Coprocessor.s
+	@echo ... GPU.obj
+	@echo ... GPU.i
+	@echo ... GPU.s
 	@echo ... GTE.obj
 	@echo ... GTE.i
 	@echo ... GTE.s
@@ -343,6 +418,12 @@ help:
 	@echo ... VRAM.obj
 	@echo ... VRAM.i
 	@echo ... VRAM.s
+	@echo ... gp0.obj
+	@echo ... gp0.i
+	@echo ... gp0.s
+	@echo ... gp1.obj
+	@echo ... gp1.i
+	@echo ... gp1.s
 .PHONY : help
 
 

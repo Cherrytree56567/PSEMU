@@ -9,7 +9,7 @@
 #include "Memory.h"
 
 uint8_t Memory::readByte(uint32_t address) const {
-    if (address < MainRAM.size()) {
+    if (address < MainRAMEnd) {
         return MainRAM[address];
     }
     else {
@@ -20,7 +20,7 @@ uint8_t Memory::readByte(uint32_t address) const {
 }
 
 void Memory::writeByte(uint32_t address, uint8_t value) {
-    if (address < MainRAM.size()) {
+    if (address < MainRAMEnd) {
         MainRAM[address] = value;
     }
     else {
@@ -30,7 +30,7 @@ void Memory::writeByte(uint32_t address, uint8_t value) {
 }
 
 uint32_t Memory::readWord(uint32_t address) const {
-    if (address < MainRAM.size() - 3) {
+    if (address < MainRAMEnd - 3) {
         uint32_t value = 0;
         for (int i = 0; i < 4; ++i) {
             value |= static_cast<uint32_t>(MainRAM[address + i]) << (8 * i);
@@ -45,7 +45,7 @@ uint32_t Memory::readWord(uint32_t address) const {
 }
 
 void Memory::writeWord(uint32_t address, uint32_t value) {
-    if (address < MainRAM.size() - 3) {
+    if (address < MainRAMEnd - 3) {
         for (int i = 0; i < 4; ++i) {
             MainRAM[address + i] = static_cast<uint8_t>(value >> (8 * i));
         }
@@ -63,7 +63,7 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
         return;
     }
 
-    if (address >= MainRAM.size()) {
+    if (address >= MainRAMEnd) {
         Logging console;
         console.err(56);
         return;
@@ -74,6 +74,17 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
 }
 
 uint32_t Memory::read32(uint32_t address) const {
-    const uint32_t value = *(const uint32_t*)&MainRAM[address];
-    return value;
+    // Ensure that the address is within the bounds of MainRAM
+    if (address + 3 < MainRAMEnd) {
+        // Read four consecutive bytes and combine them into a 32-bit value
+        uint32_t result = MainRAM[address - MainRAMStart];
+        result |= (uint32_t)MainRAM[address - MainRAMStart + 1] << 8;
+        result |= (uint32_t)MainRAM[address - MainRAMStart + 2] << 16;
+        result |= (uint32_t)MainRAM[address - MainRAMStart + 3] << 24;
+        return result;
+    } else {
+        Logging console;
+        console.err(54);
+        return 0; // Return a default value or handle the error as needed
+    }
 }

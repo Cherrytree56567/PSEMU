@@ -218,6 +218,66 @@ CMakeFiles\PSEMU.dir\GTE.cpp.s: cmake_force
  /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\PSEMU.dir\GTE.cpp.s /c C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp
 <<
 
+CMakeFiles\PSEMU.dir\gp0.cpp.obj: CMakeFiles\PSEMU.dir\flags.make
+CMakeFiles\PSEMU.dir\gp0.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp
+CMakeFiles\PSEMU.dir\gp0.cpp.obj: CMakeFiles\PSEMU.dir\compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PSEMU.dir/gp0.cpp.obj"
+	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles\PSEMU.dir\gp0.cpp.obj.d --working-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug --filter-prefix="Note: including file: " -- C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles\PSEMU.dir\gp0.cpp.obj /FdCMakeFiles\PSEMU.dir\ /FS -c C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp
+<<
+
+CMakeFiles\PSEMU.dir\gp0.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PSEMU.dir/gp0.cpp.i"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe > CMakeFiles\PSEMU.dir\gp0.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp
+<<
+
+CMakeFiles\PSEMU.dir\gp0.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PSEMU.dir/gp0.cpp.s"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\PSEMU.dir\gp0.cpp.s /c C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp
+<<
+
+CMakeFiles\PSEMU.dir\gp1.cpp.obj: CMakeFiles\PSEMU.dir\flags.make
+CMakeFiles\PSEMU.dir\gp1.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp
+CMakeFiles\PSEMU.dir\gp1.cpp.obj: CMakeFiles\PSEMU.dir\compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PSEMU.dir/gp1.cpp.obj"
+	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles\PSEMU.dir\gp1.cpp.obj.d --working-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug --filter-prefix="Note: including file: " -- C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles\PSEMU.dir\gp1.cpp.obj /FdCMakeFiles\PSEMU.dir\ /FS -c C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp
+<<
+
+CMakeFiles\PSEMU.dir\gp1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PSEMU.dir/gp1.cpp.i"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe > CMakeFiles\PSEMU.dir\gp1.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp
+<<
+
+CMakeFiles\PSEMU.dir\gp1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PSEMU.dir/gp1.cpp.s"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\PSEMU.dir\gp1.cpp.s /c C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp
+<<
+
+CMakeFiles\PSEMU.dir\GPU.cpp.obj: CMakeFiles\PSEMU.dir\flags.make
+CMakeFiles\PSEMU.dir\GPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp
+CMakeFiles\PSEMU.dir\GPU.cpp.obj: CMakeFiles\PSEMU.dir\compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/PSEMU.dir/GPU.cpp.obj"
+	$(CMAKE_COMMAND) -E cmake_cl_compile_depends --dep-file=CMakeFiles\PSEMU.dir\GPU.cpp.obj.d --working-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug --filter-prefix="Note: including file: " -- C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /showIncludes /FoCMakeFiles\PSEMU.dir\GPU.cpp.obj /FdCMakeFiles\PSEMU.dir\ /FS -c C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp
+<<
+
+CMakeFiles\PSEMU.dir\GPU.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/PSEMU.dir/GPU.cpp.i"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe > CMakeFiles\PSEMU.dir\GPU.cpp.i @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp
+<<
+
+CMakeFiles\PSEMU.dir\GPU.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/PSEMU.dir/GPU.cpp.s"
+	C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\cl.exe @<<
+ /nologo /TP $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) /FoNUL /FAs /FaCMakeFiles\PSEMU.dir\GPU.cpp.s /c C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp
+<<
+
 # Object files for target PSEMU
 PSEMU_OBJECTS = \
 "CMakeFiles\PSEMU.dir\Coprocessor.cpp.obj" \
@@ -227,7 +287,10 @@ PSEMU_OBJECTS = \
 "CMakeFiles\PSEMU.dir\Memory.cpp.obj" \
 "CMakeFiles\PSEMU.dir\PSEMU.cpp.obj" \
 "CMakeFiles\PSEMU.dir\VRAM.cpp.obj" \
-"CMakeFiles\PSEMU.dir\GTE.cpp.obj"
+"CMakeFiles\PSEMU.dir\GTE.cpp.obj" \
+"CMakeFiles\PSEMU.dir\gp0.cpp.obj" \
+"CMakeFiles\PSEMU.dir\gp1.cpp.obj" \
+"CMakeFiles\PSEMU.dir\GPU.cpp.obj"
 
 # External object files for target PSEMU
 PSEMU_EXTERNAL_OBJECTS =
@@ -240,9 +303,12 @@ PSEMU.exe: CMakeFiles\PSEMU.dir\Memory.cpp.obj
 PSEMU.exe: CMakeFiles\PSEMU.dir\PSEMU.cpp.obj
 PSEMU.exe: CMakeFiles\PSEMU.dir\VRAM.cpp.obj
 PSEMU.exe: CMakeFiles\PSEMU.dir\GTE.cpp.obj
+PSEMU.exe: CMakeFiles\PSEMU.dir\gp0.cpp.obj
+PSEMU.exe: CMakeFiles\PSEMU.dir\gp1.cpp.obj
+PSEMU.exe: CMakeFiles\PSEMU.dir\GPU.cpp.obj
 PSEMU.exe: CMakeFiles\PSEMU.dir\build.make
 PSEMU.exe: CMakeFiles\PSEMU.dir\objects1.rsp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable PSEMU.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable PSEMU.exe"
 	"C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\PSEMU.dir --rc=C:\Users\ronit\Desktop\MSVC\msvc\WINDOW~1\10\bin\100226~1.0\x64\rc.exe --mt=C:\Users\ronit\Desktop\MSVC\msvc\WINDOW~1\10\bin\100226~1.0\x64\mt.exe --manifests -- C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\bin\Hostx64\x64\link.exe /nologo @CMakeFiles\PSEMU.dir\objects1.rsp @<<
  /out:PSEMU.exe /implib:PSEMU.lib /pdb:C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-debug\PSEMU.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib 
 <<

@@ -14,7 +14,7 @@
 class Memory {
 public:
     // size = kilobytes
-    Memory(size_t size) : MainRAM((size * 8000) / sizeof(uint8_t)), MainRAMEnd(size * 8000) {}
+    Memory(size_t size) : MainRAM((size * 8000) / sizeof(uint8_t)) {}
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
@@ -44,6 +44,6 @@ public:
 private:
     std::vector<uint8_t> MainRAM;
     int MainRAMStart = 0; // bits
-    int MainRAMEnd; // bits
+    int MainRAMEnd = MainRAM.size(); // bits
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
 };

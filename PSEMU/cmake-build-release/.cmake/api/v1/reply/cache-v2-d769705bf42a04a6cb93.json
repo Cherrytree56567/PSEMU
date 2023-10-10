@@ -247,10 +247,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "C compiler"
+					"value" : "No help, variable specified on the command line."
 				}
 			],
-			"type" : "STRING",
+			"type" : "UNINITIALIZED",
 			"value" : "C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe"
 		},
 		{

@@ -17,7 +17,7 @@
 class VRAM {
 public:
     // [ For GPU Memory ]
-    VRAM(size_t gpmemsize) : GPUmemory(gpmemsize) {}
+    VRAM() : GPUmemory((1024 * 8000) / sizeof(uint8_t)) {}
 
     uint8_t& operator[](uint32_t address) {
         if (address < GPUmemory.size()) {
