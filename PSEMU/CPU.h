@@ -131,7 +131,7 @@ CPURegisters* registers;
           cop0.cause.exc_code = (uint)0x0;
           cop0.cause.CE = 1;
 
-          cop0.epc = registers.pc;
+          cop0.epc = registers->pc;
 
         /* Hack: related to the delay of the ex interrupt*/
           is_delay_slot = is_branch;
@@ -149,8 +149,8 @@ CPURegisters* registers;
           }
 
     /* Select exception address. */
-          registers.pc = exception_addr[cop0.sr.BEV];
-          registers.next_pc = registers.pc + 4;
+          registers->pc = exception_addr[cop0.sr.BEV];
+          registers->next_pc = registers->pc + 4;
         }
     }
 };
