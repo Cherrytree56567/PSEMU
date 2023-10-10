@@ -97,12 +97,11 @@ union ListPacket {
     };
 };
 
-class CPU;
 class CPURegisters;
 class Memory;
 class DMA {
 public:
-CPURegisters *cpur;
+    CPURegisters *cpur;
     Memory *mem;
     DMA(CPURegisters& cp, Memory& me): cpur(cp), mem(me) {}
 
