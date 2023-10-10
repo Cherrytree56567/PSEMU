@@ -18,7 +18,7 @@ public:
     // size = kilobytes
     DMA *dma;
     Memory(size_t size, CPURegisters &c) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(nullptr) {
-      dma = new DMA(&c, this);
+      dma = new DMA(&c, *this);
     }
 
     // address = bits
