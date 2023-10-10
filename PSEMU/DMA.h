@@ -98,6 +98,8 @@ union ListPacket {
 };
 
 class CPU;
+class CPURegisters;
+class Memory;
 class DMA {
 public:
     DMA(CPURegisters& cp, Memory& me): cpur(cp), mem(me) {}
