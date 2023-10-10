@@ -20,7 +20,7 @@ class DMA;
 class CPU {
 public:
 CPURegisters registers;
-    CPU(int a) : b(a), numInstructions(0), memory(2048, &dma, &registers) {}
+    CPU(int a) : b(a), numInstructions(0), memory(2048, &registers) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
