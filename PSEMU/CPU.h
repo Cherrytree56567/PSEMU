@@ -16,9 +16,7 @@
 #include "GTE.h"
 #include "DMA.h"
 
-class Memory;
 class DMA;
-class CPURegisters;
 class CPU {
 public:
     CPU(Memory& memorya) : memory(memorya), numInstructions(0) {}
