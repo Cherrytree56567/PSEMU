@@ -17,7 +17,8 @@ class Memory {
 public:
     // size = kilobytes
     DMA *dma;
-    Memory(size_t size, CPURegisters &c) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(&c, this) {}
+    Memory(size_t size, CPURegisters &c) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(&
+    c, this) {}
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
