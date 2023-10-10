@@ -19,7 +19,7 @@
 class DMA;
 class CPU {
 public:
-CPURegisters registers;
+CPURegisters* registers;
     CPU(int a) : b(a), numInstructions(0), memory(2048, &registers) {}
 
     void op_add(uint32_t instruction);
