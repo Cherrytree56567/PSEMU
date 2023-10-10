@@ -102,7 +102,10 @@ class CPURegisters;
 class Memory;
 class DMA {
 public:
-    DMA(CPURegisters& cp, Memory& me): cpur(cp), mem(me) {}
+    DMA(CPURegisters& cp, Memory& me) {
+      cpur = &cp;
+      mem = &me;
+    }
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
@@ -120,8 +123,8 @@ public:
     DMAIRQReg irq;
     DMAChannel channels[7];
 
-    CPURegisters& cpur;
-    Memory& mem;
+    CPURegisters *cpur;
+    Memory *mem;
     GPU gpu;
 
     bool irq_pending = false;
