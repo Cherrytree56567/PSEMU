@@ -11,12 +11,13 @@
 #include <vector>
 #include "Logging.h"
 #include "DMA.h"
+#include "CPURegisters.h"
 
 class Memory {
 public:
     // size = kilobytes
     DMA *dma;
-    Memory(size_t size, DMA& dms) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(dms) {}
+    Memory(size_t size, CPURegisters &c) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(&c, this) {}
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
