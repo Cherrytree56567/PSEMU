@@ -19,7 +19,8 @@
 class DMA;
 class CPU {
 public:
-    CPU(int a) : b(a), numInstructions(0), dma(&registers, &memory), memory(2048, &dma) {}
+CPURegisters registers;
+    CPU(int a) : b(a), numInstructions(0), memory(2048, &dma, &registers) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -95,14 +96,12 @@ public:
     void loadBIOS(const char* filename);
 
     Logging console;
-    CPURegisters registers;
     size_t numInstructions;
     uint32_t* BiosCode;
     Cop0 cop0;
     GTE cop2;
     int b;
     Memory memory;
-    DMA dma;
     bool is_branch, is_delay_slot;
     bool took_branch;
     bool in_delay_slot_took_branch;
