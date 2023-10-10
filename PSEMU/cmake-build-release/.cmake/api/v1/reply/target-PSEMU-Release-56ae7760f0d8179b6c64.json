@@ -62,7 +62,8 @@
 				8,
 				11,
 				12,
-				13
+				13,
+				14
 			]
 		}
 	],
@@ -109,7 +110,8 @@
 				8,
 				11,
 				12,
-				13
+				13,
+				14
 			]
 		},
 		{
@@ -118,7 +120,8 @@
 			[
 				7,
 				9,
-				10
+				10,
+				15
 			]
 		}
 	],
@@ -204,6 +207,17 @@
 			"compileGroupIndex" : 0,
 			"path" : "GPU.cpp",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "DMA.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "DMA.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"

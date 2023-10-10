@@ -10,16 +10,20 @@
 #include <cstdint>
 #include <vector>
 #include "Logging.h"
+#include "DMA.h"
 
 class Memory {
 public:
     // size = kilobytes
-    Memory(size_t size) : MainRAM((size * 8000) / sizeof(uint8_t)) {}
+    Memory(size_t size, DMA& dms) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(dms) {}
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
         if (address < MainRAMEnd) {
             return MainRAM[address - MainRAMStart];
+        } else if (address < DMAEnd) {
+            //     --FIX--
+            return MainRAM[address - DMAStart];
         } else {
             Logging console;
             console.err(54);
@@ -45,5 +49,8 @@ private:
     std::vector<uint8_t> MainRAM;
     int MainRAMStart = 0; // bits
     int MainRAMEnd = MainRAM.size(); // bits
+    uint32_t DMAStart = 0x1f801080;
+    uint32_t DMAEnd = 0x1f801080 + (uint32_t)0x80LL;
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
+    DMA& dma;
 };

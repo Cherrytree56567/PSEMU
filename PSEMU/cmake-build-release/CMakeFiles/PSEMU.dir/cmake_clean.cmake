@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PSEMU.dir/CPURegisters.cpp.obj.d"
   "CMakeFiles/PSEMU.dir/Coprocessor.cpp.obj"
   "CMakeFiles/PSEMU.dir/Coprocessor.cpp.obj.d"
+  "CMakeFiles/PSEMU.dir/DMA.cpp.obj"
+  "CMakeFiles/PSEMU.dir/DMA.cpp.obj.d"
   "CMakeFiles/PSEMU.dir/GPU.cpp.obj"
   "CMakeFiles/PSEMU.dir/GPU.cpp.obj.d"
   "CMakeFiles/PSEMU.dir/GTE.cpp.obj"

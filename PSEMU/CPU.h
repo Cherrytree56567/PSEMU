@@ -14,10 +14,14 @@
 #include "CPURegisters.h"
 #include "Coprocessor.h"
 #include "GTE.h"
+#include "DMA.h"
 
+class Memory;
+class DMA;
 class CPU {
 public:
-    CPU(Memory& memorya) : memory(memorya), numInstructions(0) {}
+    DMA dma;
+    CPU(Memory& memorya) : memory(memorya), numInstructions(0), dma(*this) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -93,7 +97,6 @@ public:
     void loadBIOS(const char* filename);
 
     Logging console;
-private:
     CPURegisters registers;
     size_t numInstructions;
     uint32_t* BiosCode;

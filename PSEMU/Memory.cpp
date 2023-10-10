@@ -75,16 +75,5 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
 
 uint32_t Memory::read32(uint32_t address) const {
     // Ensure that the address is within the bounds of MainRAM
-    if (address + 3 < MainRAMEnd) {
-        // Read four consecutive bytes and combine them into a 32-bit value
-        uint32_t result = MainRAM[address - MainRAMStart];
-        result |= (uint32_t)MainRAM[address - MainRAMStart + 1] << 8;
-        result |= (uint32_t)MainRAM[address - MainRAMStart + 2] << 16;
-        result |= (uint32_t)MainRAM[address - MainRAMStart + 3] << 24;
-        return result;
-    } else {
-        Logging console;
-        console.err(54);
-        return 0; // Return a default value or handle the error as needed
-    }
+    return readWord(address);
 }

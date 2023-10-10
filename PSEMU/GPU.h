@@ -119,4 +119,5 @@ public:
     static int command_size[16 * 16];
 
     std::vector<uint32_t> fifo;
+    VRAM vram;
 };

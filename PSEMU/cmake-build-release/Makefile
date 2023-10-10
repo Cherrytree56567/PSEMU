@@ -190,6 +190,30 @@ Coprocessor.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\Coprocessor.cpp.s
 .PHONY : Coprocessor.cpp.s
 
+DMA.obj: DMA.cpp.obj
+.PHONY : DMA.obj
+
+# target to build an object file
+DMA.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\DMA.cpp.obj
+.PHONY : DMA.cpp.obj
+
+DMA.i: DMA.cpp.i
+.PHONY : DMA.i
+
+# target to preprocess a source file
+DMA.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\DMA.cpp.i
+.PHONY : DMA.cpp.i
+
+DMA.s: DMA.cpp.s
+.PHONY : DMA.s
+
+# target to generate assembly for a file
+DMA.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\PSEMU.dir\build.make /nologo -$(MAKEFLAGS) CMakeFiles\PSEMU.dir\DMA.cpp.s
+.PHONY : DMA.cpp.s
+
 GPU.obj: GPU.cpp.obj
 .PHONY : GPU.obj
 
@@ -400,6 +424,9 @@ help:
 	@echo ... Coprocessor.obj
 	@echo ... Coprocessor.i
 	@echo ... Coprocessor.s
+	@echo ... DMA.obj
+	@echo ... DMA.i
+	@echo ... DMA.s
 	@echo ... GPU.obj
 	@echo ... GPU.i
 	@echo ... GPU.s

@@ -18,4 +18,6 @@ add_executable(PSEMU
         GPU.h
         gp0.cpp
         gp1.cpp
-        GPU.cpp)
+        GPU.cpp
+        DMA.cpp
+        DMA.h)
