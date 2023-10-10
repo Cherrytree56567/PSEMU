@@ -100,7 +100,7 @@ union ListPacket {
 class CPU;
 class DMA {
 public:
-    DMA(CPU& cp): cpu(cp) {}
+    DMA(CPURegisters& cp, Memory& me): cpur(cp), mem(me) {}
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
@@ -118,7 +118,8 @@ public:
     DMAIRQReg irq;
     DMAChannel channels[7];
 
-    CPU& cpu;
+    CPURegisters& cpur;
+    Memory& mem;
     GPU gpu;
 
     bool irq_pending = false;
