@@ -20,8 +20,7 @@ int main()
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    Memory memory(2048); // Specify the memory size in KB
-    CPU cpu(memory);
+    CPU cpu(1);
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);
