@@ -18,6 +18,7 @@
  * That was the first part but the second part is to be able to map it.
  *
  * Also, All the CPU Registers have the same value somehow. EDIT: nvm I fixed it, turns out I hadn't initialized all the CPURegister array to 0.
+ *
  */
 
 int main() {
@@ -27,6 +28,7 @@ int main() {
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
+    DMA dma(0);
     CPURegisters Registers(0);
     Memory memory(2048); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
