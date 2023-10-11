@@ -124,8 +124,8 @@ public:
     DMAChannel channels[7];
 
     GPU gpu;
-    CPURegisters* reg;
-    Memory* mem;
+    CPURegisters* registers;
+    Memory* memory;
     int t;
 
     bool irq_pending = false;
