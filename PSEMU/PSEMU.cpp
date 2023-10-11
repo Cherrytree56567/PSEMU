@@ -12,15 +12,23 @@
 #include "DMA.h"
 #include "Logging.h"
 
-int main()
-{
+/*
+ * Somehow get the DMA Working.
+ * The DMA needs access to the register and the memory so if put DMA in the CPU and then pass the memory and registers I can allow DMA to work.
+ * That was the first part but the second part is to be able to map it.
+ *
+ * Also, All the CPU Registers have the same value somehow.
+ */
+
+int main() {
     uint32_t biosCode[] = {
         0b00111100000000010000000000000001,
         0b00000000001000010000100000100100,
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    CPU cpu(1);
+    Memory memory(2048); // Specify the memory size in KB
+    CPU cpu(memory);
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);

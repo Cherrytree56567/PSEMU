@@ -17,10 +17,10 @@
 #include "DMA.h"
 
 class DMA;
+
 class CPU {
 public:
-CPURegisters* registers;
-    CPU(int a) : b(a), numInstructions(0), memory(2048, &registers) {}
+    CPU(Memory& memorya) : memory(memorya), numInstructions(0) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -100,8 +100,8 @@ CPURegisters* registers;
     uint32_t* BiosCode;
     Cop0 cop0;
     GTE cop2;
-    int b;
-    Memory memory;
+    CPURegisters registers;
+    Memory& memory;
     bool is_branch, is_delay_slot;
     bool took_branch;
     bool in_delay_slot_took_branch;
@@ -131,7 +131,7 @@ CPURegisters* registers;
           cop0.cause.exc_code = (uint)0x0;
           cop0.cause.CE = 1;
 
-          cop0.epc = registers->pc;
+          cop0.epc = registers.pc;
 
         /* Hack: related to the delay of the ex interrupt*/
           is_delay_slot = is_branch;
@@ -149,8 +149,8 @@ CPURegisters* registers;
           }
 
     /* Select exception address. */
-          registers->pc = exception_addr[cop0.sr.BEV];
-          registers->next_pc = registers->pc + 4;
+          registers.pc = exception_addr[cop0.sr.BEV];
+          registers.next_pc = registers.pc + 4;
         }
     }
 };

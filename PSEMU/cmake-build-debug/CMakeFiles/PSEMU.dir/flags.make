@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = 
 
-CXX_FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+CXX_FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++17 -MDd -Zi
 

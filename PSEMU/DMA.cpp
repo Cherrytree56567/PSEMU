@@ -17,7 +17,9 @@ uint32_t set_bit(uint32_t num, int b, bool v) {
 }
 
 bool DMA::is_channel_enabled(DMAChannels channel) {
-    // Empty Implementation
+    Logging console;
+    console.warn("DMA IS_CHANNEL_ENABLED IS NOT FULLY IMPLEMENTED");
+    return true;
 }
 void DMA::transfer_finished(DMAChannels dma_channel) {
     DMAChannel& channel = channels[(int)dma_channel];
@@ -92,11 +94,11 @@ void DMA::block_copy(DMAChannels dma_channel) {
                         __debugbreak();
                 }
 
-                mem.writeWord(addr, data);
+                cpu->memory.writeWord(addr, data);
                 break;
             }
             case 1: {
-                uint32_t command = cpu.memory.readWord(addr);
+                uint32_t command = cpu->memory.readWord(addr);
 
                 switch (dma_channel) {
                     case DMAChannels::GPU:
@@ -130,7 +132,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
     while (true) {
         /* Get the list packet header. */
         ListPacket packet;
-        packet.raw = mem.readWord(addr);
+        packet.raw = cpu->memory.readWord(addr);
         uint count = packet.size;
 
         /*if (count > 0)
@@ -142,7 +144,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
             addr = (addr + 4) & 0x1ffffc;
 
             /* Get command from main RAM. */
-            uint command = mem.readWord(addr);
+            uint command = cpu->memory.readWord(addr);
 
             /* Send data to the GPU. */
             gpu.write_gp0(command);
@@ -262,6 +264,6 @@ void DMA::write(uint32_t address, uint32_t val) {
 void DMA::tick() {
     if (irq_pending) {
         irq_pending = false;
-        cpur.i_stat |= (1 << (uint32_t)3);
+        cpu->registers.i_stat |= (1 << (uint32_t)3);
     }
 }

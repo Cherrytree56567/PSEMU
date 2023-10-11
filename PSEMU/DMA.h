@@ -11,11 +11,11 @@
 #include <vector>
 #include <iostream>
 #include <climits>
-#include <stddef.h>
-#include "CPU.h"
-#include "GPU.h"
-#include "CPURegisters.h"
+#include <cstddef>
 #include "Memory.h"
+#include "CPURegisters.h"
+#include "GPU.h"
+#include "CPU.h"
 
 enum class SyncType : uint32_t {
     Manual = 0,
@@ -97,13 +97,11 @@ union ListPacket {
     };
 };
 
-class CPURegisters;
-class Memory;
+class CPU;
+
 class DMA {
 public:
-    CPURegisters *cpur;
-    Memory *mem;
-    DMA(CPURegisters& cp, Memory& me): cpur(cp), mem(me) {}
+    DMA(CPU* cp) : cpu(cp) {}
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
@@ -122,6 +120,7 @@ public:
     DMAChannel channels[7];
 
     GPU gpu;
+    CPU* cpu;
 
     bool irq_pending = false;
 };

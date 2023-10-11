@@ -13,17 +13,16 @@
 
 class CPURegisters {
 public:
-    uint32_t pc;   // Program Counter
-    uint32_t next_pc;
-    uint32_t sp;   // Stack Pointer
-    uint32_t reg[32];  // Array to hold all registers (including zero, at, v0-v1, a0-a3, t0-t9, s0-s7, k0-k1, gp, s8/fp, ra)
-    uint32_t lo;   // LO register
-    uint32_t hi;   // HI register
-    uint i_stat, i_mask;
-
     CPURegisters() : pc(0), sp(0), lo(0), hi(0) {
         for (int i = 0; i < 32; ++i) {
             reg[i] = 0;
         }
     }
+    uint32_t pc = 0;   // Program Counter
+    uint32_t next_pc = 0;
+    uint32_t sp = 0;   // Stack Pointer
+    uint32_t reg[32];  // Array to hold all registers (including zero, at, v0-v1, a0-a3, t0-t9, s0-s7, k0-k1, gp, s8/fp, ra)
+    uint32_t lo = 0;   // LO register
+    uint32_t hi = 0;   // HI register
+    uint i_stat, i_mask;
 };

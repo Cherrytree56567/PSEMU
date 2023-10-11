@@ -19,6 +19,7 @@ GPU::GPU() {
 
 uint32_t GPU::read(uint32_t address) {
     // Empty Implementation
+    return 0;
 }
 
 void GPU::write(uint32_t address, uint32_t data) {
@@ -27,8 +28,10 @@ void GPU::write(uint32_t address, uint32_t data) {
 
 uint32_t GPU::get_gpuread() {
     // Empty Implementation
+    return 0;
 }
 
 uint32_t GPU::get_gpustat() {
     // Empty Implementation
+    return 0;
 }

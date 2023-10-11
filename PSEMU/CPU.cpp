@@ -90,7 +90,7 @@ void CPU::op_storebyte(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     // Store the value in memory
-    memory[registers.reg[rs] + imm_s] = registers.reg[rt];
+    memory.writeWord(registers.reg[rs] + imm_s, registers.reg[rt]);
 }
 
 // lui is used to load a value into a register. example: "lui $t0, 0x1234"
@@ -982,7 +982,6 @@ void CPU::loadInstructions() {
 void CPU::run() {
     cop0.PRId = 0x2;
     registers.next_pc = registers.pc + 4;
-
     while (registers.pc < numInstructions * 4) {
         uint32_t instruction = memory.readWord(registers.pc);
         uint8_t opcode = (instruction >> 26) & 0x3F; // OPCODE = First 6 bits
