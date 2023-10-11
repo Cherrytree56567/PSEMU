@@ -17,7 +17,7 @@
  * The DMA needs access to the register and the memory so if put DMA in the CPU and then pass the memory and registers I can allow DMA to work.
  * That was the first part but the second part is to be able to map it.
  *
- * Also, All the CPU Registers have the same value somehow.
+ * Also, All the CPU Registers have the same value somehow. EDIT: nvm I fixed it, turns out I hadn't initialized all the CPURegister array to 0.
  */
 
 int main() {
