@@ -19,15 +19,15 @@ void CPU::op_add(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-    rs = registers.reg[rs];
-    rt = registers.reg[rt];
+    rs = registers->reg[rs];
+    rt = registers->reg[rt];
 
     if (rt > 32) {
         Logging console;
         // Overflow Exception: RT is greater than 32.
         console.err(51);
     } else {
-        registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+        registers->reg[rd] = registers->reg[rs] + registers->reg[rt];
     }
 }
 
@@ -40,7 +40,7 @@ void CPU::op_storebyte(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     // Store the value in memory
-    memory.writeWord(registers.reg[rs] + imm_s, registers.reg[rt]);
+    memory.writeWord(registers->reg[rs] + imm_s, registers->reg[rt]);
 }
 
 // lui is used to load a value into a register. example: "lui $t0, 0x1234"
@@ -50,7 +50,7 @@ void CPU::op_lui(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    registers.reg[rt] = imm << 16;
+    registers->reg[rt] = imm << 16;
 } 
 
 // The op_addi function adds imm and rs, and stores the result in rt.
@@ -65,7 +65,7 @@ void CPU::op_addi(uint32_t instruction) {
         Logging console;
         console.err(51);
     } else {
-        registers.reg[rt] = imm_s + rs;
+        registers->reg[rt] = imm_s + rs;
     }
 }
 
@@ -76,7 +76,7 @@ void CPU::op_addu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] + registers.reg[rt];
+    registers->reg[rd] = registers->reg[rs] + registers->reg[rt];
 }
 
 // op_addiu adds imm and rs, and stores the result in rt. No overflow exception raised.
@@ -87,7 +87,7 @@ void CPU::op_addiu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
-    registers.reg[rt] = imm_s + registers.reg[rs];
+    registers->reg[rt] = imm_s + registers->reg[rs];
 }
 
 // op_and compares rs and rd and stores 1 in rd if they are equal, otherwise 0.
@@ -97,7 +97,7 @@ void CPU::op_and(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] & registers.reg[rt];
+    registers->reg[rd] = registers->reg[rs] & registers->reg[rt];
 }
 //g
 
@@ -108,7 +108,7 @@ void CPU::op_andi(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    registers.reg[rt] = registers.reg[rs] & registers.reg[imm];
+    registers->reg[rt] = registers->reg[rs] & registers->reg[imm];
 }
 
 //
@@ -121,8 +121,8 @@ void CPU::op_beq(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (unsigned int)(int16_t)imm;      // Extract the immediate value
 is_branch = true;
-    if (registers.reg[rs] == registers.reg[rt]) {
-        registers.next_pc = registers.pc + (imm_s << 2); // Branch to the target address if the values are equal
+    if (registers->reg[rs] == registers->reg[rt]) {
+        registers->next_pc = registers->pc + (imm_s << 2); // Branch to the target address if the values are equal
     }
 }
 
@@ -134,8 +134,8 @@ void CPU::op_blez(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 is_branch = true;
-    if ((int)registers.reg[rs] <= 0) {
-        registers.next_pc = registers.pc + (imm_s << 2);
+    if ((int)registers->reg[rs] <= 0) {
+        registers->next_pc = registers->pc + (imm_s << 2);
     }
 
     std::cout << "BLEZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -149,8 +149,8 @@ void CPU::op_bne(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 is_branch = true;
-    if (registers.reg[rs] != registers.reg[rt]) {
-        registers.next_pc = registers.pc + (imm_s << 2);
+    if (registers->reg[rs] != registers->reg[rt]) {
+        registers->next_pc = registers->pc + (imm_s << 2);
     }
 
     std::cout << "BNE: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -164,8 +164,8 @@ void CPU::op_bgtz(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 is_branch = true;
-    if ((int)registers.reg[rs] > 0) {
-        registers.next_pc = registers.pc + (imm_s << 2);
+    if ((int)registers->reg[rs] > 0) {
+        registers->next_pc = registers->pc + (imm_s << 2);
     }
 
     std::cout << "BGTZ: RS = " << std::to_string(rs) << ", RT = " << std::to_string(rt) << ", IMM = " << std::to_string(imm) << std::endl;
@@ -177,19 +177,19 @@ void CPU::op_div(uint32_t instruction) {
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
     if ((int)rt == 0){
-        registers.hi = (uint)rs;
+        registers->hi = (uint)rs;
         if ((int)rs >= 0) {
-            registers.lo = 0xFFFFFFFF;
+            registers->lo = 0xFFFFFFFF;
         }
         else {
-            registers.lo = 1;
+            registers->lo = 1;
         }
     } else if ((uint)rs == 0x80000000 && (int)rt == -1) {
-        registers.hi = 0;
-        registers.lo = 0x80000000;
+        registers->hi = 0;
+        registers->lo = 0x80000000;
     } else {
-        registers.hi = (uint)((int)rs % (int)rt);
-        registers.lo = (uint)((int)rs / (int)rt);
+        registers->hi = (uint)((int)rs % (int)rt);
+        registers->lo = (uint)((int)rs / (int)rt);
     }
 }
 
@@ -200,26 +200,26 @@ void CPU::op_divu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
     
-    uint n = registers.reg[rs];
-    uint d = registers.reg[rt];
+    uint n = registers->reg[rs];
+    uint d = registers->reg[rt];
 
     if (d == 0) {
-      registers.hi = n;
-      registers.lo = 0xFFFFFFFF;
+      registers->hi = n;
+      registers->lo = 0xFFFFFFFF;
     } else {
-      registers.hi = n % d;
-      registers.lo = n / d;
+      registers->hi = n % d;
+      registers->lo = n / d;
     }
 }
 
 void CPU::op_j(uint32_t instruction) {
     uint addr = instruction & 0x3FFFFFF;
-    registers.next_pc = (registers.next_pc & 0xF0000000) | (addr << 2);
+    registers->next_pc = (registers->next_pc & 0xF0000000) | (addr << 2);
 }
 
 void CPU::op_jal(uint32_t instruction) {
     uint addr = instruction & 0x3FFFFFF;
-    registers.reg[31] = registers.next_pc;
+    registers->reg[31] = registers->next_pc;
     op_j(instruction);
 }
 
@@ -230,7 +230,7 @@ void CPU::op_jalr(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
     
-    registers.reg[rd] = registers.next_pc;
+    registers->reg[rd] = registers->next_pc;
     op_jr(instruction);
 }
 
@@ -242,7 +242,7 @@ void CPU::op_jr(uint32_t instruction) {
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 is_branch = true;
     took_branch = true;
-    registers.next_pc = registers.reg[rs];
+    registers->next_pc = registers->reg[rs];
 }
 
 //
@@ -253,8 +253,8 @@ void CPU::op_lbu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF; // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint8_t value = memory.readByte(registers.reg[rs] + imm_s); // Read the byte from memory
-    registers.reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
+    uint8_t value = memory.readByte(registers->reg[rs] + imm_s); // Read the byte from memory
+    registers->reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
 }
 
 //
@@ -265,16 +265,16 @@ void CPU::op_lhu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint32_t address = registers->reg[rs] + imm; // Calculate the memory address
     uint32_t value = memory.readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
-    registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
+    registers->reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
         if ((addr & 0x1) == 0) {
             uint value = memory.readWord(addr);
-            registers.reg[rt] = value;
+            registers->reg[rt] = value;
         }
         else {
             // error
@@ -289,11 +289,11 @@ void CPU::op_lw(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
         uint value = memory.readWord(addr);
-        registers.reg[rt] = value;
+        registers->reg[rt] = value;
     }
 }
 
@@ -302,7 +302,7 @@ void CPU::op_mfhi(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.hi; // Move the value in the HI register to the specified register
+    registers->reg[rd] = registers->hi; // Move the value in the HI register to the specified register
 }
 
 //
@@ -312,7 +312,7 @@ void CPU::op_mthi(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.hi = registers.reg[rs]; // Move the value in the specified register to the HI register
+    registers->hi = registers->reg[rs]; // Move the value in the specified register to the HI register
 }
 
 void CPU::op_mflo(uint32_t instruction) {
@@ -320,7 +320,7 @@ void CPU::op_mflo(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.lo; // Move the value in the LO register to the specified register
+    registers->reg[rd] = registers->lo; // Move the value in the LO register to the specified register
 }
 
 void CPU::op_mtlo(uint32_t instruction) {
@@ -328,7 +328,7 @@ void CPU::op_mtlo(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.lo = registers.reg[rs]; // Move the value in the specified register to the LO register
+    registers->lo = registers->reg[rs]; // Move the value in the specified register to the LO register
 }
 //
 
@@ -337,10 +337,10 @@ void CPU::op_mult(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
     
-    int64_t value = (int64_t)(int)registers.reg[rs] * (int64_t)(int)registers.reg[rt]; //sign extend to pass amidog cpu test
+    int64_t value = (int64_t)(int)registers->reg[rs] * (int64_t)(int)registers->reg[rt]; //sign extend to pass amidog cpu test
 
-    registers.hi = (uint)(value >> 32);
-    registers.lo = (uint)value;
+    registers->hi = (uint)(value >> 32);
+    registers->lo = (uint)value;
 }
 
 //
@@ -350,10 +350,10 @@ void CPU::op_multu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    ulong value = (ulong)registers.reg[rs] * (ulong)registers.reg[rt]; //sign extend to pass amidog cpu test
+    ulong value = (ulong)registers->reg[rs] * (ulong)registers->reg[rt]; //sign extend to pass amidog cpu test
 
-    registers.hi = (uint)(value >> 32);
-    registers.lo = (uint)value;
+    registers->hi = (uint)(value >> 32);
+    registers->lo = (uint)value;
 }
 
 //
@@ -363,7 +363,7 @@ void CPU::op_nor(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = ~(registers.reg[rs] | registers.reg[rt]); // Perform the bitwise NOR operation and store the result in the specified register
+    registers->reg[rd] = ~(registers->reg[rs] | registers->reg[rt]); // Perform the bitwise NOR operation and store the result in the specified register
 }
 
 //
@@ -373,7 +373,7 @@ void CPU::op_xor(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] ^ registers.reg[rt]; // Perform the bitwise XOR operation and store the result in the specified register
+    registers->reg[rd] = registers->reg[rs] ^ registers->reg[rt]; // Perform the bitwise XOR operation and store the result in the specified register
 }
 
 void CPU::op_or(uint32_t instruction) {
@@ -381,7 +381,7 @@ void CPU::op_or(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] | registers.reg[rt]; // Perform the bitwise OR operation and store the result in the specified register
+    registers->reg[rd] = registers->reg[rs] | registers->reg[rt]; // Perform the bitwise OR operation and store the result in the specified register
 }
 
 void CPU::op_ori(uint32_t instruction) {
@@ -389,7 +389,7 @@ void CPU::op_ori(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
-    registers.reg[rt] = registers.reg[rs] | imm; // Perform the bitwise OR operation between the value in the specified register and the immediate value, and store the result in the specified register
+    registers->reg[rt] = registers->reg[rs] | imm; // Perform the bitwise OR operation between the value in the specified register and the immediate value, and store the result in the specified register
 }
 //
 void CPU::op_lb(uint32_t instruction) {
@@ -399,8 +399,8 @@ void CPU::op_lb(uint32_t instruction) {
 
     uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint value = (uint)(byte)memory.readByte(registers.reg[rs] + imm_s);
-    registers.reg[rt] = value;
+    uint value = (uint)(byte)memory.readByte(registers->reg[rs] + imm_s);
+    registers->reg[rt] = value;
 }
 
 void CPU::op_sh(uint32_t instruction) {
@@ -409,10 +409,10 @@ void CPU::op_sh(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x1) == 0) {
-        memory.writeHalfword(addr, (ushort)registers.reg[rt]);
+        memory.writeHalfword(addr, (ushort)registers->reg[rt]);
     }
     else {
         console.err(55);
@@ -424,8 +424,8 @@ void CPU::op_slt(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F;
     
-    bool condition = (int)registers.reg[rs] < (int)registers.reg[rt];
-    registers.reg[rd] = condition ? 1u : 0u;
+    bool condition = (int)registers->reg[rs] < (int)registers->reg[rt];
+    registers->reg[rd] = condition ? 1u : 0u;
 }
 
 void CPU::op_slti(uint32_t instruction) {
@@ -434,8 +434,8 @@ void CPU::op_slti(uint32_t instruction) {
     int16_t imm = static_cast<int16_t>(instruction & 0xFFFF); // Extract the signed immediate value
 
 uint16_t imm_s = (uint)(int16_t)imm;
-    bool condition = (int)registers.reg[rs] < (int)imm_s;
-    registers.reg[rt] = condition ? 1u : 0u;
+    bool condition = (int)registers->reg[rs] < (int)imm_s;
+    registers->reg[rt] = condition ? 1u : 0u;
 }
 
 void CPU::op_sltiu(uint32_t instruction) {
@@ -444,8 +444,8 @@ void CPU::op_sltiu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 
     uint16_t imm_s = (uint)(int16_t)imm;
-    bool condition = (int)registers.reg[rs] < (int)imm_s;
-    registers.reg[rt] = condition ? 1u : 0u;
+    bool condition = (int)registers->reg[rs] < (int)imm_s;
+    registers->reg[rt] = condition ? 1u : 0u;
 }
 //
 void CPU::op_sltu(uint32_t instruction) {
@@ -453,8 +453,8 @@ void CPU::op_sltu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    bool condition = (int)registers.reg[rs] < (int)registers.reg[rt];
-    registers.reg[rd] = condition ? 1u : 0u;
+    bool condition = (int)registers->reg[rs] < (int)registers->reg[rt];
+    registers->reg[rd] = condition ? 1u : 0u;
 }
 
 void CPU::op_sll(uint32_t instruction) {
@@ -463,7 +463,7 @@ void CPU::op_sll(uint32_t instruction) {
     uint8_t sa = (instruction >> 6) & 0x1F;  // Extract bits 10 to 6
     uint8_t rd = (instruction >> 11) & 0x1F;
 
-    registers.reg[rd] = registers.reg[rt] << sa; // Shift the bits in the specified register to the left by the specified amount, and store the result in the specified register
+    registers->reg[rd] = registers->reg[rt] << sa; // Shift the bits in the specified register to the left by the specified amount, and store the result in the specified register
 }
 //
 void CPU::op_srl(uint32_t instruction) {
@@ -472,7 +472,7 @@ void CPU::op_srl(uint32_t instruction) {
     uint8_t sa = (instruction >> 6) & 0x1F;  // Extract bits 10 to 6
 uint8_t rd = (instruction >> 11) & 0x1F;
 
-    registers.reg[rd] = registers.reg[rt] >> sa;
+    registers->reg[rd] = registers->reg[rt] >> sa;
 }
 
 void CPU::op_sra(uint32_t instruction) {
@@ -481,7 +481,7 @@ void CPU::op_sra(uint32_t instruction) {
     uint8_t sa = (instruction >> 6) & 0x1F;  // Extract bits 10 to 6
 uint8_t rd = (instruction >> 11) & 0x1F;
 
-    registers.reg[rd] = registers.reg[rt] >> sa;
+    registers->reg[rd] = registers->reg[rt] >> sa;
     
 }
 //
@@ -490,7 +490,7 @@ void CPU::op_sub(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] - registers.reg[rt];
+    registers->reg[rd] = registers->reg[rs] - registers->reg[rt];
 }
 //
 void CPU::op_subu(uint32_t instruction) {
@@ -498,7 +498,7 @@ void CPU::op_subu(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] - registers.reg[rt];
+    registers->reg[rd] = registers->reg[rs] - registers->reg[rt];
 }
 
 void CPU::op_sw(uint32_t instruction) {
@@ -509,10 +509,10 @@ uint16_t imm_s = (uint)(int16_t)imm;
     
     uint r = rs;
         uint i = imm_s;
-        uint addr = registers.reg[r] + i;
+        uint addr = registers->reg[r] + i;
 
         if ((addr & 0x3) == 0) {
-            memory.writeWord(addr,registers.reg[rt]);
+            memory.writeWord(addr,registers->reg[rt]);
         }
         //err
 }
@@ -526,13 +526,13 @@ uint16_t imm_s = (uint)(int16_t)imm;
   is_branch = true;
 
     bool should_link = (op & 0x1E) == 0x10;
-    bool should_branch = (int)(registers.reg[rs] ^ (op << 31)) < 0;
+    bool should_branch = (int)(registers->reg[rs] ^ (op << 31)) < 0;
 
     if (should_link) {
-      registers.reg[31] = registers.next_pc;
+      registers->reg[31] = registers->next_pc;
     }
     if (should_branch) {
-      registers.next_pc = registers.pc + (imm_s << 2);
+      registers->next_pc = registers->pc + (imm_s << 2);
     }
 }
 
@@ -541,16 +541,16 @@ void CPU::op_lh(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
-    uint32_t address = registers.reg[rs] + imm; // Calculate the memory address
+    uint32_t address = registers->reg[rs] + imm; // Calculate the memory address
     uint32_t value = memory.readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
-    registers.reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
+    registers->reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
         if ((addr & 0x1) == 0) {
             uint value = (uint)(short)memory.readWord(addr);
-            registers.reg[rt] = value;
+            registers->reg[rt] = value;
         }
         else {
             
@@ -566,7 +566,7 @@ void CPU::op_srlv(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rs] ^ registers.reg[rt];
+    registers->reg[rd] = registers->reg[rs] ^ registers->reg[rt];
 }
 
 void CPU::op_srav(uint32_t instruction) {
@@ -574,7 +574,7 @@ void CPU::op_srav(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = (uint)((int)registers.reg[rt] >> (int)(registers.reg[rs] & 0x1F));
+    registers->reg[rd] = (uint)((int)registers->reg[rt] >> (int)(registers->reg[rs] & 0x1F));
 }
 
 void CPU::op_sllv(uint32_t instruction) {
@@ -582,7 +582,7 @@ void CPU::op_sllv(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
 
-    registers.reg[rd] = registers.reg[rt] << (int)(registers.reg[rs] & 0x1F);
+    registers->reg[rd] = registers->reg[rt] << (int)(registers->reg[rs] & 0x1F);
 }
 
 void CPU::op_lwl(uint32_t instruction) {
@@ -591,12 +591,12 @@ void CPU::op_lwl(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
     uint aligned_load = memory.read32(aligned_addr);
 
     uint value = 0;
-    uint LRValue = registers.reg[rt];
+    uint LRValue = registers->reg[rt];
 
     switch (addr & 0b11) {
     case 0:
@@ -613,7 +613,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         break;
     }
     
-    registers.reg[rt] = value;
+    registers->reg[rt] = value;
 }
 
 void CPU::op_swl(uint32_t instruction) {
@@ -622,23 +622,23 @@ void CPU::op_swl(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
     uint aligned_load = memory.read32(aligned_addr);
 
     uint value = 0;
     switch (addr & 0b11) {
     case 0:
-        value = (aligned_load & 0xFFFFFF00) | (registers.reg[rt] >> 24);
+        value = (aligned_load & 0xFFFFFF00) | (registers->reg[rt] >> 24);
         break;
     case 1:
-        value = (aligned_load & 0xFFFF0000) | (registers.reg[rt] >> 16);
+        value = (aligned_load & 0xFFFF0000) | (registers->reg[rt] >> 16);
         break;
     case 2:
-        value = (aligned_load & 0xFF000000) | (registers.reg[rt] >> 8);
+        value = (aligned_load & 0xFF000000) | (registers->reg[rt] >> 8);
         break;
     case 3:
-        value = registers.reg[rt]; break;
+        value = registers->reg[rt]; break;
     }
 
     memory.writeWord(aligned_addr, value);
@@ -650,22 +650,22 @@ void CPU::op_swr(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
     uint aligned_load = memory.read32(aligned_addr);
 
     uint value = 0;
     switch (addr & 0b11) {
     case 0:
-        value = registers.reg[rt]; break;
+        value = registers->reg[rt]; break;
     case 1:
-        value = (aligned_load & 0x000000FF) | (registers.reg[rt] << 8);
+        value = (aligned_load & 0x000000FF) | (registers->reg[rt] << 8);
         break;
     case 2:
-        value = (aligned_load & 0x0000FFFF) | (registers.reg[rt] << 16);
+        value = (aligned_load & 0x0000FFFF) | (registers->reg[rt] << 16);
         break;
     case 3:
-        value = (aligned_load & 0x00FFFFFF) | (registers.reg[rt] << 24);
+        value = (aligned_load & 0x00FFFFFF) | (registers->reg[rt] << 24);
         break;
     }
 
@@ -678,12 +678,12 @@ void CPU::op_lwr(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
     uint aligned_load = memory.read32(aligned_addr);
 
     uint value = 0;
-    uint LRValue = registers.reg[rt];
+    uint LRValue = registers->reg[rt];
 
     switch (addr & 0b11) {
     case 0:
@@ -700,7 +700,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         break;
     }
     
-    registers.reg[rt] = value;
+    registers->reg[rt] = value;
 }
 
 void CPU::op_xori(uint32_t instruction) {
@@ -709,7 +709,7 @@ void CPU::op_xori(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
     
-    registers.reg[rt] = registers.reg[rs] ^ imm;
+    registers->reg[rt] = registers->reg[rs] ^ imm;
 }
 
 void CPU::op_mfc0(uint32_t instruction) {
@@ -719,7 +719,7 @@ void CPU::op_mfc0(uint32_t instruction) {
     uint mfc = rd;
 
     if (mfc == 3 || mfc >= 5 && mfc <= 9 || mfc >= 11 && mfc <= 15) {
-        registers.reg[rt] = cop0.regs[mfc];
+        registers->reg[rt] = cop0.regs[mfc];
     } else {
         console.err(60);
     }
@@ -730,7 +730,7 @@ void CPU::op_mtc0(uint32_t instruction) {
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
     uint id = (instruction >> 26) & 0x3;
-    uint value = registers.reg[rt];
+    uint value = registers->reg[rt];
     uint reg = rd;
 
     bool prev_IEC = cop0.sr.IEc;
@@ -747,7 +747,7 @@ void CPU::op_mtc0(uint32_t instruction) {
     uint irq_pending = cop0.cause.Sw | (cop0.cause.IP >> 2);
 
     if (!prev_IEC && cop0.sr.IEc && (irq_mask & irq_pending) > 0) {
-        registers.pc = registers.next_pc;
+        registers->pc = registers->next_pc;
         // Interrupts
         uint mode = cop0.sr.raw & 0x3F;
     cop0.sr.raw &= ~(uint)0x3F;
@@ -756,7 +756,7 @@ void CPU::op_mtc0(uint32_t instruction) {
     uint copy = cop0.cause.raw & 0xff00;
     cop0.cause.exc_code = (uint)0x0;
     cop0.cause.CE = id;
-        cop0.epc = registers.pc;
+        cop0.epc = registers->pc;
 
         /* Hack: related to the delay of the ex interrupt*/
         is_delay_slot = is_branch;
@@ -766,7 +766,7 @@ void CPU::op_mtc0(uint32_t instruction) {
         cop0.epc -= 4;
 
         cop0.cause.BD = true;
-        cop0.TAR = registers.pc;
+        cop0.TAR = registers->pc;
 
         if (in_delay_slot_took_branch) {
             cop0.cause.BT = true;
@@ -774,8 +774,8 @@ void CPU::op_mtc0(uint32_t instruction) {
     }
 
     /* Select exception address. */
-    registers.pc = exception_addr[cop0.sr.BEV];
-    registers.next_pc = registers.pc + 4;
+    registers->pc = exception_addr[cop0.sr.BEV];
+    registers->next_pc = registers->pc + 4;
     }
 }
 
@@ -806,7 +806,7 @@ void CPU::op_swc2(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
         memory.writeWord(addr, cop2.read_data(rt));
@@ -823,7 +823,7 @@ void CPU::op_lwc2(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint addr = registers.reg[rs] + imm_s;
+    uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
         uint data = memory.readWord(addr);
@@ -839,28 +839,28 @@ void CPU::op_mfc2(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-    registers.reg[rt] = cop2.read_data(rd);
+    registers->reg[rt] = cop2.read_data(rd);
 }
 
 void CPU::op_mtc2(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-    cop2.write_data(rd, registers.reg[rt]);
+    cop2.write_data(rd, registers->reg[rt]);
 }
 
 void CPU::op_cfc2(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-    registers.reg[rt] = cop2.read_control(rd);
+    registers->reg[rt] = cop2.read_control(rd);
 }
 
 void CPU::op_ctc2(uint32_t instruction) {
     uint8_t rs = (instruction >> 21) & 0x1F; // Extract bits 25 to 21
     uint8_t rt = (instruction >> 16) & 0x1F; // Extract bits 20 to 16
     uint8_t rd = (instruction >> 11) & 0x1F; // Extract bits 15 to 11
-    cop2.write_control(rd, registers.reg[rt]);
+    cop2.write_control(rd, registers->reg[rt]);
 }
 
 void CPU::op_cop2(uint32_t instruction) {
@@ -931,9 +931,9 @@ void CPU::loadInstructions() {
 
 void CPU::run() {
     cop0.PRId = 0x2;
-    registers.next_pc = registers.pc + 4;
-    while (registers.pc < numInstructions * 4) {
-        uint32_t instruction = memory.readWord(registers.pc);
+    registers->next_pc = registers->pc + 4;
+    while (registers->pc < numInstructions * 4) {
+        uint32_t instruction = memory.readWord(registers->pc);
         uint8_t opcode = (instruction >> 26) & 0x3F; // OPCODE = First 6 bits
         uint8_t funct = instruction & 0x3F; // FUNCTION_CODE = Last 6 bits
 
@@ -1305,14 +1305,14 @@ void CPU::run() {
         }
 
         // Program Counter
-        registers.pc = registers.next_pc; // 4 Bytes = 32 Bits
-        registers.next_pc += 4;
+        registers->pc = registers->next_pc; // 4 Bytes = 32 Bits
+        registers->next_pc += 4;
 
         // Interrupts
         handleInterrupts();
     }
     for (int i = 0; i < 32; ++i) {
-        console.log("Register " + std::to_string(i) + ": " + std::to_string(registers.reg[i]));
+        console.log("Register " + std::to_string(i) + ": " + std::to_string(registers->reg[i]));
     }
     /*for (int i = 0; i < (2048 * 8000) / sizeof(uint8_t); ++i) {
         console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.read32(i)).to_string());
