@@ -20,7 +20,7 @@ class DMA;
 
 class CPU {
 public:
-    CPU(Memory* memorya, CPURegisters* gs) : memory(memorya), numInstructions(0) registers(gs) {}
+    CPU(Memory* memorya, CPURegisters* gs) : memory(memorya), numInstructions(0), registers(gs) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -108,13 +108,13 @@ public:
     uint exception_addr[2] = { 0x80000080, 0xBFC00180 };
 
     void handleInterrupts() {
-        uint32_t instr = memory.readWord(registers.pc) >> 26;
+        uint32_t instr = memory->readWord(registers.pc) >> 26;
         
         if (instr == 0x12) {
           return;
         }
         
-        bool pending = (registers.i_stat & registers.i_mask) != 0;
+        bool pending = (registers->i_stat & registers->i_mask) != 0;
         if (pending) cop0.cause.IP |= (1 << 0);
 		    else cop0.cause.IP &= ~(1 << 0);
         
@@ -131,7 +131,7 @@ public:
           cop0.cause.exc_code = (uint)0x0;
           cop0.cause.CE = 1;
 
-          cop0.epc = registers.pc;
+          cop0.epc = registers->pc;
 
         /* Hack: related to the delay of the ex interrupt*/
           is_delay_slot = is_branch;
@@ -149,8 +149,8 @@ public:
           }
 
     /* Select exception address. */
-          registers.pc = exception_addr[cop0.sr.BEV];
-          registers.next_pc = registers.pc + 4;
+          registers->pc = exception_addr[cop0.sr.BEV];
+          registers->next_pc = registers->pc + 4;
         }
     }
 };
