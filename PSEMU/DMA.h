@@ -113,8 +113,8 @@ public:
     uint32_t read(uint32_t address);
     void write(uint32_t address, uint32_t data);
     void add_regmem(CPURegisters* re, Memory* me){
-      reg = re;
-      mem = me;
+      registers = re;
+      memory = me;
     }
 
     void tick();
