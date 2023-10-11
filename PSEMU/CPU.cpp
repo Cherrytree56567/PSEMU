@@ -9,56 +9,6 @@
 #include "CPU.h"
 #pragma warning(disable : 4996)
 
-
-/*
- * Interesting code from GPUCode/PSXEmu.
-    void CPU::op_cop2()
-    {
-        switch (instr.rs() & 0x10) {
-        case 0x00:
-            switch (instr.rs()) {
-            case 0b00000: op_mfc2(); break;
-            case 0b00010: op_cfc2(); break;
-            case 0b00100: op_mtc2(); break;
-            case 0b00110: op_ctc2(); break;
-            default: exception(ExceptionType::IllegalInstr, instr.id()); break;
-            }
-            break;
-        case 0x10:
-            gte.execute(instr);
-            break;
-        }
-    }
-
-    void CPU::op_cop0()
-    {
-        switch (instr.rs()) {
-        case 0b00000: op_mfc0(); break;
-        case 0b00100: op_mtc0(); break;
-        case 0b10000: op_rfe(); break;
-        default: exception(ExceptionType::IllegalInstr, instr.id()); break;
-        }
-    }
- */
-
-/*
- * /Add Bcond   0b000001
- * /Add Cop0    0b010000
- * /Add Cop2    0b010010
- * /Add xori    0b001110
- * /Add swr     0b101110
- * /Add swl     0b101010
- * /Add lwl     0b100010
- * /Add lwr     0b100110
- * /Add lwc2    0b110010
- * /Add swc2    0b111010
- * /Add syscall 0b001100
- * /Add sllv    0b000100
- * /Add srav    0b000111
- * /Add srlv    0b000110
- * /Add break   0b001101
- */
-
 using uint = std::uint32_t;
 using ulong = std::uint64_t;
 using byte = std::int8_t;
