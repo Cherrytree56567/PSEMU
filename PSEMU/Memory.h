@@ -15,7 +15,7 @@
 class Memory {
 public:
     // size = kilobytes
-    Memory(size_t size) : MainRAM((size * 8000) / sizeof(uint8_t)) {};
+    Memory(size_t size, DMA dn) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(dn) {};
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
@@ -52,4 +52,5 @@ private:
     uint32_t DMAStart = 0x1f801080;
     uint32_t DMAEnd = 0x1f801080 + (uint32_t)0x80LL;
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
+    DMA* dma;
 };
