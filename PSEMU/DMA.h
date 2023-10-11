@@ -101,7 +101,7 @@ class CPU;
 
 class DMA {
 public:
-    DMA(int g) : t(g), reg(nullptr), mem(nullptr) {}
+    DMA(int g) : t(g), registers(nullptr), memory(nullptr) {}
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
