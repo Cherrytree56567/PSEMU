@@ -92,7 +92,7 @@ void DMA::block_copy(DMAChannels dma_channel) {
                         printf("Unhandled DMA source channel: 0x%x\n", dma_channel);
                 }
 
-                cpu->memory.writeWord(addr, data);
+                cpu->memory->writeWord(addr, data);
                 break;
             }
             case 1: {
