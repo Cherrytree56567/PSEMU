@@ -13,6 +13,8 @@
 #include "CPURegisters.h"
 #include "DMA.h"
 
+class DMA;
+
 class Memory {
 public:
     // size = kilobytes
