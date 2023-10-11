@@ -30,7 +30,7 @@ int main() {
 
     DMA dma(0);
     CPURegisters Registers(0);
-    Memory memory(2048); // Specify the memory size in KB
+    Memory memory(2048, &dma); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
     dma.add_regmem(&Registers, &memory);
 
