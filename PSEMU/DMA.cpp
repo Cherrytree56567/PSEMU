@@ -92,11 +92,11 @@ void DMA::block_copy(DMAChannels dma_channel) {
                         printf("Unhandled DMA source channel: 0x%x\n", dma_channel);
                 }
 
-                cpu->memory->writeWord(addr, data);
+                memory->writeWord(addr, data);
                 break;
             }
             case 1: {
-                uint32_t command = cpu->memory->readWord(addr);
+                uint32_t command = memory->readWord(addr);
 
                 switch (dma_channel) {
                     case DMAChannels::GPU:
@@ -129,7 +129,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
     while (true) {
         /* Get the list packet header. */
         ListPacket packet;
-        packet.raw = cpu->memory->readWord(addr);
+        packet.raw = memory->readWord(addr);
         uint count = packet.size;
 
         /*if (count > 0)
@@ -141,7 +141,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
             addr = (addr + 4) & 0x1ffffc;
 
             /* Get command from main RAM. */
-            uint command = cpu->memory->readWord(addr);
+            uint command = memory->readWord(addr);
 
             /* Send data to the GPU. */
             gpu.write_gp0(command);
@@ -261,6 +261,6 @@ void DMA::write(uint32_t address, uint32_t val) {
 void DMA::tick() {
     if (irq_pending) {
         irq_pending = false;
-        cpu->registers->i_stat |= (1 << (uint32_t)3);
+        registers->i_stat |= (1 << (uint32_t)3);
     }
 }
