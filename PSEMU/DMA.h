@@ -101,7 +101,7 @@ class CPU;
 
 class DMA {
 public:
-    DMA(CPU* cp) : cpu(cp) {}
+    DMA(int g) : t(g) {}
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
@@ -112,6 +112,10 @@ public:
 
     uint32_t read(uint32_t address);
     void write(uint32_t address, uint32_t data);
+    void add_regmem(CPURegisters* re, Memory* me){
+      reg = &re;
+      mem = &me;
+    }
 
     void tick();
 
@@ -120,7 +124,9 @@ public:
     DMAChannel channels[7];
 
     GPU gpu;
-    CPU* cpu;
+    CPURegisters* reg;
+    Memory* mem;
+    int t;
 
     bool irq_pending = false;
 };
