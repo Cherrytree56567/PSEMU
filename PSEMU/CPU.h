@@ -14,9 +14,8 @@
 #include "CPURegisters.h"
 #include "Coprocessor.h"
 #include "GTE.h"
-#include "DMA.h"
 
-class DMA;
+class Memory;
 
 class CPU {
 public:
