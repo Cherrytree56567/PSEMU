@@ -27,7 +27,7 @@ int main() {
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    CPURegister Registers(0);
+    CPURegisters Registers(0);
     Memory memory(2048); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
 
