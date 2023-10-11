@@ -101,7 +101,7 @@ class CPU;
 
 class DMA {
 public:
-    DMA(int g) : t(g) {}
+    DMA(int g) : t(g), reg(nullptr), mem(nullptr) {}
 
     bool is_channel_enabled(DMAChannels channel);
     void transfer_finished(DMAChannels channel);
@@ -113,8 +113,8 @@ public:
     uint32_t read(uint32_t address);
     void write(uint32_t address, uint32_t data);
     void add_regmem(CPURegisters* re, Memory* me){
-      reg = &re;
-      mem = &me;
+      reg = re;
+      mem = me;
     }
 
     void tick();
