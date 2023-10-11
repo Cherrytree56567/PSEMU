@@ -20,7 +20,7 @@ class DMA;
 
 class CPU {
 public:
-    CPU(Memory& memorya, CPURegisters* gs) : memory(memorya), numInstructions(0) registers(gs) {}
+    CPU(Memory* memorya, CPURegisters* gs) : memory(memorya), numInstructions(0) registers(gs) {}
 
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
@@ -101,7 +101,7 @@ public:
     Cop0 cop0;
     GTE cop2;
     CPURegisters* registers;
-    Memory& memory;
+    Memory* memory;
     bool is_branch, is_delay_slot;
     bool took_branch;
     bool in_delay_slot_took_branch;
