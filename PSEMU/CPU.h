@@ -108,7 +108,7 @@ public:
     uint exception_addr[2] = { 0x80000080, 0xBFC00180 };
 
     void handleInterrupts() {
-        uint32_t instr = memory->readWord(registers.pc) >> 26;
+        uint32_t instr = memory->readWord(registers->pc) >> 26;
         
         if (instr == 0x12) {
           return;
