@@ -6,7 +6,6 @@
  PSEMU © 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-ShareAlike 4.0 International
 
 */
-#pragma once
 #include "DMA.h"
 
 uint32_t set_bit(uint32_t num, int b, bool v) {
@@ -91,14 +90,13 @@ void DMA::block_copy(DMAChannels dma_channel) {
                         break;
                     default:
                         printf("Unhandled DMA source channel: 0x%x\n", dma_channel);
-                        __debugbreak();
                 }
 
                 cpu->memory.writeWord(addr, data);
                 break;
             }
             case 1: {
-                uint32_t command = cpu->memory.readWord(addr);
+                uint32_t command = cpu->memory->readWord(addr);
 
                 switch (dma_channel) {
                     case DMAChannels::GPU:
@@ -125,14 +123,13 @@ void DMA::list_copy(DMAChannels dma_channel) {
     /* TODO: implement Device to Ram DMA transfer. */
     if (channel.control.trans_dir == 0) {
         printf("Not supported DMA direction!\n");
-        __debugbreak();
     }
 
     /* While not reached the end. */
     while (true) {
         /* Get the list packet header. */
         ListPacket packet;
-        packet.raw = cpu->memory.readWord(addr);
+        packet.raw = cpu->memory->readWord(addr);
         uint count = packet.size;
 
         /*if (count > 0)
@@ -144,7 +141,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
             addr = (addr + 4) & 0x1ffffc;
 
             /* Get command from main RAM. */
-            uint command = cpu->memory.readWord(addr);
+            uint command = cpu->memory->readWord(addr);
 
             /* Send data to the GPU. */
             gpu.write_gp0(command);
@@ -264,6 +261,6 @@ void DMA::write(uint32_t address, uint32_t val) {
 void DMA::tick() {
     if (irq_pending) {
         irq_pending = false;
-        cpu->registers.i_stat |= (1 << (uint32_t)3);
+        cpu->registers->i_stat |= (1 << (uint32_t)3);
     }
 }
