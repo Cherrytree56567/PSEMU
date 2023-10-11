@@ -13,7 +13,7 @@
 
 class CPURegisters {
 public:
-    CPURegisters() : pc(0), sp(0), lo(0), hi(0) {
+    CPURegisters(int s) : pc(s), sp(0), lo(0), hi(0) {
         for (int i = 0; i < 32; ++i) {
             reg[i] = 0;
         }
