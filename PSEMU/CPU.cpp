@@ -40,7 +40,7 @@ void CPU::op_storebyte(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;      // Extract the immediate value
 
     // Store the value in memory
-    memory.writeWord(registers->reg[rs] + imm_s, registers->reg[rt]);
+    memory->writeWord(registers->reg[rs] + imm_s, registers->reg[rt]);
 }
 
 // lui is used to load a value into a register. example: "lui $t0, 0x1234"
@@ -253,7 +253,7 @@ void CPU::op_lbu(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF; // Extract the immediate value
     uint16_t imm_s = (uint)(int16_t)imm;
 
-    uint8_t value = memory.readByte(registers->reg[rs] + imm_s); // Read the byte from memory
+    uint8_t value = memory->readByte(registers->reg[rs] + imm_s); // Read the byte from memory
     registers->reg[rt] = static_cast<uint32_t>(value); // Store the value in the specified register
 }
 
@@ -266,14 +266,14 @@ void CPU::op_lhu(uint32_t instruction) {
     uint16_t imm_s = (uint)(int16_t)imm;
     
     uint32_t address = registers->reg[rs] + imm; // Calculate the memory address
-    uint32_t value = memory.readWord(address); // Read the word from memory
+    uint32_t value = memory->readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
     registers->reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
     uint addr = registers->reg[rs] + imm_s;
 
         if ((addr & 0x1) == 0) {
-            uint value = memory.readWord(addr);
+            uint value = memory->readWord(addr);
             registers->reg[rt] = value;
         }
         else {
@@ -292,7 +292,7 @@ void CPU::op_lw(uint32_t instruction) {
     uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
-        uint value = memory.readWord(addr);
+        uint value = memory->readWord(addr);
         registers->reg[rt] = value;
     }
 }
@@ -399,7 +399,7 @@ void CPU::op_lb(uint32_t instruction) {
 
     uint16_t imm_s = (uint)(int16_t)imm;
     
-    uint value = (uint)(byte)memory.readByte(registers->reg[rs] + imm_s);
+    uint value = (uint)(byte)memory->readByte(registers->reg[rs] + imm_s);
     registers->reg[rt] = value;
 }
 
@@ -412,7 +412,7 @@ void CPU::op_sh(uint32_t instruction) {
     uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x1) == 0) {
-        memory.writeHalfword(addr, (ushort)registers->reg[rt]);
+        memory->writeHalfword(addr, (ushort)registers->reg[rt]);
     }
     else {
         console.err(55);
@@ -512,7 +512,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         uint addr = registers->reg[r] + i;
 
         if ((addr & 0x3) == 0) {
-            memory.writeWord(addr,registers->reg[rt]);
+            memory->writeWord(addr,registers->reg[rt]);
         }
         //err
 }
@@ -542,14 +542,14 @@ void CPU::op_lh(uint32_t instruction) {
     uint16_t imm = instruction & 0xFFFF;      // Extract the immediate value
 uint16_t imm_s = (uint)(int16_t)imm;
     uint32_t address = registers->reg[rs] + imm; // Calculate the memory address
-    uint32_t value = memory.readWord(address); // Read the word from memory
+    uint32_t value = memory->readWord(address); // Read the word from memory
     uint16_t halfword = static_cast<uint16_t>((value >> ((address & 2) << 3)) & 0xFFFF); // Extract the halfword from the word
     registers->reg[rt] = static_cast<uint32_t>(halfword); // Store the value in the specified register
 
     uint addr = registers->reg[rs] + imm_s;
 
         if ((addr & 0x1) == 0) {
-            uint value = (uint)(short)memory.readWord(addr);
+            uint value = (uint)(short)memory->readWord(addr);
             registers->reg[rt] = value;
         }
         else {
@@ -593,7 +593,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     
     uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
-    uint aligned_load = memory.read32(aligned_addr);
+    uint aligned_load = memory->read32(aligned_addr);
 
     uint value = 0;
     uint LRValue = registers->reg[rt];
@@ -624,7 +624,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     
     uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
-    uint aligned_load = memory.read32(aligned_addr);
+    uint aligned_load = memory->read32(aligned_addr);
 
     uint value = 0;
     switch (addr & 0b11) {
@@ -641,7 +641,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         value = registers->reg[rt]; break;
     }
 
-    memory.writeWord(aligned_addr, value);
+    memory->writeWord(aligned_addr, value);
 }
 
 void CPU::op_swr(uint32_t instruction) {
@@ -652,7 +652,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     
     uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
-    uint aligned_load = memory.read32(aligned_addr);
+    uint aligned_load = memory->read32(aligned_addr);
 
     uint value = 0;
     switch (addr & 0b11) {
@@ -669,7 +669,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
         break;
     }
 
-    memory.writeWord(aligned_addr, value);
+    memory->writeWord(aligned_addr, value);
 }
 
 void CPU::op_lwr(uint32_t instruction) {
@@ -680,7 +680,7 @@ uint16_t imm_s = (uint)(int16_t)imm;
     
     uint addr = registers->reg[rs] + imm_s;
     uint aligned_addr = addr & 0xFFFFFFFC;
-    uint aligned_load = memory.read32(aligned_addr);
+    uint aligned_load = memory->read32(aligned_addr);
 
     uint value = 0;
     uint LRValue = registers->reg[rt];
@@ -809,7 +809,7 @@ void CPU::op_swc2(uint32_t instruction) {
     uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
-        memory.writeWord(addr, cop2.read_data(rt));
+        memory->writeWord(addr, cop2.read_data(rt));
     } else {
         cop0.BadA = addr;
         // Coprocessor Error
@@ -826,7 +826,7 @@ void CPU::op_lwc2(uint32_t instruction) {
     uint addr = registers->reg[rs] + imm_s;
 
     if ((addr & 0x3) == 0) {
-        uint data = memory.readWord(addr);
+        uint data = memory->readWord(addr);
         cop2.write_data(rt, data);
     } else {
         cop0.BadA = addr;
@@ -925,7 +925,7 @@ void CPU::loadBiosCode(uint32_t* binaryCode, size_t numI) {
 
 void CPU::loadInstructions() {
     for (size_t i = 0; i < numInstructions; ++i) {
-        memory.writeWord(i * 4, BiosCode[i]); // Each instruction is 4 bytes
+        memory->writeWord(i * 4, BiosCode[i]); // Each instruction is 4 bytes
     }
 }
 
@@ -933,7 +933,7 @@ void CPU::run() {
     cop0.PRId = 0x2;
     registers->next_pc = registers->pc + 4;
     while (registers->pc < numInstructions * 4) {
-        uint32_t instruction = memory.readWord(registers->pc);
+        uint32_t instruction = memory->readWord(registers->pc);
         uint8_t opcode = (instruction >> 26) & 0x3F; // OPCODE = First 6 bits
         uint8_t funct = instruction & 0x3F; // FUNCTION_CODE = Last 6 bits
 
@@ -1315,6 +1315,6 @@ void CPU::run() {
         console.log("Register " + std::to_string(i) + ": " + std::to_string(registers->reg[i]));
     }
     /*for (int i = 0; i < (2048 * 8000) / sizeof(uint8_t); ++i) {
-        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory.read32(i)).to_string());
+        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory->read32(i)).to_string());
     }*/
 }
