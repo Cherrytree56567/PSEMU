@@ -11,6 +11,7 @@
 #include <vector>
 #include "Logging.h"
 #include "CPURegisters.h"
+#include "DMA.h"
 
 class Memory {
 public:
