@@ -141,7 +141,7 @@ public:
              cop0.epc -= 4;
 
              cop0.cause.BD = true;
-             cop0.TAR = registers.pc;
+             cop0.TAR = registers->pc;
 
              if (in_delay_slot_took_branch) {
                  cop0.cause.BT = true;
