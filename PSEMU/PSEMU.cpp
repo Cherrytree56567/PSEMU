@@ -32,6 +32,7 @@ int main() {
     CPURegisters Registers(0);
     Memory memory(2048); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
+    dma.add_regmem(&Registers, &memory);
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);
