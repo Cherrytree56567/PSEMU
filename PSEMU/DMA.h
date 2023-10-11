@@ -97,7 +97,7 @@ union ListPacket {
     };
 };
 
-class CPU;
+class Memory;
 
 class DMA {
 public:
