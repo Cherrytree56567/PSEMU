@@ -9,6 +9,7 @@
 #pragma once
 #include "VRAM.h"
 #include "glm/glm/glm.hpp"
+#include <utility>
 
 union GPUSTATUS {
     uint32_t value;
@@ -74,13 +75,20 @@ public:
     uint32_t read(uint32_t address);
     void write(uint32_t address, uint32_t data);
 
-    /* GPU memory read/write commands. */
+    glm::ivec3 extract_color(uint32_t color);
+    glm::ivec2 extract_point(uint32_t point);
+    glm::ivec2 extract_coord(uint32_t coord);
+
+    // GPU memory commands.
     void write_gp0(uint32_t data);
     void write_gp1(uint32_t data);
     uint32_t get_gpuread();
     uint32_t get_gpustat();
 
-    /* GP0 commands. */
+    void vram_transfer(uint16_t data);
+    uint16_t vram_transfer();
+
+    // GP0 commands.
     void gp0_nop();
     void gp0_fill_rect();
     void gp0_draw_mode();
@@ -94,14 +102,19 @@ public:
     void gp0_image_store();
     void gp0_image_transfer();
 
-    /* GP0 registers. */
+    // GP0 Render Functions
+    void gp0_render_polygon();
+    void gp0_render_rect();
+    void gp0_render_line();
+
+    // GP0 registers.
     glm::u8vec2 texture_window_mask;
     glm::u8vec2 texture_window_offset;
     glm::u16vec2 drawing_area_top_left;
     glm::u16vec2 drawing_area_bottom_right;
     glm::i16vec2 draw_offset;
 
-    /* GP1 registers. */
+    // GP1 registers.
     glm::u16vec2 display_area;
     glm::u16vec2 display_area_top_left;
     glm::u16vec2 display_area_bottom_right;

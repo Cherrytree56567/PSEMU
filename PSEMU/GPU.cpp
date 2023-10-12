@@ -35,3 +35,20 @@ uint32_t GPU::get_gpustat() {
     // Empty Implementation
     return 0;
 }
+
+void GPU::vram_transfer(uint16_t data) {
+    // Empty
+}
+uint16_t GPU::vram_transfer() {
+    // Empty
+}
+
+glm::ivec3 GPU::extract_color(uint32_t color) {
+    // Empty
+}
+glm::ivec2 GPU::extract_point(uint32_t point) {
+    // Empty
+}
+glm::ivec2 GPU::extract_coord(uint32_t coord) {
+    // Empty
+}
