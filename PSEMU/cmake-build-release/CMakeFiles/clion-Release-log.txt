@@ -1,4 +1,4 @@
 "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe -S C:\Users\ronit\Desktop\PSEMU\PSEMU -B C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-release
 -- Configuring done (0.1s)
--- Generating done (0.0s)
+-- Generating done (0.3s)
 -- Build files have been written to: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-release

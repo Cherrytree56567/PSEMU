@@ -13,12 +13,10 @@
 #include "CPURegisters.h"
 #include "DMA.h"
 
-class DMA;
-
 class Memory {
 public:
     // size = kilobytes
-    Memory(size_t size, DMA* dn) : MainRAM((size * 8000) / sizeof(uint8_t)), dma(dn) {};
+    Memory(CPURegisters* dn) : MainRAM((2048 * 8000) / sizeof(uint8_t)), reg(dn) {};
 
     // address = bits
     uint8_t& operator[](uint32_t address) {
@@ -48,12 +46,12 @@ public:
     uint32_t read32(uint32_t address) const;
 
     // TODO: Implement memory-mapped I/O for CD-ROM and HDD
-private:
     std::vector<uint8_t> MainRAM;
     int MainRAMStart = 0; // bits
     int MainRAMEnd = MainRAM.size(); // bits
     uint32_t DMAStart = 0x1f801080;
     uint32_t DMAEnd = 0x1f801080 + (uint32_t)0x80LL;
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
-    DMA* dma;
+    CPURegisters* reg;
+    DMA dma{reg, &MainRAM};
 };
