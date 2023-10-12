@@ -91,7 +91,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -129,7 +129,7 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -169,7 +169,7 @@
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -210,7 +210,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -304,10 +304,19 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.cpp" />
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp" />
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp" />
-    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp" />
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.cpp" />
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp" />
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\PSEMU.cpp" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.cpp" />
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp" />
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h" />
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp" />
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp" />
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\cmake-build-release\ZERO_CHECK.vcxproj">

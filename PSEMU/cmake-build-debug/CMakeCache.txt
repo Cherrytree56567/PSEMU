@@ -45,8 +45,8 @@ CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=/O2 /Ob1 /DNDEBUG
 //Libraries linked by default with all C++ applications.
 CMAKE_CXX_STANDARD_LIBRARIES:STRING=kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
 
-//No help, variable specified on the command line.
-CMAKE_C_COMPILER:UNINITIALIZED=C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe
+//C compiler
+CMAKE_C_COMPILER:STRING=C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe
 
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=/DWIN32 /D_WINDOWS
@@ -81,6 +81,9 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=/INCREMENTAL:NO
 //Flags used by the linker during RELWITHDEBINFO builds.
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 
+//Enable/Disable output of compile commands during generation.
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
+
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/pkgRedirects
 
@@ -90,8 +93,8 @@ CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/PSEMU
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/link.exe
 
-//Program used to build from makefiles.
-CMAKE_MAKE_PROGRAM:STRING=nmake
+//make program
+CMAKE_MAKE_PROGRAM:FILEPATH=C:/PROGRA~1/JETBRA~1/CLION2~1.2/bin/ninja/win/x64/ninja.exe
 
 //Flags used by the linker during the creation of modules during
 // all build types.
@@ -266,10 +269,12 @@ CMAKE_EXE_LINKER_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_EXE_LINKER_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_EXPORT_COMPILE_COMMANDS
+CMAKE_EXPORT_COMPILE_COMMANDS-ADVANCED:INTERNAL=1
 //Name of external makefile project generator.
 CMAKE_EXTRA_GENERATOR:INTERNAL=
 //Name of generator.
-CMAKE_GENERATOR:INTERNAL=NMake Makefiles
+CMAKE_GENERATOR:INTERNAL=Ninja
 //Generator instance identifier.
 CMAKE_GENERATOR_INSTANCE:INTERNAL=
 //Name of generator platform.
@@ -281,8 +286,6 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 CMAKE_HOME_DIRECTORY:INTERNAL=C:/Users/ronit/Desktop/PSEMU/PSEMU
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_MAKE_PROGRAM
-CMAKE_MAKE_PROGRAM-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS
 CMAKE_MODULE_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS_DEBUG

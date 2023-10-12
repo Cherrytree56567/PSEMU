@@ -6,7 +6,7 @@
  PSEMU © 2023 by Ronit D'silva is licensed under Attribution-NonCommercial-ShareAlike 4.0 International
 
 */
-#include "DMA.h"
+#include "Memory.h"
 
 uint32_t set_bit(uint32_t num, int b, bool v) {
     if (v) num |= (1 << b);
@@ -15,12 +15,12 @@ uint32_t set_bit(uint32_t num, int b, bool v) {
     return num;
 }
 
-bool DMA::is_channel_enabled(DMAChannels channel) {
+bool Memory::is_channel_enabled(DMAChannels channel) {
     Logging console;
     console.warn("DMA IS_CHANNEL_ENABLED IS NOT FULLY IMPLEMENTED");
     return true;
 }
-void DMA::transfer_finished(DMAChannels dma_channel) {
+void Memory::transfer_finished(DMAChannels dma_channel) {
     DMAChannel& channel = channels[(int)dma_channel];
 
     if (irq.enable & (1 << (int)dma_channel) || irq.master_enable)
@@ -34,7 +34,7 @@ void DMA::transfer_finished(DMAChannels dma_channel) {
     }
 }
 
-void DMA::start(DMAChannels dma_channel) {
+void Memory::start(DMAChannels dma_channel) {
     DMAChannel& channel = channels[(uint32_t)dma_channel];
     if (channel.control.sync_mode == SyncType::Linked_List)
         /* Start linked list copy routine. */
@@ -46,7 +46,7 @@ void DMA::start(DMAChannels dma_channel) {
     /* Complete the transfer. */
     transfer_finished(dma_channel);
 }
-void DMA::block_copy(DMAChannels dma_channel) {
+void Memory::block_copy(DMAChannels dma_channel) {
     DMAChannel& channel = channels[(uint32_t)dma_channel];
 
     uint32_t trans_dir = channel.control.trans_dir;
@@ -92,11 +92,11 @@ void DMA::block_copy(DMAChannels dma_channel) {
                         printf("Unhandled DMA source channel: 0x%x\n", dma_channel);
                 }
 
-                memory->writeWord(addr, data);
+                writeWord(addr, data);
                 break;
             }
             case 1: {
-                uint32_t command = memory->readWord(addr);
+                uint32_t command = readWord(addr);
 
                 switch (dma_channel) {
                     case DMAChannels::GPU:
@@ -116,7 +116,7 @@ void DMA::block_copy(DMAChannels dma_channel) {
     channel.control.enable = false;
     channel.control.trigger = false;
 }
-void DMA::list_copy(DMAChannels dma_channel) {
+void Memory::list_copy(DMAChannels dma_channel) {
     DMAChannel& channel = channels[(uint32_t)dma_channel];
     uint addr = channel.base & 0x1ffffe;
 
@@ -129,7 +129,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
     while (true) {
         /* Get the list packet header. */
         ListPacket packet;
-        packet.raw = memory->readWord(addr);
+        packet.raw = readWord(addr);
         uint count = packet.size;
 
         /*if (count > 0)
@@ -141,7 +141,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
             addr = (addr + 4) & 0x1ffffc;
 
             /* Get command from main RAM. */
-            uint command = memory->readWord(addr);
+            uint command = readWord(addr);
 
             /* Send data to the GPU. */
             gpu.write_gp0(command);
@@ -163,7 +163,7 @@ void DMA::list_copy(DMAChannels dma_channel) {
     channel.control.trigger = false;
 }
 
-uint32_t DMA::read(uint32_t address) {
+uint32_t Memory::read(uint32_t address) {
     uint offset = address - 0x1f801080;
 
     /* Get channel information from address. */
@@ -201,7 +201,7 @@ uint32_t DMA::read(uint32_t address) {
 
     return 0;
 }
-void DMA::write(uint32_t address, uint32_t val) {
+void Memory::write(uint32_t address, uint32_t val) {
     // Just directly provide the address no need to subtract.
     uint offset = address - 0x1f801080;
 
@@ -258,9 +258,9 @@ void DMA::write(uint32_t address, uint32_t val) {
         start((DMAChannels)active_channel);
 }
 
-void DMA::tick() {
+void Memory::tick() {
     if (irq_pending) {
         irq_pending = false;
-        registers->i_stat |= (1 << (uint32_t)3);
+        regs->i_stat |= (1 << (uint32_t)3);
     }
 }

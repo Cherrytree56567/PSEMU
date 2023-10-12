@@ -7,7 +7,6 @@
 
 */
 #include "Memory.h"
-#include "DMA.h"
 
 uint8_t Memory::readByte(uint32_t address) const {
     if (address < MainRAMEnd) {

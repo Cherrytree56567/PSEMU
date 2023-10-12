@@ -10,9 +10,6 @@
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -22,11 +19,46 @@
     <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\PSEMU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\ronit\Desktop\PSEMU\PSEMU\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{186E403A-A3C7-32E8-BA2A-DE82C460983F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{E90B0102-1D3A-356D-9940-DD0AC1F6B097}</UniqueIdentifier>
     </Filter>

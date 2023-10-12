@@ -9,7 +9,6 @@
 #include <iostream>
 #include "CPU.h"
 #include "Memory.h"
-#include "DMA.h"
 #include "Logging.h"
 
 /*
@@ -18,7 +17,8 @@
  * That was the first part but the second part is to be able to map it.
  *
  * Also, All the CPU Registers have the same value somehow. EDIT: nvm I fixed it, turns out I hadn't initialized all the CPURegister array to 0.
- * Ok, so I have gotton the first part right.
+ *
+ * Ok, I found a way to fix the DMA Circular Dependencies, I can just merge the DMA with the Memory.
  */
 
 int main() {
@@ -28,11 +28,9 @@ int main() {
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
-    DMA dma(0);
     CPURegisters Registers(0);
-    Memory memory(2048); // Specify the memory size in KB
+    Memory memory(2048, &Registers); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
-    dma.add_regmem(&Registers, &memory);
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);

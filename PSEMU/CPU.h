@@ -15,7 +15,7 @@
 #include "Coprocessor.h"
 #include "GTE.h"
 
-class Memory;
+class DMA;
 
 class CPU {
 public:

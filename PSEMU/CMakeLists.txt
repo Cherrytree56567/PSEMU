@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.26)
 project(PSEMU)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 
 add_executable(PSEMU
         Coprocessor.cpp
@@ -20,4 +20,4 @@ add_executable(PSEMU
         gp1.cpp
         GPU.cpp
         DMA.cpp
-        DMA.h)
+)

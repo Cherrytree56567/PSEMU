@@ -8,10 +8,6 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       The system is: Windows - 10.0.19045 - AMD64
-...
-
----
-events:
   -
     kind: "message-v1"
     backtrace:
@@ -113,8 +109,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dmn5qw"
-      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dmn5qw"
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-20oyc7"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-20oyc7"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -123,27 +119,10 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-dmn5qw
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-20oyc7
         
-        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_1baa3\\fast && 	C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\nmake.exe  -f CMakeFiles\\cmTC_1baa3.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_1baa3.dir\\build
-        Building C object CMakeFiles/cmTC_1baa3.dir/CMakeCCompilerABI.c.obj
-        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_1baa3.dir\\CMakeCCompilerABI.c.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-dmn5qw --filter-prefix="Note: including file: " -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmEE03.tmp
-        CMakeCCompilerABI.c
-        Linking C executable cmTC_1baa3.exe
-        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_1baa3.dir --rc=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_1baa3.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmEE72.tmp
-        Visual Studio Incremental Link with embedded manifests
-        Create CMakeFiles\\cmTC_1baa3.dir/manifest.rc
-        Create empty: CMakeFiles\\cmTC_1baa3.dir/embed.manifest
-        RC Pass 1:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_1baa3.dir/manifest.res CMakeFiles\\cmTC_1baa3.dir/manifest.rc
-        LINK Pass 1:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_1baa3.dir\\objects1.rsp /out:cmTC_1baa3.exe /implib:cmTC_1baa3.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-dmn5qw\\cmTC_1baa3.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_1baa3.dir/intermediate.manifest CMakeFiles\\cmTC_1baa3.dir/manifest.res
-        MT:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_1baa3.dir/intermediate.manifest /out:CMakeFiles\\cmTC_1baa3.dir/embed.manifest /notify_update
-        RC Pass 2:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_1baa3.dir/manifest.res CMakeFiles\\cmTC_1baa3.dir/manifest.rc
-        FINAL LINK:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_1baa3.dir\\objects1.rsp /out:cmTC_1baa3.exe /implib:cmTC_1baa3.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-dmn5qw\\cmTC_1baa3.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_1baa3.dir/intermediate.manifest CMakeFiles\\cmTC_1baa3.dir/manifest.res
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_c92af && [1/2] C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe  /nologo   /DWIN32 /D_WINDOWS  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_c92af.dir\\CMakeCCompilerABI.c.obj /FdCMakeFiles\\cmTC_c92af.dir\\ /FS -c "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+        [2/2] cmd.exe /C "cd . && "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_c92af.dir --rc=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_c92af.dir\\CMakeCCompilerABI.c.obj  /out:cmTC_c92af.exe /implib:cmTC_c92af.lib /pdb:cmTC_c92af.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
   -
@@ -155,8 +134,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-86txzw"
-      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-86txzw"
+      source: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2wt74e"
+      binary: "C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2wt74e"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Ob0 /Od /RTC1"
@@ -165,27 +144,10 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-86txzw
+        Change Dir: C:/Users/ronit/Desktop/PSEMU/PSEMU/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2wt74e
         
-        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/cmake.exe -E env VERBOSE=1 nmake -f Makefile /nologo cmTC_a794a\\fast && 	C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\nmake.exe  -f CMakeFiles\\cmTC_a794a.dir\\build.make /nologo -L                  CMakeFiles\\cmTC_a794a.dir\\build
-        Building CXX object CMakeFiles/cmTC_a794a.dir/CMakeCXXCompilerABI.cpp.obj
-        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E cmake_cl_compile_depends --dep-file=CMakeFiles\\cmTC_a794a.dir\\CMakeCXXCompilerABI.cpp.obj.d --working-dir=C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-86txzw --filter-prefix="Note: including file: " -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmF1FB.tmp
-        CMakeCXXCompilerABI.cpp
-        Linking CXX executable cmTC_a794a.exe
-        	"C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_a794a.dir --rc=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_a794a.dir\\objects1.rsp @C:\\Users\\ronit\\AppData\\Local\\Temp\\nmF25B.tmp
-        Visual Studio Incremental Link with embedded manifests
-        Create CMakeFiles\\cmTC_a794a.dir/manifest.rc
-        Create empty: CMakeFiles\\cmTC_a794a.dir/embed.manifest
-        RC Pass 1:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_a794a.dir/manifest.res CMakeFiles\\cmTC_a794a.dir/manifest.rc
-        LINK Pass 1:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_a794a.dir\\objects1.rsp /out:cmTC_a794a.exe /implib:cmTC_a794a.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-86txzw\\cmTC_a794a.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_a794a.dir/intermediate.manifest CMakeFiles\\cmTC_a794a.dir/manifest.res
-        MT:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe /nologo /manifest CMakeFiles\\cmTC_a794a.dir/intermediate.manifest /out:CMakeFiles\\cmTC_a794a.dir/embed.manifest /notify_update
-        RC Pass 2:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe /fo CMakeFiles\\cmTC_a794a.dir/manifest.res CMakeFiles\\cmTC_a794a.dir/manifest.rc
-        FINAL LINK:
-        C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo @CMakeFiles\\cmTC_a794a.dir\\objects1.rsp /out:cmTC_a794a.exe /implib:cmTC_a794a.lib /pdb:C:\\Users\\ronit\\Desktop\\PSEMU\\PSEMU\\cmake-build-debug\\CMakeFiles\\CMakeScratch\\TryCompile-86txzw\\cmTC_a794a.pdb /version:0.0 /machine:x64 /debug /INCREMENTAL /subsystem:console kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTFILE:CMakeFiles\\cmTC_a794a.dir/intermediate.manifest CMakeFiles\\cmTC_a794a.dir/manifest.res
+        Run Build Command(s):C:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe -v cmTC_3004e && [1/2] C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe  /nologo /TP   /DWIN32 /D_WINDOWS /EHsc  /Ob0 /Od /RTC1 -MDd -Zi /showIncludes /FoCMakeFiles\\cmTC_3004e.dir\\CMakeCXXCompilerABI.cpp.obj /FdCMakeFiles\\cmTC_3004e.dir\\ /FS -c "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+        [2/2] cmd.exe /C "cd . && "C:\\Program Files\\JetBrains\\CLion 2023.2.2\\bin\\cmake\\win\\x64\\bin\\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\\cmTC_3004e.dir --rc=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\rc.exe --mt=C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\WINDOW~1\\10\\bin\\100226~1.0\\x64\\mt.exe --manifests  -- C:\\Users\\ronit\\Desktop\\MSVC\\msvc\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\link.exe /nologo CMakeFiles\\cmTC_3004e.dir\\CMakeCXXCompilerABI.cpp.obj  /out:cmTC_3004e.exe /implib:cmTC_3004e.lib /pdb:cmTC_3004e.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
         
       exitCode: 0
 ...

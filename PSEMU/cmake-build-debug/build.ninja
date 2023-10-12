@@ -70,13 +70,6 @@ build CMakeFiles\PSEMU.dir\CPURegisters.cpp.obj: CXX_COMPILER__PSEMU_unscanned_D
   TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
   TARGET_PDB = PSEMU.pdb
 
-build CMakeFiles\PSEMU.dir\GPU.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp || cmake_object_order_depends_target_PSEMU
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
-  OBJECT_DIR = CMakeFiles\PSEMU.dir
-  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
-  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
-  TARGET_PDB = PSEMU.pdb
-
 build CMakeFiles\PSEMU.dir\Logging.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.cpp || cmake_object_order_depends_target_PSEMU
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
   OBJECT_DIR = CMakeFiles\PSEMU.dir
@@ -98,6 +91,48 @@ build CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$
   TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
   TARGET_PDB = PSEMU.pdb
 
+build CMakeFiles\PSEMU.dir\VRAM.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
+build CMakeFiles\PSEMU.dir\GTE.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
+build CMakeFiles\PSEMU.dir\gp0.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
+build CMakeFiles\PSEMU.dir\gp1.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
+build CMakeFiles\PSEMU.dir\GPU.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
+build CMakeFiles\PSEMU.dir\DMA.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp || cmake_object_order_depends_target_PSEMU
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -std:c++latest -MDd -Zi
+  OBJECT_DIR = CMakeFiles\PSEMU.dir
+  OBJECT_FILE_DIR = CMakeFiles\PSEMU.dir
+  TARGET_COMPILE_PDB = CMakeFiles\PSEMU.dir\
+  TARGET_PDB = PSEMU.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target PSEMU
@@ -106,7 +141,7 @@ build CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: CXX_COMPILER__PSEMU_unscanned_Debug C$
 #############################################
 # Link the executable PSEMU.exe
 
-build PSEMU.exe: CXX_EXECUTABLE_LINKER__PSEMU_Debug CMakeFiles\PSEMU.dir\Coprocessor.cpp.obj CMakeFiles\PSEMU.dir\CPU.cpp.obj CMakeFiles\PSEMU.dir\CPURegisters.cpp.obj CMakeFiles\PSEMU.dir\GPU.cpp.obj CMakeFiles\PSEMU.dir\Logging.cpp.obj CMakeFiles\PSEMU.dir\Memory.cpp.obj CMakeFiles\PSEMU.dir\PSEMU.cpp.obj
+build PSEMU.exe: CXX_EXECUTABLE_LINKER__PSEMU_Debug CMakeFiles\PSEMU.dir\Coprocessor.cpp.obj CMakeFiles\PSEMU.dir\CPU.cpp.obj CMakeFiles\PSEMU.dir\CPURegisters.cpp.obj CMakeFiles\PSEMU.dir\Logging.cpp.obj CMakeFiles\PSEMU.dir\Memory.cpp.obj CMakeFiles\PSEMU.dir\PSEMU.cpp.obj CMakeFiles\PSEMU.dir\VRAM.cpp.obj CMakeFiles\PSEMU.dir\GTE.cpp.obj CMakeFiles\PSEMU.dir\gp0.cpp.obj CMakeFiles\PSEMU.dir\gp1.cpp.obj CMakeFiles\PSEMU.dir\GPU.cpp.obj CMakeFiles\PSEMU.dir\DMA.cpp.obj
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -MDd -Zi
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
