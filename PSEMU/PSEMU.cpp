@@ -19,6 +19,7 @@
  * Also, All the CPU Registers have the same value somehow. EDIT: nvm I fixed it, turns out I hadn't initialized all the CPURegister array to 0.
  *
  * Ok, I found a way to fix the DMA Circular Dependencies, I can just merge the DMA with the Memory.
+ * I finally got it working.
  */
 
 int main() {
