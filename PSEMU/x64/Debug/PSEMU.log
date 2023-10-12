@@ -1,10 +1,5 @@
-﻿  DMA.cpp
+﻿  CPU.cpp
 C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(152,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(103,21): warning C4018: '<': signed/unsigned mismatch
-  gp0.cpp
-  gp1.cpp
-  GPU.cpp
-  GTE.cpp
-  VRAM.cpp
-  Generating Code...
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(928,29): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe
