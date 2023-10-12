@@ -132,16 +132,25 @@
     <ClCompile Include="Coprocessor.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="CPURegisters.cpp" />
+    <ClCompile Include="DMA.cpp" />
+    <ClCompile Include="gp0.cpp" />
+    <ClCompile Include="gp1.cpp" />
+    <ClCompile Include="GPU.cpp" />
+    <ClCompile Include="GTE.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="PSEMU.cpp" />
     <ClCompile Include="Memory.cpp" />
+    <ClCompile Include="VRAM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Coprocessor.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="CPURegisters.h" />
+    <ClInclude Include="GPU.h" />
+    <ClInclude Include="GTE.h" />
     <ClInclude Include="Logging.h" />
     <ClInclude Include="Memory.h" />
+    <ClInclude Include="VRAM.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Testing\OP_ADD\ADD_TEST.asm">
