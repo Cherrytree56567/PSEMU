@@ -9,8 +9,8 @@ Makefile: C++20<br>
 
 # Goals
 - [X] Emulate R3000A PS1 CPU
-- [ ] Map the PS1 GPU VRAM
-- [ ] Emulate the GTE
+- [X] Map the PS1 GPU VRAM
+- [X] Emulate the GTE
 - [ ] Emulate the GPU
 - [X] Add PS1 BIOS Support
 - [ ] Add support for PS1 Custom Sound Chip
@@ -19,7 +19,6 @@ Makefile: C++20<br>
 - [ ] Add Input Support 
 
 # Future Goals
-- [ ] Emulate OG PS (COMING SOON)
 - [ ] Emulate PS2
 - [ ] Emulate PS3
 - [ ] Emulate PS4
