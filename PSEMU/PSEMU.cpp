@@ -28,9 +28,11 @@ int main() {
     };
     size_t numInstructions = sizeof(biosCode) / sizeof(uint32_t);
 
+    DMA dma(0);
     CPURegisters Registers(0);
-    Memory memory(&Registers); // Specify the memory size in KB
+    Memory memory(2048); // Specify the memory size in KB
     CPU cpu(&memory, &Registers);
+    dma.add_regmem(&Registers, &memory);
 
     // Load BIOS code into the CPU's memory
     //cpu.loadBiosCode(biosCode, numInstructions);

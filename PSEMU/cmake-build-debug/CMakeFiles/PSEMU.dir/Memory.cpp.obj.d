@@ -278,3 +278,5 @@ C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/include/xmmintrin.h
 C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/include/mmintrin.h
 C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/include/zmmintrin.h
 C:/Users/ronit/Desktop/MSVC/msvc/VC/Tools/MSVC/14.37.32822/include/ammintrin.h
+C:/Users/ronit/Desktop/PSEMU/PSEMU/CPU.h
+C:/Users/ronit/Desktop/PSEMU/PSEMU/GTE.h

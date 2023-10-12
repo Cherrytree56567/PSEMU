@@ -117,43 +117,18 @@ CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\iostream
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.h
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec3.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\qualifier.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\..\simd\platform.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\qualifier.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\.\compute_vector_relational.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2_precision.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2_precision.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_int_sized.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec3.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3.hpp
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec3.inl
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\compute_vector_relational.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3_precision.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float3.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float3_precision.hpp
@@ -161,8 +136,25 @@ CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\e
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double3_precision.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int3.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int3_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_int_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2_precision.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2_precision.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec4.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool4.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec4.hpp
@@ -177,6 +169,15 @@ CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\e
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4_sized.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4_sized.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
+CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\mat2x2.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\matrix_double2x2.hpp
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_mat2x2.hpp
@@ -283,7 +284,6 @@ CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\mmintrin.h
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\zmmintrin.h
 CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\ammintrin.h
-CMakeFiles\PSEMU.dir\CPU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h
 
 
 CMakeFiles\PSEMU.dir\CPURegisters.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp
@@ -1624,6 +1624,8 @@ CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\M
 CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\mmintrin.h
 CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\zmmintrin.h
 CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\ammintrin.h
+CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h
+CMakeFiles\PSEMU.dir\Memory.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h
 
 
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\PSEMU.cpp
@@ -1742,43 +1744,18 @@ CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.h
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\string
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.h
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec3.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\qualifier.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\..\simd\platform.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\qualifier.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\.\compute_vector_relational.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2_precision.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2_precision.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_int_sized.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec3.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3.hpp
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec3.inl
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\compute_vector_relational.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3_precision.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float3.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float3_precision.hpp
@@ -1786,8 +1763,25 @@ CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double3_precision.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int3.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int3_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_int_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\setup.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float2_precision.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2_precision.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\vec4.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool4.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec4.hpp
@@ -1802,6 +1796,15 @@ CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4_sized.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint4_sized.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\setup.hpp
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h"
+CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\mat2x2.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\matrix_double2x2.hpp
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_mat2x2.hpp
@@ -1908,7 +1911,6 @@ CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MS
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\mmintrin.h
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\zmmintrin.h
 CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\ammintrin.h
-CMakeFiles\PSEMU.dir\PSEMU.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h
 
 
 CMakeFiles\PSEMU.dir\VRAM.cpp.obj: C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.cpp
@@ -2878,19 +2880,13 @@ C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\iostream:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.h:
 
-C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert:
+C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.h:
 
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_mat3x2.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp:
+C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\cassert:
 
 "C:\Users\ronit\Desktop\MSVC\msvc\Windows Kits\10\Include\10.0.22621.0\ucrt\assert.h":
 
@@ -2898,37 +2894,11 @@ C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\matrix_double4x3.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\..\simd\platform.h:
 
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\.\compute_vector_relational.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\..\geometric.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.cpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp:
-
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec3.hpp:
-
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\matrix_double4x4.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec3.inl:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\compute_vector_relational.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool3_precision.hpp:
 
@@ -2949,6 +2919,28 @@ C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int3_sized.hpp:
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint3_sized.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.cpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\ext\scalar_uint_sized.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_vec2.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\type_vec2.inl:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\..\geometric.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_bool2_precision.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double2.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int2_sized.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_uint2_sized.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4.hpp:
 
@@ -2971,6 +2963,18 @@ C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_float4_precision.hpp:
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_double4.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\.\ext\vector_int4_sized.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\ext\..\detail\type_mat3x2.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.h:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.h:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\glm.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\_fixes.hpp:
+
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\fwd.hpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\mat2x2.hpp:
 
@@ -3120,15 +3124,13 @@ C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\pmmintrin.h:
 
 C:\Users\ronit\Desktop\MSVC\msvc\VC\Tools\MSVC\14.37.32822\include\ammintrin.h:
 
-C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.h:
-
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp:
 
-C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp:
+C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\.\compute_vector_relational.hpp:
 
-C:\Users\ronit\Desktop\PSEMU\PSEMU\glm\glm\detail\compute_vector_relational.hpp:
+C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp:
 
 C:\Users\ronit\Desktop\PSEMU\PSEMU\PSEMU.cpp:
 
