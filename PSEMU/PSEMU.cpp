@@ -20,6 +20,12 @@
  *
  * Ok, I found a way to fix the DMA Circular Dependencies, I can just merge the DMA with the Memory.
  * I finally got it working.
+ * 
+ * Priorities:
+ * Get GPU working
+ * Make the Renderer and look at these functions that use it
+ * - gp0_fill_rect
+ * Map the DMA (VERY VERY IMPORTANT)
  */
 
 int main() {

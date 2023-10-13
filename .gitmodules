@@ -1,6 +1,3 @@
 [submodule "PSEMU/glm"]
 	path = PSEMU/glm
 	url = https://github.com/g-truc/glm.git
-[submodule "PSEMU/glad"]
-	path = PSEMU/glad
-	url = https://github.com/Dav1dde/glad.git

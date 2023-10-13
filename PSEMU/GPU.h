@@ -9,7 +9,15 @@
 #pragma once
 #include "VRAM.h"
 #include "glm/glm/glm.hpp"
+#include "glad/glad/glad.h"
 #include <utility>
+
+struct Vertex {
+    glm::vec3 color;
+    glm::vec2 pos, coord;
+    glm::vec2 texpage, clut_coord;
+    float textured, color_depth;
+};
 
 union GPUSTATUS {
     uint32_t value;
@@ -133,4 +141,5 @@ public:
 
     std::vector<uint32_t> fifo;
     VRAM vram;
+    std::vector<Vertex> vertexData;
 };

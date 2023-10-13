@@ -137,21 +137,31 @@ void GPU::gp0_fill_rect() {
         v.pos = vertex;
         v.textured = false;
 
-        vdata.push_back(v);
+        vertexData.push_back(v);
     }
 
     /* Complete the quad. */
-    vdata.insert(vdata.end(), { vdata[1], vdata[2] });
+    vertexData.insert(vertexData.end(), { vertexData[1], vertexData[2] });
 
     /* Force draw. */
     /* NOTE: this done as fill commands ignore all */
     /* mask settings that the batch renderer uses. */
-    gl_renderer->draw(vdata);
-    vdata.clear();
+    //gl_renderer->draw(vertexData);
+    vertexData.clear();
 }
 
 void GPU::gp0_draw_mode() {
-    // Empty Implementation
+    uint32_t val = fifo[0];
+
+    GPU_status.page_base_x = (uint8_t)(val & 0xF);
+    GPU_status.page_base_y = (uint8_t)((val >> 4) & 0x1);
+    GPU_status.semi_transprency = (uint8_t)((val >> 5) & 0x3);
+    GPU_status.texture_depth = (uint8_t)((val >> 7) & 0x3);
+    GPU_status.dithering = ((val >> 9) & 0x1) != 0;
+    GPU_status.draw_to_display = ((val >> 10) & 0x1) != 0;
+    GPU_status.texture_disable = ((val >> 11) & 0x1) != 0;
+    textured_rectangle_flip.x = ((val >> 12) & 0x1) != 0;
+    textured_rectangle_flip.y = ((val >> 13) & 0x1) != 0;
 }
 
 void GPU::gp0_draw_area_top_left() {
