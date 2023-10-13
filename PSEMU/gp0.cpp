@@ -200,4 +200,14 @@ void GPU::gp0_image_transfer() {
     // Empty Implementation
 }
 
+void GPU::gp0_render_polygon() {
+    // Empty Implementation
+}
 
+void GPU::gp0_render_rect() {
+    // Empty Implementation
+}
+
+void GPU::gp0_render_line() {
+    // Empty Implementation
+}

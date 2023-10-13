@@ -929,392 +929,384 @@ void CPU::loadInstructions() {
     }
 }
 
+void CPU::tick() {
+    run();
+}
+
 void CPU::run() {
     cop0.PRId = 0x2;
-    registers->next_pc = registers->pc + 4;
-    while (registers->pc < numInstructions * 4) {
-        uint32_t instruction = memory->readWord(registers->pc);
-        uint8_t opcode = (instruction >> 26) & 0x3F; // OPCODE = First 6 bits
-        uint8_t funct = instruction & 0x3F; // FUNCTION_CODE = Last 6 bits
+    uint32_t instruction = memory->readWord(registers->pc);
+    uint8_t opcode = (instruction >> 26) & 0x3F; // OPCODE = First 6 bits
+    uint8_t funct = instruction & 0x3F; // FUNCTION_CODE = Last 6 bits
 
-        switch (opcode) {
-        case 0b000000: // R-type instructions
-            switch (funct) {
-            case 0b001101:
-                // break
-                op_break(instruction);
-                console.log("CPU INSTRUCTION :: BREAK");
-                break;
-            case 0b000110:
-                // srlv
-                op_srlv(instruction);
-                console.log("CPU INSTRUCTION :: SRLV");
-                break;
-            case 0b000111:
-                // srav
-                op_srav(instruction);
-                console.log("CPU INSTRUCTION :: SRAV");
-                break;
-            case 0b000100:
-                // sllv
-                op_sllv(instruction);
-                console.log("CPU INSTRUCTION :: SLLV");
-                break;
-            case 0b001100:
-                // syscall
-                console.err(58);
-                console.log("CPU INSTRUCTION :: SYSCALL");
-                break;
-            case 0b100000:
-                // Add
-                op_add(instruction);
-                console.log("CPU INSTRUCTION :: ADD");
-                break;
-
-            case 0b100001:
-                // Addu
-                op_addu(instruction);
-                console.log("CPU INSTRUCTION :: ADDU");
-                break;
-
-            case 0b100100:
-                // and
-                op_and(instruction);
-                console.log("CPU INSTRUCTION :: AND");
-                break;
-
-            case 0b011010:
-                // div
-                op_div(instruction);
-                console.log("CPU INSTRUCTION :: DIV");
-                break;
-
-            case 0b011011:
-                // divu
-                op_divu(instruction);
-                console.log("CPU INSTRUCTION :: DIVU");
-                break;
-
-            case 0b001001:
-                // jalr
-                op_jalr(instruction);
-                console.log("CPU INSTRUCTION :: JALR");
-                break;
-
-            case 0b001000:
-                // jr
-                op_jr(instruction);
-                console.log("CPU INSTRUCTION :: JR");
-                break;
-
-            case 0b010000:
-                // mfhi
-                op_mfhi(instruction);
-                console.log("CPU INSTRUCTION :: MFHI");
-                break;
-
-            case 0b010001:
-                // mthi
-                op_mthi(instruction);
-                console.log("CPU INSTRUCTION :: MTHI");
-                break;
-
-            case 0b010010:
-                // mflo
-                op_mflo(instruction);
-                console.log("CPU INSTRUCTION :: MFLO");
-                break;
-
-            case 0b010011:
-                // mtlo
-                op_mtlo(instruction);
-                console.log("CPU INSTRUCTION :: MTLO");
-                break;
-
-            case 0b011000:
-                // mult
-                op_mult(instruction);
-                console.log("CPU INSTRUCTION :: MULT");
-                break;
-
-            case 0b011001:
-                // multu
-                op_multu(instruction);
-                console.log("CPU INSTRUCTION :: MULTU");
-                break;
-
-            case 0b100111:
-                // nor
-                op_nor(instruction);
-                console.log("CPU INSTRUCTION :: NOR");
-                break;
-
-            case 0b100110:
-                // xor
-                op_xor(instruction);
-                console.log("CPU INSTRUCTION :: XOR");
-                break;
-
-            case 0b100101:
-                // or
-                op_or(instruction);
-                console.log("CPU INSTRUCTION :: OR");
-                break;
-
-            case 0b101010:
-                // slt
-                op_slt(instruction);
-                console.log("CPU INSTRUCTION :: SLT");
-                break;
-
-            case 0b101011:
-                // sltu
-                op_sltu(instruction);
-                console.log("CPU INSTRUCTION :: SLTU");
-                break;
-
-            case 0b000000:
-                // sll
-                op_sll(instruction);
-                console.log("CPU INSTRUCTION :: SLL");
-                break;
-
-            case 0b000010:
-                // srl
-                op_srl(instruction);
-                console.log("CPU INSTRUCTION :: SRL");
-                break;
-
-            case 0b000011:
-                // sra
-                op_sra(instruction);
-                console.log("CPU INSTRUCTION :: SRA");
-                break;
-
-            case 0b100010:
-                // sub
-                op_sub(instruction);
-                console.log("CPU INSTRUCTION :: SUB");
-                break;
-
-            case 0b100011:
-                // subu
-                op_subu(instruction);
-                console.log("CPU INSTRUCTION :: SUBU");
-                break;
-
-            default:
-                // Handle invalid funct code
-                Logging console;
-                console.warn("Invalid Function code: " + std::to_string(funct));
-                break;
-            }
-            break;
-
-        // J Type Instructions
-        case 0b000010:
-            // j
-            op_j(instruction);
-            console.log("CPU INSTRUCTION :: J");
-            break;
-
-        case 0b000011:
-            // jal
-            op_jal(instruction);
-            console.log("CPU INSTRUCTION :: JAL");
-            break;
-
-        // I Type Instructions
-        case 0b001000:
-            // addi
-            op_addi(instruction);
-            console.log("CPU INSTRUCTION :: ADDI");
-            break;
-
-        case 0b001001:
-            // addiu
-            op_addiu(instruction);
-            console.log("CPU INSTRUCTION :: ADDIU");
-            break;
-
-        case 0b001100:
-            // andi
-            op_andi(instruction);
-            console.log("CPU INSTRUCTION :: ANDI");
-            break;
-
-        case 0b000100:
-            // beq
-            op_beq(instruction);
-            console.log("CPU INSTRUCTION :: BEQ");
-            break;
-
-        case 0b000110:
-            // blez
-            op_blez(instruction);
-            console.log("CPU INSTRUCTION :: BLEZ");
-            break;
-
-        case 0b000101:
-            // bne
-            op_bne(instruction);
-            console.log("CPU INSTRUCTION :: BNE");
-            break;
-
-        case 0b000111:
-            // bgtz
-            op_bgtz(instruction);
-            console.log("CPU INSTRUCTION :: BGTZ");
-            break;
-
-        case 0b100000:
-            // lb
-            op_lb(instruction);
-            console.log("CPU INSTRUCTION :: LB");
-            break;
-
-        case 0b100100:
-            // lbu
-            op_lbu(instruction);
-            console.log("CPU INSTRUCTION :: LBU");
-            break;
-
-        case 0b100101:
-            // lhu
-            op_lhu(instruction);
-            console.log("CPU INSTRUCTION :: LHU");
-            break;
-
-        case 0b001111:
-            // lui
-            op_lui(instruction);
-            console.log("CPU INSTRUCTION :: LUI");
-            break;
-
-        case 0b100011:
-            // lw
-            op_lw(instruction);
-            console.log("CPU INSTRUCTION :: LW");
-            break;
-
+    switch (opcode) {
+    case 0b000000: // R-type instructions
+        switch (funct) {
         case 0b001101:
-            // ori
-            op_ori(instruction);
-            console.log("CPU INSTRUCTION :: ORI");
+            // break
+            op_break(instruction);
+            console.log("CPU INSTRUCTION :: BREAK");
             break;
-
-        case 0b101000:
-            // sb
-            op_storebyte(instruction);
-            console.log("CPU INSTRUCTION :: SB");
+        case 0b000110:
+            // srlv
+            op_srlv(instruction);
+            console.log("CPU INSTRUCTION :: SRLV");
             break;
-
-        case 0b101001:
-            // sh
-            op_sh(instruction);
-            console.log("CPU INSTRUCTION :: SH");
+        case 0b000111:
+            // srav
+            op_srav(instruction);
+            console.log("CPU INSTRUCTION :: SRAV");
             break;
-
-        case 0b001010:
-            // slti
-            op_slti(instruction);
-            console.log("CPU INSTRUCTION :: SLTI");
+        case 0b000100:
+            // sllv
+            op_sllv(instruction);
+            console.log("CPU INSTRUCTION :: SLLV");
             break;
-
-        case 0b001011:
-            // sltiu
-            op_sltiu(instruction);
-            console.log("CPU INSTRUCTION :: SLTIU");
+        case 0b001100:
+            // syscall
+            console.err(58);
+            console.log("CPU INSTRUCTION :: SYSCALL");
             break;
-
-        case 0b101011:
-            // sw
-            op_sw(instruction);
-            console.log("CPU INSTRUCTION :: SW");
+        case 0b100000:
+            // Add
+            op_add(instruction);
+            console.log("CPU INSTRUCTION :: ADD");
             break;
 
         case 0b100001:
-            // lh
-            op_lh(instruction);
-            console.log("CPU INSTRUCTION :: LH");
+            // Addu
+            op_addu(instruction);
+            console.log("CPU INSTRUCTION :: ADDU");
             break;
-        
-        case 0b100010:
-            //lwl
-            op_lwl(instruction);
-            console.log("CPU INSTRUCTION :: LWL");
+
+        case 0b100100:
+            // and
+            op_and(instruction);
+            console.log("CPU INSTRUCTION :: AND");
             break;
-        
-        case 0b100110:
-            //lwr
-            op_lwr(instruction);
-            console.log("CPU INSTRUCTION :: LWR");
+
+        case 0b011010:
+            // div
+            op_div(instruction);
+            console.log("CPU INSTRUCTION :: DIV");
             break;
-            
-        case 0b000001:
-            // bcond
-            op_bcond(instruction);
-            console.log("CPU INSTRUCTION :: BCOND");
+
+        case 0b011011:
+            // divu
+            op_divu(instruction);
+            console.log("CPU INSTRUCTION :: DIVU");
             break;
-        
-        case 0b001110:
-            // xori
-            op_xori(instruction);
-            console.log("CPU INSTRUCTION :: XORI");
+
+        case 0b001001:
+            // jalr
+            op_jalr(instruction);
+            console.log("CPU INSTRUCTION :: JALR");
             break;
-        
-        case 0b101010:
-            // swl
-            op_swl(instruction);
-            console.log("CPU INSTRUCTION :: SWL");
+
+        case 0b001000:
+            // jr
+            op_jr(instruction);
+            console.log("CPU INSTRUCTION :: JR");
             break;
-        
-        case 0b101110:
-            // swr
-            op_swr(instruction);
-            console.log("CPU INSTRUCTION :: SWR");
-            break;
-        
+
         case 0b010000:
-            // cop0
-            op_cop0(instruction);
-            console.log("CPU INSTRUCTION :: COP0");
+            // mfhi
+            op_mfhi(instruction);
+            console.log("CPU INSTRUCTION :: MFHI");
             break;
 
-        case 0b111010:
-            // swc2
-            op_swc2(instruction);
-            console.log("CPU INSTRUCTION :: SWC2");
-            break;
-
-        case 0b110010:
-            // lwc2
-            op_lwc2(instruction);
-            console.log("CPU INSTRUCTION :: LWC2");
+        case 0b010001:
+            // mthi
+            op_mthi(instruction);
+            console.log("CPU INSTRUCTION :: MTHI");
             break;
 
         case 0b010010:
-            // cop2
-            op_cop2(instruction);
-            console.log("CPU INSTRUCTION :: COP2");
+            // mflo
+            op_mflo(instruction);
+            console.log("CPU INSTRUCTION :: MFLO");
+            break;
+
+        case 0b010011:
+            // mtlo
+            op_mtlo(instruction);
+            console.log("CPU INSTRUCTION :: MTLO");
+            break;
+
+        case 0b011000:
+            // mult
+            op_mult(instruction);
+            console.log("CPU INSTRUCTION :: MULT");
+            break;
+
+        case 0b011001:
+            // multu
+            op_multu(instruction);
+            console.log("CPU INSTRUCTION :: MULTU");
+            break;
+
+        case 0b100111:
+            // nor
+            op_nor(instruction);
+            console.log("CPU INSTRUCTION :: NOR");
+            break;
+
+        case 0b100110:
+            // xor
+            op_xor(instruction);
+            console.log("CPU INSTRUCTION :: XOR");
+            break;
+
+        case 0b100101:
+            // or
+            op_or(instruction);
+            console.log("CPU INSTRUCTION :: OR");
+            break;
+
+        case 0b101010:
+            // slt
+            op_slt(instruction);
+            console.log("CPU INSTRUCTION :: SLT");
+            break;
+
+        case 0b101011:
+            // sltu
+            op_sltu(instruction);
+            console.log("CPU INSTRUCTION :: SLTU");
+            break;
+
+        case 0b000000:
+            // sll
+            op_sll(instruction);
+            console.log("CPU INSTRUCTION :: SLL");
+            break;
+
+        case 0b000010:
+            // srl
+            op_srl(instruction);
+            console.log("CPU INSTRUCTION :: SRL");
+            break;
+
+        case 0b000011:
+            // sra
+            op_sra(instruction);
+            console.log("CPU INSTRUCTION :: SRA");
+            break;
+
+        case 0b100010:
+            // sub
+            op_sub(instruction);
+            console.log("CPU INSTRUCTION :: SUB");
+            break;
+
+        case 0b100011:
+            // subu
+            op_subu(instruction);
+            console.log("CPU INSTRUCTION :: SUBU");
             break;
 
         default:
-            console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
+            // Handle invalid funct code
+            Logging console;
+            console.warn("Invalid Function code: " + std::to_string(funct));
             break;
         }
+        break;
 
-        // Program Counter
-        registers->pc = registers->next_pc; // 4 Bytes = 32 Bits
-        registers->next_pc += 4;
+        // J Type Instructions
+    case 0b000010:
+        // j
+        op_j(instruction);
+        console.log("CPU INSTRUCTION :: J");
+        break;
 
-        // Interrupts
-        handleInterrupts();
+    case 0b000011:
+        // jal
+        op_jal(instruction);
+        console.log("CPU INSTRUCTION :: JAL");
+        break;
+
+        // I Type Instructions
+    case 0b001000:
+        // addi
+        op_addi(instruction);
+        console.log("CPU INSTRUCTION :: ADDI");
+        break;
+
+    case 0b001001:
+        // addiu
+        op_addiu(instruction);
+        console.log("CPU INSTRUCTION :: ADDIU");
+        break;
+
+    case 0b001100:
+        // andi
+        op_andi(instruction);
+        console.log("CPU INSTRUCTION :: ANDI");
+        break;
+
+    case 0b000100:
+        // beq
+        op_beq(instruction);
+        console.log("CPU INSTRUCTION :: BEQ");
+        break;
+
+    case 0b000110:
+        // blez
+        op_blez(instruction);
+        console.log("CPU INSTRUCTION :: BLEZ");
+        break;
+
+    case 0b000101:
+        // bne
+        op_bne(instruction);
+        console.log("CPU INSTRUCTION :: BNE");
+        break;
+
+    case 0b000111:
+        // bgtz
+        op_bgtz(instruction);
+        console.log("CPU INSTRUCTION :: BGTZ");
+        break;
+
+    case 0b100000:
+        // lb
+        op_lb(instruction);
+        console.log("CPU INSTRUCTION :: LB");
+        break;
+
+    case 0b100100:
+        // lbu
+        op_lbu(instruction);
+        console.log("CPU INSTRUCTION :: LBU");
+        break;
+
+    case 0b100101:
+        // lhu
+        op_lhu(instruction);
+        console.log("CPU INSTRUCTION :: LHU");
+        break;
+
+    case 0b001111:
+        // lui
+        op_lui(instruction);
+        console.log("CPU INSTRUCTION :: LUI");
+        break;
+
+    case 0b100011:
+        // lw
+        op_lw(instruction);
+        console.log("CPU INSTRUCTION :: LW");
+        break;
+
+    case 0b001101:
+        // ori
+        op_ori(instruction);
+        console.log("CPU INSTRUCTION :: ORI");
+        break;
+
+    case 0b101000:
+        // sb
+        op_storebyte(instruction);
+        console.log("CPU INSTRUCTION :: SB");
+        break;
+
+    case 0b101001:
+        // sh
+        op_sh(instruction);
+        console.log("CPU INSTRUCTION :: SH");
+        break;
+
+    case 0b001010:
+        // slti
+        op_slti(instruction);
+        console.log("CPU INSTRUCTION :: SLTI");
+        break;
+
+    case 0b001011:
+        // sltiu
+        op_sltiu(instruction);
+        console.log("CPU INSTRUCTION :: SLTIU");
+        break;
+
+    case 0b101011:
+        // sw
+        op_sw(instruction);
+        console.log("CPU INSTRUCTION :: SW");
+        break;
+
+    case 0b100001:
+        // lh
+        op_lh(instruction);
+        console.log("CPU INSTRUCTION :: LH");
+        break;
+
+    case 0b100010:
+        //lwl
+        op_lwl(instruction);
+        console.log("CPU INSTRUCTION :: LWL");
+        break;
+
+    case 0b100110:
+        //lwr
+        op_lwr(instruction);
+        console.log("CPU INSTRUCTION :: LWR");
+        break;
+
+    case 0b000001:
+        // bcond
+        op_bcond(instruction);
+        console.log("CPU INSTRUCTION :: BCOND");
+        break;
+
+    case 0b001110:
+        // xori
+        op_xori(instruction);
+        console.log("CPU INSTRUCTION :: XORI");
+        break;
+
+    case 0b101010:
+        // swl
+        op_swl(instruction);
+        console.log("CPU INSTRUCTION :: SWL");
+        break;
+
+    case 0b101110:
+        // swr
+        op_swr(instruction);
+        console.log("CPU INSTRUCTION :: SWR");
+        break;
+
+    case 0b010000:
+        // cop0
+        op_cop0(instruction);
+        console.log("CPU INSTRUCTION :: COP0");
+        break;
+
+    case 0b111010:
+        // swc2
+        op_swc2(instruction);
+        console.log("CPU INSTRUCTION :: SWC2");
+        break;
+
+    case 0b110010:
+        // lwc2
+        op_lwc2(instruction);
+        console.log("CPU INSTRUCTION :: LWC2");
+        break;
+
+    case 0b010010:
+        // cop2
+        op_cop2(instruction);
+        console.log("CPU INSTRUCTION :: COP2");
+        break;
+
+    default:
+        console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
+        break;
     }
-    for (int i = 0; i < 32; ++i) {
-        console.log("Register " + std::to_string(i) + ": " + std::to_string(registers->reg[i]));
-    }
-    /*for (int i = 0; i < (2048 * 8000) / sizeof(uint8_t); ++i) {
-        console.log("MEMORY " + std::to_string(i) + ": " + std::bitset<32>(memory->read32(i)).to_string());
-    }*/
+
+    // Program Counter
+    registers->next_pc += 4;
+    registers->pc = registers->next_pc; // 4 Bytes = 32 Bits
 }

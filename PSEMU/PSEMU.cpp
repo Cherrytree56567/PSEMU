@@ -22,10 +22,14 @@
  * I finally got it working.
  * 
  * Priorities:
- * Get GPU working
- * Make the Renderer and look at these functions that use it
+ * [ ] Get GPU working
+ * [ ] Make the Renderer and look at these functions that use it
  * - gp0_fill_rect
- * Map the DMA (VERY VERY IMPORTANT)
+ * [ ] Implement Tick.
+ * 
+ * Just a note, I'm not sure if it's nessairy or not but other emulators seem to be starting at a specific address but mine just starts at zero.
+ * Also I think we need to use a tick
+ * I think the j instruction at the end uses the DMA.
  */
 
 int main() {

@@ -1,28 +1,6 @@
-﻿  Coprocessor.cpp
-  CPU.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(152,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  CPU.cpp
+C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(148,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(103,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(928,29): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
-  CPURegisters.cpp
-  DMA.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(152,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(103,21): warning C4018: '<': signed/unsigned mismatch
-  gp0.cpp
-  gp1.cpp
-  GPU.cpp
-  GTE.cpp
-  Logging.cpp
-  PSEMU.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(152,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(103,21): warning C4018: '<': signed/unsigned mismatch
-  Memory.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(152,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(103,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(12,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(23,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(33,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(48,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(66,17): warning C4018: '>=': signed/unsigned mismatch
-  VRAM.cpp
-  Generating Code...
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(218,14): warning C4018: '<': signed/unsigned mismatch
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(939,29): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe

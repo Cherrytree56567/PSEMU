@@ -14,7 +14,7 @@ class Logging
 {
 public:
 	bool warnstatus = true;
-	bool errstatus = false;
+	bool errstatus = true;
 	bool infostatus = true;
 	void err(int message);
 	void warn(std::string message);

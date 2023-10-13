@@ -8,11 +8,12 @@
 */
 #include "Memory.h"
 
-uint8_t Memory::readByte(uint32_t address) const {
+uint8_t Memory::readByte(uint32_t address) {
     if (address < MainRAMEnd) {
         return MainRAM[address];
-    }
-    else {
+    } else if (address < DMAEnd) {
+        return (uint8_t)DMAread(address);
+    } else {
         Logging console;
         console.err(54);
         return 0;
@@ -22,22 +23,24 @@ uint8_t Memory::readByte(uint32_t address) const {
 void Memory::writeByte(uint32_t address, uint8_t value) {
     if (address < MainRAMEnd) {
         MainRAM[address] = value;
-    }
-    else {
+    } else if (address < DMAEnd) {
+        return write(address, value);
+    } else {
         Logging console;
         console.err(54);
     }
 }
 
-uint32_t Memory::readWord(uint32_t address) const {
-    if (address < MainRAMEnd - 3) {
+uint32_t Memory::readWord(uint32_t address) {
+    if (address < MainRAMEnd) {
         uint32_t value = 0;
         for (int i = 0; i < 4; ++i) {
             value |= static_cast<uint32_t>(MainRAM[address + i]) << (8 * i);
         }
         return value;
-    }
-    else {
+    } else if (address < DMAEnd) {
+        return DMAread(address);
+    } else {
         Logging console;
         console.err(54);
         return 0;
@@ -45,10 +48,13 @@ uint32_t Memory::readWord(uint32_t address) const {
 }
 
 void Memory::writeWord(uint32_t address, uint32_t value) {
-    if (address < MainRAMEnd - 3) {
+    if (address < MainRAMEnd) {
         for (int i = 0; i < 4; ++i) {
             MainRAM[address + i] = static_cast<uint8_t>(value >> (8 * i));
         }
+    }
+    else if (address < DMAEnd) {
+        return write(address, value);
     }
     else {
         Logging console;
@@ -62,18 +68,23 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
         console.err(55);
         return;
     }
-
-    if (address >= MainRAMEnd) {
-        Logging console;
-        console.err(56);
-        return;
+    else {
+        if (address < MainRAMEnd) {
+            MainRAM[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
+            MainRAM[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
+        }
+        else if (address < DMAEnd) {
+            return write(address, value);
+        }
+        else {
+            Logging console;
+            console.err(56);
+            return;
+        }
     }
-
-    MainRAM[address] = static_cast<uint8_t>(value & 0xFF); // Write the least significant byte
-    MainRAM[address + 1] = static_cast<uint8_t>((value >> 8) & 0xFF); // Write the most significant byte
 }
 
-uint32_t Memory::read32(uint32_t address) const {
+uint32_t Memory::read32(uint32_t address) {
     // Ensure that the address is within the bounds of MainRAM
     return readWord(address);
 }

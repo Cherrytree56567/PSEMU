@@ -8,6 +8,14 @@
 */
 #include "GPU.h"
 
+template<int bi>
+uint32_t sl(uint32_t value) {
+    enum { mask = (1 << bi) - 1 };
+    enum { sign = 1 << (bi - 1) };
+
+    return ((value & mask) ^ sign) - sign;
+}
+
 GPU::GPU() {
     GPU_status.value = 0x14802000;
 
@@ -41,14 +49,28 @@ void GPU::vram_transfer(uint16_t data) {
 }
 uint16_t GPU::vram_transfer() {
     // Empty
+    return 0;
 }
 
 glm::ivec3 GPU::extract_color(uint32_t color) {
-    // Empty
+    glm::ivec3 result;
+    result.r = (color >> 0) & 0xff;
+    result.g = (color >> 8) & 0xff;
+    result.b = (color >> 16) & 0xff;
+
+    return result;
 }
 glm::ivec2 GPU::extract_point(uint32_t point) {
-    // Empty
+    glm::ivec2 result;
+    result.x = sl<11>(point);
+    result.y = sl<11>(point >> 16);
+
+    return result;
 }
 glm::ivec2 GPU::extract_coord(uint32_t coord) {
-    // Empty
+    glm::ivec2 p;
+    p.s = (coord >> 0) & 0xff;
+    p.t = (coord >> 8) & 0xff;
+
+    return p;
 }

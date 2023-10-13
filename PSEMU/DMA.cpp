@@ -163,7 +163,7 @@ void Memory::list_copy(DMAChannels dma_channel) {
     channel.control.trigger = false;
 }
 
-uint32_t Memory::read(uint32_t address) {
+uint32_t Memory::DMAread(uint32_t address) {
     uint offset = address - 0x1f801080;
 
     /* Get channel information from address. */

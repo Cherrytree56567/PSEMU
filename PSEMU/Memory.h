@@ -103,8 +103,7 @@ public:
         if (address < MainRAMEnd) {
             return MainRAM[address - MainRAMStart];
         } else if (address < DMAEnd) {
-            //     --FIX--
-            return MainRAM[address - DMAStart];
+            std::cout << "ERROR: 8-BITS NOT SUPPORTED IN DMA";
         } else {
             Logging console;
             console.err(54);
@@ -113,19 +112,17 @@ public:
         }
     }
 
-    uint8_t readByte(uint32_t address) const;
+    uint8_t readByte(uint32_t address);
 
     void writeByte(uint32_t address, uint8_t value);
 
-    uint32_t readWord(uint32_t address) const;
+    uint32_t readWord(uint32_t address);
 
     void writeWord(uint32_t address, uint32_t value);
 
     void writeHalfword(uint32_t address, uint16_t value);
 
-    uint32_t read32(uint32_t address) const;
-
-    // TODO: Implement memory-mapped I/O for CD-ROM and HDD
+    uint32_t read32(uint32_t address);
 
     // DMA
     bool is_channel_enabled(DMAChannels channel);
@@ -135,11 +132,10 @@ public:
     void block_copy(DMAChannels channel);
     void list_copy(DMAChannels channel);
 
-    uint32_t read(uint32_t address);
+    uint32_t DMAread(uint32_t address);
     void write(uint32_t address, uint32_t data);
 
     void tick();
-private:
     DMAControl control;
     DMAIRQReg irq;
     DMAChannel channels[7];
@@ -151,7 +147,7 @@ private:
     int MainRAMStart = 0; // bits
     int MainRAMEnd = MainRAM.size(); // bits
     uint32_t DMAStart = 0x1f801080;
-    uint32_t DMAEnd = 0x1f801080 + (uint32_t)0x80LL;
+    uint32_t DMAEnd = 0x1f801080 + static_cast<uint32_t>(0x80LL);
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
     CPURegisters* regs;
 };
