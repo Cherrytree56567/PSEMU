@@ -931,6 +931,22 @@ void CPU::loadInstructions() {
 
 void CPU::tick() {
     run();
+
+    registers->pc = registers->next_pc;
+    registers->next_pc += 4;
+
+    /* Update (load) delay slots. */
+    is_delay_slot = is_branch;
+    in_delay_slot_took_branch = took_branch;
+    is_branch = false;
+    took_branch = false;
+
+    /* Check aligment errors. */
+    if ((registers->pc % 4) != 0) {
+        cop0.BadA = registers->pc;
+        // READ ERROR
+        return;
+    }
 }
 
 void CPU::run() {
@@ -1305,8 +1321,4 @@ void CPU::run() {
         console.warn("Invalid Opcode: " + std::bitset<6>(opcode).to_string());
         break;
     }
-
-    // Program Counter
-    registers->next_pc += 4;
-    registers->pc = registers->next_pc; // 4 Bytes = 32 Bits
 }

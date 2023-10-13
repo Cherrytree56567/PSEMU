@@ -21,6 +21,8 @@ class CPU {
 public:
     CPU(Memory* memorya, CPURegisters* gs) : memory(memorya), numInstructions(0), registers(gs) {}
 
+    void tick();
+
     void op_add(uint32_t instruction);
     void op_addu(uint32_t instruction);
     void op_storebyte(uint32_t instruction);
