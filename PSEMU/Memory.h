@@ -13,6 +13,25 @@
 #include "CPURegisters.h"
 #include "GPU.h"
 
+struct Range {
+    Range(uint begin, ulong size) :
+        start(begin), length(size) {}
+
+    inline bool contains(uint addr) const
+    {
+        return (addr >= start && addr < start + length);
+    }
+
+    inline uint offset(uint addr) const
+    {
+        return addr - start;
+    }
+
+public:
+    uint start = 0;
+    ulong length = 0;
+};
+
 enum class SyncType : uint32_t {
     Manual = 0,
     Request = 1,
@@ -103,7 +122,8 @@ public:
         if (address < MainRAMEnd) {
             return MainRAM[address - MainRAMStart];
         } else if (address < DMAEnd) {
-            std::cout << "ERROR: 8-BITS NOT SUPPORTED IN DMA";
+            uint8_t abs_addr = DMAread(physical_addr(address));
+            return abs_addr;
         } else {
             Logging console;
             console.err(54);
@@ -112,7 +132,16 @@ public:
         }
     }
 
+    const uint region_mask[8] = {
+        0xffffffff, 0xffffffff,
+        0xffffffff, 0xffffffff,
+        0x7fffffff, 0x1fffffff,
+        0xffffffff, 0xffffffff,
+    };
+
     uint8_t readByte(uint32_t address);
+
+    uint32_t physical_addr(uint32_t addr);
 
     void writeByte(uint32_t address, uint8_t value);
 
@@ -150,4 +179,18 @@ public:
     uint32_t DMAEnd = 0x1f801080 + static_cast<uint32_t>(0x80LL);
     // Main Ram starts at 0 bits and ends at 16384000 bits (divide it by uint8_t to get array size)
     CPURegisters* regs;
+
+    const Range RAM = Range(0x00000000, 2 * 1024 * 1024LL);
+    const Range BIOS = Range(0x1fc00000, 512 * 1024LL);
+    const Range TIMERS = Range(0x1f801100, 0x30);
+    const Range RAM_SIZE = Range(0x1f801060, 4);
+    const Range SPU_RANGE = Range(0x1f801c00, 640);
+    const Range EXPANSION_2 = Range(0x1f802000, 66);
+    const Range EXPANSION_1 = Range(0x1f000000, 512 * 1024);
+    const Range CACHE_CONTROL = Range(0xfffe0130, 4);
+    const Range SYS_CONTROL = Range(0x1f801000, 36);
+    const Range CDROM = Range(0x1f801800, 0x4);
+    const Range PAD_MEMCARD = Range(0x1f801040, 15);
+    const Range DMA_RANGE = Range(0x1f801080, 0x80LL);
+    const Range SCRATCHPAD = Range(0x1f800000, 1024LL);
 };

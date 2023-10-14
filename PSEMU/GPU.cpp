@@ -74,3 +74,8 @@ glm::ivec2 GPU::extract_coord(uint32_t coord) {
 
     return p;
 }
+
+bool GPU::tick(uint32_t cycles) {
+    std::cout << "Warning: GPU tick is not implemented.";
+    return false;
+}

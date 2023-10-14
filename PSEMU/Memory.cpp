@@ -8,6 +8,11 @@
 */
 #include "Memory.h"
 
+uint32_t Memory::physical_addr(uint32_t addr) {
+    uint index = addr >> 29;
+    return (addr & region_mask[index]);
+}
+
 uint8_t Memory::readByte(uint32_t address) {
     if (address < MainRAMEnd) {
         return MainRAM[address];
@@ -85,6 +90,5 @@ void Memory::writeHalfword(uint32_t address, uint16_t value) {
 }
 
 uint32_t Memory::read32(uint32_t address) {
-    // Ensure that the address is within the bounds of MainRAM
     return readWord(address);
 }

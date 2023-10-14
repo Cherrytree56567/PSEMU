@@ -87,7 +87,7 @@ public:
     glm::ivec2 extract_point(uint32_t point);
     glm::ivec2 extract_coord(uint32_t coord);
 
-    // GPU memory commands.
+    // GPU commands.
     void write_gp0(uint32_t data);
     void write_gp1(uint32_t data);
     uint32_t get_gpuread();
@@ -95,6 +95,7 @@ public:
 
     void vram_transfer(uint16_t data);
     uint16_t vram_transfer();
+    bool tick(uint32_t cycles);
 
     // GP0 commands.
     void gp0_nop();

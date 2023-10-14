@@ -25,11 +25,14 @@
  * [ ] Get GPU working
  * [ ] Make the Renderer and look at these functions that use it
  * - gp0_fill_rect
- * [ ] Implement Tick.
+ * [X] Implement Tick.
+ * [ ] Add Proper Memory
  * 
  * Just a note, I'm not sure if it's nessairy or not but other emulators seem to be starting at a specific address but mine just starts at zero.
  * Also I think we need to use a tick
  * I think the j instruction at the end uses the DMA.
+ * 
+ * NOTE: The gpu tick is not implemented
  */
 
 int main() {
@@ -48,11 +51,17 @@ int main() {
     cpu.loadBIOS("scph1001.bin");
     cpu.loadInstructions();
 
+    memory.control = 0x07654321;
+
     // Run the CPU to execute the loaded BIOS code
     while (true) {
       cpu.tick();
+      cpu.handleInterrupts();
       
       memory.tick(); // dMA
-      
+
+      /*if (memory.gpu.tick(300)) {
+          // Empty
+      }  */
     }
 }

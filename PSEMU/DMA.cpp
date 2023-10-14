@@ -182,7 +182,7 @@ uint32_t Memory::DMAread(uint32_t address) {
             case 8:
                 return channel.control.raw;
             default:
-                printf("[DMA] DMAController::read: unhandled channel read at offset: 0x%x\n", offset);
+                printf("[DMA]_ DMAController::read: unhandled channel read at offset: 0x%x\n", offset);
                 exit(1);
         }
     } /* One of the primary registers is selected. */

@@ -947,7 +947,6 @@ void CPU::tick() {
         // READ ERROR
         return;
     }
-    // reset cop0 registers
 }
 
 void CPU::run() {
