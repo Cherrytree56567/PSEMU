@@ -3,7 +3,9 @@
 
 class CPU {
 public:
-	CPU(Bus* bu) : bus(bu) {}
+	CPU(Bus* bu) : bus(bu) {
+		pc = 0xbfc00000;
+	}
 
 	void tick();
 	void fetch();
