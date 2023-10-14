@@ -13,94 +13,14 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\CPU">
-      <UniqueIdentifier>{a88b7610-a9bc-452b-a9bd-a4d7f3bc922b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CPU\Memory">
-      <UniqueIdentifier>{d97e8d2b-a87a-4998-998f-04e106651ebf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CPU\CPU Registers">
-      <UniqueIdentifier>{dc196ffa-82bb-4a13-be84-33eb92912d87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Logging">
-      <UniqueIdentifier>{a4be8a67-7c42-4970-829f-5b2c23faeb8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CPU\Coprocessor">
-      <UniqueIdentifier>{a97e7153-f159-4895-b5f8-3b40d802cf2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\CPU\GTE">
-      <UniqueIdentifier>{f8df33c1-5429-48f1-8c04-e6ed7af0806c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GPU">
-      <UniqueIdentifier>{55b7fd33-b361-4c15-bcae-1b2ba544f8ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Memory.cpp">
-      <Filter>Source Files\CPU\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="CPURegisters.cpp">
-      <Filter>Source Files\CPU\CPU Registers</Filter>
-    </ClCompile>
-    <ClCompile Include="Logging.cpp">
-      <Filter>Source Files\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="CPU.cpp">
-      <Filter>Source Files\CPU</Filter>
-    </ClCompile>
-    <ClCompile Include="Coprocessor.cpp">
-      <Filter>Source Files\CPU\Coprocessor</Filter>
-    </ClCompile>
-    <ClCompile Include="DMA.cpp">
-      <Filter>Source Files\CPU\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="GTE.cpp">
-      <Filter>Source Files\CPU\GTE</Filter>
-    </ClCompile>
-    <ClCompile Include="gp0.cpp">
-      <Filter>Source Files\GPU</Filter>
-    </ClCompile>
-    <ClCompile Include="gp1.cpp">
-      <Filter>Source Files\GPU</Filter>
-    </ClCompile>
-    <ClCompile Include="GPU.cpp">
-      <Filter>Source Files\GPU</Filter>
-    </ClCompile>
-    <ClCompile Include="VRAM.cpp">
-      <Filter>Source Files\GPU</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CPURegisters.h">
-      <Filter>Source Files\CPU\CPU Registers</Filter>
-    </ClInclude>
-    <ClInclude Include="Memory.h">
-      <Filter>Source Files\CPU\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="Logging.h">
-      <Filter>Source Files\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="CPU.h">
-      <Filter>Source Files\CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="Coprocessor.h">
-      <Filter>Source Files\CPU\Coprocessor</Filter>
-    </ClInclude>
-    <ClInclude Include="GTE.h">
-      <Filter>Source Files\CPU\GTE</Filter>
-    </ClInclude>
-    <ClInclude Include="GPU.h">
-      <Filter>Source Files\GPU</Filter>
-    </ClInclude>
-    <ClInclude Include="VRAM.h">
-      <Filter>Source Files\GPU</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Testing\OP_ADD\ADD_TEST.asm">

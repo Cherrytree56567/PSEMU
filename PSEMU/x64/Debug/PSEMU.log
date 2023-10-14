@@ -1,9 +1,2 @@
-﻿  Memory.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(177,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.h(122,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(17,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(29,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(40,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(56,17): warning C4018: '<': signed/unsigned mismatch
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp(77,21): warning C4018: '<': signed/unsigned mismatch
+﻿  PSEMU.cpp
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe

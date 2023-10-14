@@ -1,12 +1,1 @@
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Coprocessor.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\Coprocessor.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\CPU.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPURegisters.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\CPURegisters.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\DMA.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\gp0.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\gp0.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\gp1.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\gp1.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\GPU.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\GPU.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\GTE.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\GTE.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Logging.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\Logging.obj
 C:\Users\ronit\Desktop\PSEMU\PSEMU\PSEMU.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\PSEMU.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\Memory.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\Memory.obj
-C:\Users\ronit\Desktop\PSEMU\PSEMU\VRAM.cpp;C:\Users\ronit\Desktop\PSEMU\PSEMU\x64\Debug\VRAM.obj
