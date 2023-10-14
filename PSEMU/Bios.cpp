@@ -1,6 +1,6 @@
 #include "Bios.h"
 
-void Bios::new(const char* path) {
+void Bios::newl(const char* path) {
   std::ifstream file(path, std::ios::binary);
     if (!file.is_open()) {
         std::cerr << "Error: Unable to open the file." << std::endl;
