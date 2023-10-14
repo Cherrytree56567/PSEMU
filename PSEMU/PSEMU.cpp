@@ -11,7 +11,7 @@
 #include "Bus.h"
 
 int main() {
-    Bus* bus();
+    Bus bus(1);
     CPU cpu(&bus);
     return 0;
 }

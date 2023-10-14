@@ -5,10 +5,13 @@ class CPU {
 public:
 	CPU(Bus* bu) : bus(bu) {}
 
-	Bus* bus;
 	void tick();
 	void fetch();
-	void decode();
-	void execute();
+	void decode_execute();
+
+	Bus* bus;
+	
+	// Registers
+	uint32_t pc = 0;
 };
 

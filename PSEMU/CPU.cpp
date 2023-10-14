@@ -8,10 +8,6 @@ void CPU::fetch() {
 
 }
 
-void CPU::decode() {
-
-}
-
-void CPU::execute() {
+void CPU::decode_execute() {
 
 }

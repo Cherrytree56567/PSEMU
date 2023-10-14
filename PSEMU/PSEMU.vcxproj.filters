@@ -16,15 +16,35 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\CPU">
+      <UniqueIdentifier>{10b2bee1-0b11-4292-a6df-482241d17223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bus">
+      <UniqueIdentifier>{f5b7cfcd-aeaa-460d-a11b-262d54de02b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CPU.cpp">
+      <Filter>Source Files\CPU</Filter>
+    </ClCompile>
+    <ClCompile Include="Bus.cpp">
+      <Filter>Source Files\Bus</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Testing\OP_ADD\ADD_TEST.asm">
       <Filter>Source Files\Testing</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CPU.h">
+      <Filter>Source Files\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Bus.h">
+      <Filter>Source Files\Bus</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
