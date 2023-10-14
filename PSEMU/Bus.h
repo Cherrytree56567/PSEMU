@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include "Bios.h"
+#include "Range.h"
 
 class Bus {
 public:
