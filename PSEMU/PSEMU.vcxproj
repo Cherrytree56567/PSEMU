@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bios.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="PSEMU.cpp" />
@@ -139,6 +140,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bios.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="CPU.h" />
   </ItemGroup>

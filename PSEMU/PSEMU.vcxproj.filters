@@ -33,6 +33,9 @@
     <ClCompile Include="Bus.cpp">
       <Filter>Source Files\Bus</Filter>
     </ClCompile>
+    <ClCompile Include="Bios.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Testing\OP_ADD\ADD_TEST.asm">
@@ -45,6 +48,9 @@
     </ClInclude>
     <ClInclude Include="Bus.h">
       <Filter>Source Files\Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="Bios.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
