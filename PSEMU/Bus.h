@@ -22,6 +22,6 @@ public:
 	uint8_t RAM[RAMSize];
 	Bios bios;
 	
-const Range BIOSRange(0xbfc00000, 512 * 1024);
+Range BIOSRange(0xbfc00000, 512 * 1024);
 };
 
