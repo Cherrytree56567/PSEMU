@@ -49,5 +49,10 @@ int main() {
     cpu.loadInstructions();
 
     // Run the CPU to execute the loaded BIOS code
-    cpu.run();
+    while (true) {
+      cpu.tick();
+      
+      memory.tick(); // dMA
+      
+    }
 }
