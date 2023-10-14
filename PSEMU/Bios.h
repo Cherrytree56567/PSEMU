@@ -1,18 +1,14 @@
 #pragma once
 #include <vector>
 
-struct Bios_Data {
-	/// BIOS memory
-	std::vector<uint8_t> data;
-};
-
 class Bios {
 public:
 	Bios() {}
 	
 	void new(const char* path);
+	void load32(uint32_t offset);
 	
 	const uint64_t bios_size = 512 * 1024;
-	Bios_Data bdata;
+	std::vector<uint8_t>(bios_size) data;
 };
 
