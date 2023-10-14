@@ -20,7 +20,7 @@ void Bios::new(const char* path) {
     }
 }
 
-void load32(uint32_t offset) {
+void Bios::load32(uint32_t offset) {
   uint32_t b0 = static_cast<uint32_t>(data[offset + 0]);
     uint32_t b1 = static_cast<uint32_t>(data[offset + 1]);
     uint32_t b2 = static_cast<uint32_t>(data[offset + 2]);
