@@ -9,7 +9,8 @@ public:
 	Bus(int a) {}
 
 	uint32_t load32(uint32_t addr) {
-        if (BIOS.contains(addr) != std::nullopt) {
+	  auto offset = BIOS.contains(addr);
+        if (offset != std::nullopt) {
             return bios.load32(offset.value());
         }
 
