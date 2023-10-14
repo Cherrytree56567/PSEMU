@@ -932,8 +932,8 @@ void CPU::loadInstructions() {
 void CPU::tick() {
     run();
 
-    registers->pc = registers->next_pc;
     registers->next_pc += 4;
+    registers->pc = registers->next_pc;
 
     /* Update (load) delay slots. */
     is_delay_slot = is_branch;
@@ -947,6 +947,7 @@ void CPU::tick() {
         // READ ERROR
         return;
     }
+    // reset cop0 registers
 }
 
 void CPU::run() {
