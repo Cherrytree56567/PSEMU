@@ -9,7 +9,7 @@ public:
 	Bus(int a) {}
 
 	uint32_t load32(uint32_t addr) {
-        if (auto offset = BIOS.contains(addr); offset.has_value()) {
+        if (auto offset = BIOS.contains(addr)) {
             return bios.load32(offset.value());
         }
 
