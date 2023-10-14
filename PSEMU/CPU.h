@@ -7,7 +7,7 @@ public:
 
 	void tick();
 	void fetch();
-	void decode_execute();
+	void decode_execute(uint32_t instruction);
 
 	Bus* bus;
 	

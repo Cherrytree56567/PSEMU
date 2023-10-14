@@ -5,9 +5,14 @@ void CPU::tick() {
 }
 
 void CPU::fetch() {
+    uint32_t instruction = bus->read32(pc);
 
+    // Increment PC to point to the next instruction.
+    pc += 4;
+
+    decode_execute(instruction);
 }
 
-void CPU::decode_execute() {
+void CPU::decode_execute(uint32_t instruction) {
 
 }
