@@ -6,7 +6,7 @@ class Bios {
 public:
 	Bios() {}
 	
-	void new(const char* path);
+	void newl(const char* path);
 	uint32_t load32(uint32_t offset);
 	
 	const uint64_t bios_size = 512 * 1024;
