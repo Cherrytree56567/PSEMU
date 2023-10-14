@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <stdexcept>
+#include <cstdint>
 #include <optional>
 
 struct Range {
