@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <optional>
 
-struct Range {
+class Range {
     uint32_t start;
     uint32_t length;
 
