@@ -9,7 +9,7 @@ public:
 	Bus(int a) {}
 
 	uint32_t load32(uint32_t addr) {
-	  auto offset = BIOS.contains(addr);
+	  auto offset = BIOSRange.contains(addr);
         if (offset != std::nullopt) {
             return bios.load32(offset.value());
         }
@@ -22,6 +22,6 @@ public:
 	uint8_t RAM[RAMSize];
 	Bios bios;
 	
-const Range BIOS(0xbfc00000, 512 * 1024);
+const Range BIOSRange(0xbfc00000, 512 * 1024);
 };
 
