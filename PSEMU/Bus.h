@@ -4,16 +4,18 @@
 #include <string>
 #include "Bios.h"
 #include "Range.h"
+#include "RAM.h"
 
 class Bus {
 public:
-    Bus() {} // Initialize BIOSRange in the constructor
+    Bus() { ram.newl(); } // Initialize BIOSRange in the constructor
 
     // Memory Ranges
     const Range BIOS = Range(0xbfc00000, 512 * 1024);
     const Range MEM_CONTROL = Range(0x1f801000, 36);
     const Range RAM_SIZE = Range(0x1f801060, 4);
     const Range CACHE_CONTROL = Range(0xfffe0130, 4);
+    const Range RAM_ = Range(0xa0000000, 2 * 1024 * 1024);
 
     // Load and Store functions
     uint32_t load32(uint32_t addr) {
@@ -21,6 +23,8 @@ public:
             return bios.load32(BIOS.offset(addr));
         } else if (RAM_SIZE.contains(addr)) {
             return 0x00000888;
+        } else if (RAM_.contains(addr)) {
+            return ram.load32(RAM_.offset(addr));
         }
 
         if (addr % 4 != 0) {
@@ -38,6 +42,9 @@ public:
         } else if (CACHE_CONTROL.contains(addr)) {
             std::cout << "[Bus] WARNING: Cache_Control not implemented.";
             return;
+        } else if (RAM_.contains(addr)) {
+            ram.store32(RAM_.offset((addr & region_mask[addr >> 29])), value);
+            return;
         }
 
         if (addr % 4 != 0) {
@@ -49,4 +56,12 @@ public:
     }
 
     Bios bios;
+    RAM ram;
+
+    const uint32_t region_mask[8] = {
+        0xffffffff, 0xffffffff,
+        0xffffffff, 0xffffffff,
+        0x7fffffff, 0x1fffffff,
+        0xffffffff, 0xffffffff,
+    };
 };
