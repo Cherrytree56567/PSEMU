@@ -304,3 +304,13 @@ void CPU::op_lw(Instruction instruction) {
     // Put the load in the delay slot
     load = std::make_tuple(t, v);
 }
+
+void CPU::op_sltu(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t v = regs[s] < regs[t];
+
+    set_reg(d, v);
+}
