@@ -192,12 +192,54 @@ void CPU::op_mtc0(Instruction instruction) {
     uint32_t v = regs[cpu_r];
 
     switch (cop_r) {
-        case (12):
+        case 3:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 5:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 6:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 7:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 9:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 11:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+            }
+            break;
+
+        case 12:
             sr = v;
             break;
 
+        case 13:
+            if (v != 0) {
+                throw std::runtime_error("[CPU] ERROR: Unhandled write to CAUSE register.");
+            }
+            break;
+
         default:
-            throw std::runtime_error("[CPU] ERROR: Unhandled COP0 Register");
+            throw std::runtime_error("Unhandled cop0 register " + std::to_string(cop_r));
             break;
     }
 }
