@@ -61,6 +61,15 @@ public:
 
         throw std::runtime_error("[Bus] ERROR: Unhandled store32 into address " + std::to_string(addr));
     }
+    
+    void store16(uint32_t addr, uint16_t value) {
+        if (addr % 4 != 0) {
+            throw std::runtime_error("[Bus] ERROR: Unaligned store16 address " + std::to_string(addr));
+            return;
+        }
+
+        throw std::runtime_error("[Bus] ERROR: Unhandled store16 into address " + std::to_string(addr));
+    }
 
     Bios bios;
     RAM ram;
