@@ -319,3 +319,13 @@ void CPU::op_sltu(Instruction instruction) {
 
     set_reg(d, v);
 }
+
+void CPU::op_addu(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
+
+    uint32_t v = regs[s] + regs[t];
+
+    set_reg(d, v);
+}
