@@ -24,4 +24,20 @@ struct Instruction {
     inline uint32_t imm_s() const {
         return(uint32_t)(int16_t)imm();
     }
+
+    inline uint32_t rd() const {
+        return(instruction >> 11) & 0x1F;
+    }
+
+    inline uint32_t sa() const {
+        return(instruction >> 6) & 0x1F;
+    }
+
+    inline uint32_t function() const {
+        return instruction & 0x3F;
+    }
+
+    inline uint32_t addr() const {
+        return instruction & 0x3FFFFFF;
+    }
 };

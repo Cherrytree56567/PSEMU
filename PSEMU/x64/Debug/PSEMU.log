@@ -1,5 +1,2 @@
-﻿  Bus.cpp
-  CPU.cpp
-  PSEMU.cpp
-  Generating Code...
+﻿  CPU.cpp
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe
