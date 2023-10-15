@@ -5,6 +5,7 @@
 #include <optional>
 
 class Range {
+public:
     uint32_t start;
     uint32_t length;
 
