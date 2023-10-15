@@ -14,5 +14,5 @@ void CPU::fetch() {
 }
 
 void CPU::decode_execute(uint32_t instruction) {
-
+  
 }
