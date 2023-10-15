@@ -50,7 +50,7 @@ public:
             std::cout << "[Bus] WARNING: Cache_Control not implemented.";
             return;
         } else if (RAM_.contains(mask_region(addr))) {
-            ram.store32(RAM_.offset(mask_region(addr), value);
+            ram.store32(RAM_.offset(mask_region(addr)), value);
             return;
         }
 
