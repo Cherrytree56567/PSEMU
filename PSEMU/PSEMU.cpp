@@ -14,14 +14,8 @@ int main() {
     Bus bus;
     bus.bios.newl("scph1001.bin");
     CPU cpu(&bus);
-    int i = 0;
     while (true) {
-        // Remove the if statement later
-        if (i == 131072) {
-            break;
-        }
         cpu.tick();
-        i++;
     }
     return 0;
 }

@@ -4,12 +4,17 @@
 struct Instruction {
     uint32_t instruction;
 
-    inline uint32_t function() const {
+    //  OPCode
+    inline uint32_t opcode() const {
         return instruction >> 26;
     }
 
-    inline uint32_t t() const {
+    inline uint32_t rt() const {
         return (instruction >> 16) & 0x1f;
+    }
+
+    inline uint32_t rs() const {
+        return (instruction >> 21) & 0x1F;
     }
 
     inline uint32_t imm() const {
