@@ -40,6 +40,11 @@ void CPU::decode_execute(Instruction instruction) {
                     op_sll(instruction);
                     std::cout << "[CPU] INFO: SLL (R-Type)\n";
                     break;
+                    
+                case (0b101011):
+                    op_sltu(instruction);
+                    std::cout << "[CPU] INFO: SLTU (R-Type)\n";
+                    break;
 
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
