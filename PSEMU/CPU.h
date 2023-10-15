@@ -19,6 +19,7 @@ public:
 	// CPU OPCODES
 	void op_lui(Instruction instruction);
 	void op_ori(Instruction instruction);
+	void op_sw(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {

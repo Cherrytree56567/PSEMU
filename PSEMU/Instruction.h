@@ -20,4 +20,8 @@ struct Instruction {
     inline uint32_t imm() const {
         return instruction & 0xffff;
     }
+
+    inline uint32_t imm_s() const {
+        return(uint32_t)(int16_t)imm();
+    }
 };
