@@ -12,6 +12,10 @@
 
 int main() {
     Bus bus(1);
+    bus.bios.newl("scph1001.bin");
     CPU cpu(&bus);
+    while (true) {
+      cpu.tick();
+    }
     return 0;
 }
