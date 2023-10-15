@@ -11,11 +11,11 @@ public:
     Bus() { ram.newl(); } // Initialize BIOSRange in the constructor
 
     // Memory Ranges
-    const Range BIOS = Range(0xbfc00000, 512 * 1024);
-    const Range MEM_CONTROL = Range(0x1f801000, 36);
+    const Range BIOS = Range(0x1fc00000, 512 * 1024);
+    const Range SYS_CONTROL = Range(0x1f801000, 36);
     const Range RAM_SIZE = Range(0x1f801060, 4);
     const Range CACHE_CONTROL = Range(0xfffe0130, 4);
-    const Range RAM_ = Range(0xa0000000, 2 * 1024 * 1024);
+    const Range RAM_ = Range(0x00000000, 2 * 1024 * 1024);
 
     // Load and Store functions
     uint32_t load32(uint32_t addr) {
@@ -35,7 +35,7 @@ public:
     }
 
     void store32(uint32_t addr, uint32_t value) {
-        if (MEM_CONTROL.contains(addr)) {
+        if (SYS_CONTROL.contains(addr)) {
             return;
         } else if (RAM_SIZE.contains(addr)) {
             return;
