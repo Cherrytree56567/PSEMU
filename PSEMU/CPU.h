@@ -39,6 +39,7 @@ public:
 	void op_lw(Instruction instruction);
 	void op_sltu(Instruction instruction);
 	void op_addu(Instruction instruction);
+	void op_sh(Instruction instruction);
 	void branch(uint32_t offset);
 
 	// HELPER FUNCTIONS
