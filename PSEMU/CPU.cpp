@@ -102,6 +102,11 @@ void CPU::decode_execute(Instruction instruction) {
             op_lw(instruction);
             std::cout << "[CPU] INFO: LW (I-Type)\n";
             break;
+        
+        case (0b101001):
+            op_sh(instruction);
+            std::cout << "[CPU] INFO: SH (I-Type)\n";
+            break;
             
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
