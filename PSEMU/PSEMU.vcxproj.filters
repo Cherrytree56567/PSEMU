@@ -25,6 +25,9 @@
     <Filter Include="Source Files\Bus\BIOS">
       <UniqueIdentifier>{5cda58a3-18b6-4818-ae46-b3718f9260d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Bus\RAM">
+      <UniqueIdentifier>{8524c40f-742d-4742-baa0-fa4732042965}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
@@ -38,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="Bios.cpp">
       <Filter>Source Files\Bus\BIOS</Filter>
+    </ClCompile>
+    <ClCompile Include="RAM.cpp">
+      <Filter>Source Files\Bus\RAM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +66,9 @@
     </ClInclude>
     <ClInclude Include="Instruction.h">
       <Filter>Source Files\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="RAM.h">
+      <Filter>Source Files\Bus\RAM</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
