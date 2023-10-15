@@ -13,8 +13,15 @@ void CPU::fetch() {
 
     pc += 4;
 
+    set_reg(std::get<0>(load), std::get<1>(load));
+
+    load = std::make_tuple(0, 0);
+
     decode_execute(instr);
     just_started = false;
+    for (int i = 0; i < 32; i++) {
+        regs[i] = out_regs[i];
+    }
 }
 
 void CPU::decode_execute(Instruction instruction) {
@@ -169,6 +176,7 @@ void CPU::op_cop0(Instruction instruction) {
     switch (instruction.rs()) {
         case (0b00100):
             op_mtc0(instruction);
+            std::cout << "[CPU] INFO: MTC0 (COP0-Type)\n";
             break;
 
         default:
@@ -251,5 +259,6 @@ void CPU::op_lw(Instruction instruction) {
 
     uint32_t v = bus->load32(addr);
 
-    set_reg(t, v);
+    // Put the load in the delay slot
+    load = std::make_tuple(t, v);
 }

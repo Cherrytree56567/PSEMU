@@ -9,6 +9,10 @@ public:
 		for (int i = 0; i < 32; i++) {
 			regs[i] = 0;
 		}
+		for (int i = 0; i < 32; i++) {
+			out_regs[i] = 0;
+		}
+		load = std::make_tuple(0,0);
 		Next_Instr.instruction = 0x0;
 		just_started = true;
 		sr = 0;
@@ -36,9 +40,9 @@ public:
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
-		regs[index] = value;
+		out_regs[index] = value;
 
-		regs[0] = 0;
+		out_regs[0] = 0;
 	}
 
 	Bus* bus;
@@ -47,5 +51,7 @@ public:
 	Instruction Next_Instr;
 	bool just_started;
 	uint32_t sr; // COP0 Status Register
+	uint32_t out_regs[32];
+	std::tuple<uint32_t, uint32_t> load;
 };
 
