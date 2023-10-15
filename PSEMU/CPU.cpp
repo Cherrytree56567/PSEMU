@@ -132,7 +132,7 @@ void CPU::op_sw(Instruction instruction) {
 
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
-
+    std::cout << "HHHH" << addr;
     bus->store32(addr, v);
 }
 
