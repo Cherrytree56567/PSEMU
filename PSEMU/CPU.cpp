@@ -355,5 +355,5 @@ void CPU::op_sh(Instruction instruction) {
         uint32_t addr = regs[s] + i;
         uint32_t v    = regs[t];
 
-        store16(addr, (uint16_t)v);
+        bus->store16(addr, (uint16_t)v);
 }
