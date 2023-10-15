@@ -7,6 +7,7 @@
 class Bus {
 public:
 	Bus(int a) {}
+	Range BIOSRange(0xbfc00000, 512 * 1024);
 
 	uint32_t load32(uint32_t addr) {
 	  auto offset = BIOSRange.contains(addr);
@@ -21,7 +22,5 @@ public:
 	static const int RAMSize = (2048 * 8000) / sizeof(uint8_t);
 	uint8_t RAM[RAMSize];
 	Bios bios;
-	
-Range BIOSRange(0xbfc00000, 512 * 1024);
 };
 
