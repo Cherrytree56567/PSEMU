@@ -299,7 +299,7 @@ void CPU::op_lw(Instruction instruction) {
 
     if ((sr & 0x10000) != 0) {
         // Cache is isolated, ignore write
-        std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
+        std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
         return;
     }
 
@@ -333,4 +333,22 @@ void CPU::op_addu(Instruction instruction) {
     uint32_t v = regs[s] + regs[t];
 
     set_reg(d, v);
+}
+
+void CPU::op_sh(Instruction instruction) {
+
+        if ((sr & 0x10000) != 0) {
+            // Cache is isolated, ignore write
+            std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
+            return;
+        }
+
+        uint32_t i = instruction.imm_s();
+        uint32_t t = instruction.rt();
+        uint32_t s = instruction.rs();
+
+        uint32_t addr = regs[s] + i;
+        uint32_t v    = regs[t];
+
+        self.store16(addr, (uint16_t)v);
 }
