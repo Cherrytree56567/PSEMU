@@ -11,7 +11,7 @@ public:
     Bus() { ram.newl(); } // Initialize BIOSRange in the constructor
 
     // Memory Ranges
-    const Range BIOS = Range(0xbfc00000, 512 * 1024);
+    const Range BIOS = Range(0xbfc00000, 512 * 1024-3);
     const Range MEM_CONTROL = Range(0x1f801000, 36);
     const Range RAM_SIZE = Range(0x1f801060, 4);
     const Range CACHE_CONTROL = Range(0xfffe0130, 4);
