@@ -45,7 +45,12 @@ void CPU::decode_execute(Instruction instruction) {
                     op_sltu(instruction);
                     std::cout << "[CPU] INFO: SLTU (R-Type)\n";
                     break;
-
+                
+                case (0b100001):
+                    op_addu(instruction);
+                    std::cout << "[CPU] INFO: ADDU (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
