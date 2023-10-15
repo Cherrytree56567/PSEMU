@@ -11,11 +11,17 @@
 #include "Bus.h"
 
 int main() {
-    Bus bus(1);
+    Bus bus;
     bus.bios.newl("scph1001.bin");
     CPU cpu(&bus);
+    int i = 0;
     while (true) {
-      cpu.tick();
+        // Remove the if statement later
+        if (i == 131072) {
+            break;
+        }
+        cpu.tick();
+        i++;
     }
     return 0;
 }

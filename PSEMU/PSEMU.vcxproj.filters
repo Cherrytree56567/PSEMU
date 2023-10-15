@@ -22,6 +22,9 @@
     <Filter Include="Source Files\Bus">
       <UniqueIdentifier>{f5b7cfcd-aeaa-460d-a11b-262d54de02b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Bus\BIOS">
+      <UniqueIdentifier>{5cda58a3-18b6-4818-ae46-b3718f9260d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
@@ -34,7 +37,7 @@
       <Filter>Source Files\Bus</Filter>
     </ClCompile>
     <ClCompile Include="Bios.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Bus\BIOS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +53,13 @@
       <Filter>Source Files\Bus</Filter>
     </ClInclude>
     <ClInclude Include="Bios.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\Bus\BIOS</Filter>
+    </ClInclude>
+    <ClInclude Include="Range.h">
+      <Filter>Source Files\Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Source Files\CPU</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
