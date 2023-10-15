@@ -46,7 +46,7 @@ public:
             return;
         } else if (RAM_SIZE.contains(mask_region(addr))) {
             return;
-        } else if (CACHE_CONTROL.contains(addr)) {
+        } else if (CACHE_CONTROL.contains(mask_region(addr))) {
             std::cout << "[Bus] WARNING: Cache_Control not implemented.";
             return;
         } else if (RAM_.contains(mask_region(addr))) {
