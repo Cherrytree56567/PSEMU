@@ -47,6 +47,13 @@ public:
 
 		out_regs[0] = 0;
 	}
+	
+	uint32_t mask_region(uint32_t addr) {
+    // Index address space in 512MB chunks
+    uint32_t index = (addr >> 29);
+
+    return addr & REGION_MASK[index];
+  }
 
 	Bus* bus;
 	uint32_t pc;
