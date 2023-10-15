@@ -1,5 +1,6 @@
 #pragma once
 #include "Bus.h"
+#include <tuple>
 #include "Instruction.h"
 
 class CPU {
