@@ -52,7 +52,7 @@ public:
     // Index address space in 512MB chunks
     uint32_t index = (addr >> 29);
 
-    return addr & REGION_MASK[index];
+    return addr & bus->REGION_MASK[index];
   }
 
 	Bus* bus;
