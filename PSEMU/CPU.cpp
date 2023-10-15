@@ -1,7 +1,7 @@
 #include "CPU.h"
 
 void CPU::tick() {
-
+  fetch();
 }
 
 void CPU::fetch() {
