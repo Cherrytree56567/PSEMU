@@ -50,6 +50,21 @@ void CPU::decode_execute(Instruction instruction) {
                     op_addu(instruction);
                     std::cout << "[CPU] INFO: ADDU (R-Type)\n";
                     break;
+
+                case (0b001000):
+                    op_jr(instruction);
+                    std::cout << "[CPU] INFO: JR (R-Type)\n";
+                    break;
+
+                case (0b100100):
+                    op_and(instruction);
+                    std::cout << "[CPU] INFO: AND (R-Type)\n";
+                    break;
+
+                case (0b100000):
+                    op_add(instruction);
+                    std::cout << "[CPU] INFO: ADD (R-Type)\n";
+                    break;
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
@@ -106,6 +121,36 @@ void CPU::decode_execute(Instruction instruction) {
         case (0b101001):
             op_sh(instruction);
             std::cout << "[CPU] INFO: SH (I-Type)\n";
+            break;
+
+        case (0b000011):
+            op_jal(instruction);
+            std::cout << "[CPU] INFO: JAL (I-Type)\n";
+            break;
+
+        case (0b001100):
+            op_andi(instruction);
+            std::cout << "[CPU] INFO: ANDI (I-Type)\n";
+            break;
+
+        case (0b101000):
+            op_sb(instruction);
+            std::cout << "[CPU] INFO: SB (I-Type)\n";
+            break;
+
+        case (0b100000):
+            op_lb(instruction);
+            std::cout << "[CPU] INFO: LB (I-Type)\n";
+            break;
+
+        case (0b000100):
+            op_beq(instruction);
+            std::cout << "[CPU] INFO: BEQ (I-Type)\n";
+            break;
+
+        case (0b000111):
+            op_bgtz(instruction);
+            std::cout << "[CPU] INFO: BGTZ (I-Type)\n";
             break;
             
         default:
@@ -192,6 +237,11 @@ void CPU::op_cop0(Instruction instruction) {
         case (0b00100):
             op_mtc0(instruction);
             std::cout << "[CPU] INFO: MTC0 (COP0-Type)\n";
+            break;
+
+        case (0b00000):
+            op_mfc0(instruction);
+            std::cout << "[CPU] INFO: MFC0 (COP0-Type)\n";
             break;
 
         default:
@@ -283,21 +333,28 @@ void CPU::op_bne(Instruction instruction) {
 }
 
 void CPU::op_addi(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
+    int32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
-    uint32_t s_value = regs[s];
+    int32_t s_value = static_cast<int32_t>(regs[s]);
 
-    uint32_t v;
-    if (s_value <= UINT32_MAX - i) {
-        v = s_value + i;
+    int32_t v;
+    if (i > 0 && s_value > INT32_MAX - i) {
+        throw std::overflow_error("ADDI overflow");
+    }
+    else if (i < 0 && s_value < INT32_MIN - i) {
+        throw std::overflow_error("ADDI underflow");
     }
     else {
-        throw std::runtime_error("[CPU] ERROR: ADDI overflow");
+        v = s_value + i;
     }
 
-    set_reg(t, v);
+    if (v < 0) {
+        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
+    }
+
+    set_reg(t, static_cast<uint32_t>(v));
 }
 
 void CPU::op_lw(Instruction instruction) {
@@ -356,4 +413,138 @@ void CPU::op_sh(Instruction instruction) {
         uint32_t v    = regs[t];
 
         bus->store16(addr, (uint16_t)v);
+}
+
+void CPU::op_jal(Instruction instruction) {
+    uint32_t ra = pc;
+
+    // Store return address in $31 ($ra)
+    set_reg(31, ra);
+
+    op_j(instruction);
+}
+
+void CPU::op_andi(Instruction instruction) {
+    uint32_t i = instruction.imm();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t v = regs[s] & i;
+
+    set_reg(t, v);
+}
+
+void CPU::op_sb(Instruction instruction) {
+
+    if ((sr & 0x10000) != 0) {
+        // Cache is isolated, ignore write
+        std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
+        return;
+    }
+
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = regs[s] + i;
+    uint32_t v = regs[t];
+
+    bus->store8(addr, (uint8_t)v);
+}
+
+void CPU::op_jr(Instruction instruction) {
+    uint32_t s = instruction.rs();
+
+    pc = regs[s];
+}
+
+void CPU::op_lb(Instruction instruction) {
+
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = regs[s] + i;
+
+    // Cast as i8 to force sign extension
+    uint8_t v = bus->load8(addr);
+
+    // Put the load in the delay slot
+    load = std::make_tuple(t, v);
+}
+
+void CPU::op_beq(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    if (regs[s] == regs[t]) {
+        branch(i);
+    }
+}
+
+void CPU::op_mfc0(Instruction instruction) {
+    uint32_t cpu_r = instruction.rt();
+    uint32_t cop_r = instruction.rd();
+
+    uint32_t v;
+
+    switch (cop_r) {
+    case 12:
+        v = sr;
+        break;
+    case 13:
+        throw std::runtime_error("[CPU] ERROR: Unhandled read from CAUSE register");
+    default:
+        throw std::runtime_error("[CPU] ERROR: Unhandled read from COP0R" + std::to_string(cop_r));
+    }
+
+    load = std::make_tuple(cpu_r, v);
+}
+
+void CPU::op_and(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t v = regs[s] & regs[t];
+
+    set_reg(d, v);
+}
+
+void CPU::op_add(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
+
+    int32_t s_value = static_cast<int32_t>(regs[s]);
+    int32_t t_value = static_cast<int32_t>(regs[t]);
+
+    int32_t v;
+    if (s_value > 0 && t_value > INT32_MAX - s_value) {
+        throw std::overflow_error("ADD overflow");
+    }
+    else if (s_value < 0 && t_value < INT32_MIN - s_value) {
+        throw std::underflow_error("ADD underflow");
+    }
+    else {
+        v = s_value + t_value;
+    }
+
+    if (v < 0) {
+        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
+    }
+
+    set_reg(d, static_cast<uint32_t>(v));
+}
+
+void CPU::op_bgtz(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t s = instruction.rs();
+
+    uint32_t v = regs[s];
+
+    if (v > 0) {
+        branch(i);
+    }
 }

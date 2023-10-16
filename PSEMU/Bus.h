@@ -16,6 +16,10 @@ public:
     const Range RAM_SIZE = Range(0x1f801060, 4);
     const Range CACHE_CONTROL = Range(0xfffe0130, 4);
     const Range RAM_ = Range(0x00000000, 2 * 1024 * 1024);
+    const Range SPU = Range(0x1f801c00, 640);
+    const Range EXPANSION_2 = Range(0x1f802000, 66);
+    const Range EXPANSION_1 = Range(0x1f000000, 512 * 1024);
+    const Range IRQ_CONTROL = Range(0x1f801070, 8);
     
     uint32_t mask_region(uint32_t addr) {
       // Index address space in 512MB chunks
@@ -26,12 +30,13 @@ public:
 
     // Load and Store functions
     uint32_t load32(uint32_t addr) {
-        if (BIOS.contains(mask_region(addr))) {
-            return bios.load32(BIOS.offset(mask_region(addr)));
-        } else if (RAM_SIZE.contains(mask_region(addr))) {
+        uint32_t abs_addr = mask_region(addr);
+        if (BIOS.contains(abs_addr)) {
+            return bios.load32(BIOS.offset(abs_addr));
+        } else if (RAM_SIZE.contains(abs_addr)) {
             return 0x00000888;
-        } else if (RAM_.contains(mask_region(addr))) {
-            return ram.load32(RAM_.offset(mask_region(addr)));
+        } else if (RAM_.contains(abs_addr)) {
+            return ram.load32(RAM_.offset(abs_addr));
         }
 
         if (addr % 4 != 0) {
@@ -42,15 +47,19 @@ public:
     }
 
     void store32(uint32_t addr, uint32_t value) {
-        if (SYS_CONTROL.contains(mask_region(addr))) {
+        uint32_t abs_addr = mask_region(addr);
+        if (SYS_CONTROL.contains(abs_addr)) {
             return;
-        } else if (RAM_SIZE.contains(mask_region(addr))) {
+        } else if (RAM_SIZE.contains(abs_addr)) {
             return;
-        } else if (CACHE_CONTROL.contains(mask_region(addr))) {
-            std::cout << "[Bus] WARNING: Cache_Control not implemented.";
+        } else if (CACHE_CONTROL.contains(abs_addr)) {
+            std::cout << "[Bus] WARNING: Cache_Control not implemented.\n";
             return;
-        } else if (RAM_.contains(mask_region(addr))) {
-            ram.store32(RAM_.offset(mask_region(addr)), value);
+        } else if (RAM_.contains(abs_addr)) {
+            ram.store32(RAM_.offset(abs_addr), value);
+            return;
+        } else if (IRQ_CONTROL.contains(abs_addr)) {
+            std::cout << "[Bus] INFO: IRQ control: " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " <- " << std::to_string(value) << "\n";
             return;
         }
 
@@ -63,12 +72,53 @@ public:
     }
     
     void store16(uint32_t addr, uint16_t value) {
+        uint32_t abs_addr = mask_region(addr);
+        if (SPU.contains(abs_addr)) {
+            std::cout << "[Bus] ERROR: Unhandled write to SPU register " << std::to_string(SPU.offset(abs_addr)) << "\n";
+            //exit(0);
+            return;
+        }
+
         if (addr % 4 != 0) {
             throw std::runtime_error("[Bus] ERROR: Unaligned store16 address " + std::to_string(addr));
             return;
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled store16 into address " + std::to_string(addr));
+    }
+
+    void store8(uint32_t addr, uint8_t value) {
+        uint32_t abs_addr = mask_region(addr);
+        if (EXPANSION_2.contains(abs_addr)) {
+            std::cout << "[Bus] ERROR: Unhandled write to Expansion 2 register " << std::to_string(EXPANSION_2.offset(abs_addr)) << "\n";
+            //exit(0);
+            return;
+        } else if (RAM_.contains(abs_addr)) {
+            ram.store8(RAM_.offset(abs_addr), value);
+            return;
+        }
+
+        if (addr % 4 != 0) {
+            throw std::runtime_error("[Bus] ERROR: Unaligned store8 address " + std::to_string(addr));
+            return;
+        }
+
+        throw std::runtime_error("[Bus] ERROR: Unhandled store8 into address " + std::to_string(addr));
+    }
+
+    uint8_t load8(uint32_t addr) {
+        uint32_t abs_addr = mask_region(addr);
+
+        if (BIOS.contains(abs_addr)) {
+            return bios.load8(BIOS.offset(abs_addr));
+        } else if (EXPANSION_1.contains(abs_addr)) {
+            // No expansion implemented
+            return 0xff;
+        } else if (RAM_.contains(abs_addr)) {
+            return ram.load8(RAM_.offset(abs_addr));
+        }
+
+        throw std::runtime_error("[Bus] ERROR: Unhandled load8 into address " + std::to_string(addr));
     }
 
     Bios bios;

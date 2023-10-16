@@ -42,6 +42,18 @@ public:
 	void op_sh(Instruction instruction);
 	void branch(uint32_t offset);
 
+	void op_jal(Instruction instruction);
+	void op_andi(Instruction instruction);
+	void op_sb(Instruction instruction);
+	void op_jr(Instruction instruction);
+	void op_lb(Instruction instruction);
+	void op_beq(Instruction instruction);
+	void op_mfc0(Instruction instruction);
+	void op_and(Instruction instruction);
+	void op_add(Instruction instruction);
+	void op_bgtz(Instruction instruction);
+
+
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
 		out_regs[index] = value;
