@@ -8,9 +8,9 @@ MSBuild: C++20<br>
 Makefile: C++20<br>
 
 # Goals
-- [X] Emulate R3000A PS1 CPU
-- [X] Map the PS1 GPU VRAM
-- [X] Emulate the GTE
+- [ ] Emulate R3000A PS1 CPU
+- [ ] Map the PS1 GPU VRAM
+- [ ] Emulate the GTE
 - [ ] Emulate the GPU
 - [X] Add PS1 BIOS Support
 - [ ] Add support for PS1 Custom Sound Chip
