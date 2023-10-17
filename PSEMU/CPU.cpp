@@ -158,6 +158,11 @@ void CPU::decode_execute(Instruction instruction) {
             std::cout << "[CPU] INFO: BLEZ (I-Type)\n";
             break;
             
+        case (0b100100):
+            op_lbu(instruction);
+            std::cout << "[CPU] INFO: LBU (I-Type)\n";
+            break;
+            
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
             exit(0);
