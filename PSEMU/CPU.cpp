@@ -203,6 +203,11 @@ void CPU::decode_execute(Instruction instruction) {
             std::cout << "[CPU] INFO: SLTI (I-Type)\n";
             break;
             
+        case (0b001011):
+            op_sltiu(instruction);
+            std::cout << "[CPU] INFO: SLTIU (I-Type)\n";
+            break;
+            
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
             exit(0);
@@ -735,4 +740,14 @@ void CPU::op_srl(Instruction instruction) {
     uint32_t v = regs[t] >> i;
 
     set_reg(d, v);
+}
+
+void CPU::op_sltiu(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t v = regs[s] < i;
+
+    set_reg(t, v);
 }
