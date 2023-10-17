@@ -152,6 +152,11 @@ void CPU::decode_execute(Instruction instruction) {
             op_beq(instruction);
             std::cout << "[CPU] INFO: BEQ (I-Type)\n";
             break;
+            
+        case (0b000001):
+            op_bxx(instruction);
+            std::cout << "[CPU] INFO: BXX (I-Type)\n";
+            break;
 
         case (0b000111):
             op_bgtz(instruction);
@@ -597,4 +602,35 @@ void CPU::op_jalr(Instruction instruction) {
     set_reg(d, ra);
 
     pc = regs[s];
+}
+
+void CPU::op_bxx(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t s = instruction.rs();
+
+    uint32_t instructiona = instruction.instruction;
+
+    uint32_t is_bgez = (instructiona >> 16) & 1;
+    uint32_t is_link = (instruction >> 17) & 0xf == 8;
+
+    uint32_t v = regs[s];
+
+    // Test "less than zero"
+    uint32_t test = (v < 0);
+
+    // If the test is "greater than or equal to zero" we need
+    // to negate the comparison above since
+    // ("a >= 0" <=> "!(a < 0)"). The xor takes care of that.
+    uint32_t test = test ^ is_bgez;
+
+    if (is_link) {
+        uint32_t ra = pc;
+
+        // Store return address in R31
+        set_reg(31, ra);
+    }
+
+    if (test != 0) {
+        branch(i);
+    }
 }
