@@ -86,6 +86,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: DIV (R-Type)\n";
                     break;
                     
+                case (0b010010):
+                    op_mflo(instruction);
+                    std::cout << "[CPU] INFO: MFLO (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -709,4 +714,10 @@ void CPU::op_div(Instruction instruction) {
         hi = static_cast<uint32_t>(n % d);
         lo = static_cast<uint32_t>(n / d);
     }
+}
+
+void CPU::op_mflo(Instruction instruction) {
+    uint32_t d = instruction.rd();
+
+    set_reg(d, lo);
 }
