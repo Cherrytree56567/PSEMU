@@ -605,7 +605,7 @@ void CPU::op_blez(Instruction instruction) {
     uint32_t v = regs[s];
 
     if (v <= 0) {
-        self.branch(i);
+        branch(i);
     }
 }
 
@@ -641,7 +641,7 @@ void CPU::op_bxx(Instruction instruction) {
     uint32_t instructiona = instruction.instruction;
 
     uint32_t is_bgez = (instructiona >> 16) & 1;
-    uint32_t is_link = (instruction >> 17) & 0xf == 8;
+    uint32_t is_link = (instructiona >> 17) & 0xf == 8;
 
     uint32_t v = regs[s];
 
