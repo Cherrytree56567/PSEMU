@@ -17,6 +17,8 @@ public:
 		Next_Instr.instruction = 0x0;
 		just_started = true;
 		sr = 0;
+		hi = 0;
+		lo = 0;
 	}
 
 	// CPU FUNCTIONS
@@ -72,6 +74,8 @@ public:
 	Bus* bus;
 	uint32_t pc;
 	uint32_t regs[32];
+	uint32_t hi;
+	uint32_t lo;
 	Instruction Next_Instr;
 	bool just_started;
 	uint32_t sr; // COP0 Status Register
