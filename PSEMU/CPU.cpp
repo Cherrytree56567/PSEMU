@@ -91,6 +91,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: MFLO (R-Type)\n";
                     break;
                     
+                case (0b000010):
+                    op_srl(instruction);
+                    std::cout << "[CPU] INFO: SRL (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -720,4 +725,14 @@ void CPU::op_mflo(Instruction instruction) {
     uint32_t d = instruction.rd();
 
     set_reg(d, lo);
+}
+
+void CPU::op_srl(Instruction instruction) {
+    uint32_t i = instruction.sa();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
+
+    uint32_t v = regs[t] >> i;
+
+    set_reg(d, v);
 }
