@@ -61,8 +61,9 @@ public:
 	void op_bxx(Instruction instruction);
 	void op_slti(Instruction instruction);
 	void op_subu(Instruction instruction);
-	void op_sra(instruction instruction);
-	void op_div(instruction instruction);
+	void op_sra(Instruction instruction);
+	void op_div(Instruction instruction);
+	void op_mflo(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
