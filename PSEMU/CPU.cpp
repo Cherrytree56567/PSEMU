@@ -563,3 +563,16 @@ void CPU::op_blez(Instruction instruction) {
         self.branch(i);
     }
 }
+
+fn op_lbu(&mut self, instruction: Instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = regs[s] + i;
+
+    uint8_t v = self.load8(addr);
+
+    // Put the load in the delay slot
+    load = std::make_tuple(t, (uint32_t)v);
+}
