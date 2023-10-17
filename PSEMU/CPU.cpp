@@ -795,8 +795,8 @@ void CPU::op_slt(Instruction instruction) {
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
 
-    uint32_t s = regs[s];
-    uint32_t t = regs[t];
+    s = regs[s];
+    t = regs[t];
 
     uint32_t v = s < t;
 
