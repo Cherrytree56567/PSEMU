@@ -66,6 +66,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: ADD (R-Type)\n";
                     break;
                     
+                case (0b001001):
+                    op_jalr(instruction);
+                    std::cout << "[CPU] INFO: JALR (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -580,4 +585,16 @@ void CPU::op_lbu(Instruction instruction) {
 
     // Put the load in the delay slot
     load = std::make_tuple(t, (uint32_t)v);
+}
+
+void CPU::op_jalr(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+
+    uint32_t ra = pc;
+
+    // Store return address in `d`
+    set_reg(d, ra);
+
+    pc = regs[s];
 }
