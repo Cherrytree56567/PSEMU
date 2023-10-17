@@ -71,6 +71,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: JALR (R-Type)\n";
                     break;
                     
+                case (0b100011):
+                    op_subu(instruction);
+                    std::cout << "[CPU] INFO: SUBU (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -640,7 +645,7 @@ void CPU::op_bxx(Instruction instruction) {
     }
 }
 
-fn op_slti(&mut self, instruction: Instruction) {
+void CPU::op_slti(Instruction instruction) {
     uint32_t i = instruction.imm_s();
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
@@ -648,4 +653,14 @@ fn op_slti(&mut self, instruction: Instruction) {
     uint32_t v = (regs[s]) < i;
 
     set_reg(t, v);
+}
+
+void CPU::op_subu(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
+
+    uint32_t v = regs[s] - regs[t]);
+
+    set_reg(d, v);
 }
