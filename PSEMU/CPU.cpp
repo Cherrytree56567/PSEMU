@@ -564,7 +564,7 @@ void CPU::op_blez(Instruction instruction) {
     }
 }
 
-fn op_lbu(&mut self, instruction: Instruction) {
+void CPU::op_lbu(Instruction instruction) {
     uint32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
