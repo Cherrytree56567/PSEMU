@@ -62,7 +62,7 @@ public:
 	void op_slti(Instruction instruction);
 	void op_subu(Instruction instruction);
 	void op_sra(instruction instruction);
-
+	void op_div(instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
