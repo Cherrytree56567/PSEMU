@@ -679,3 +679,29 @@ void CPU::op_sra(Instruction instruction) {
 
     set_reg(d, v);
 }
+
+void CPU::op_div(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t n = reg[s];
+    uint32_t d = reg[t];
+
+    if (d == 0) {
+        // Division by zero, results are bogus
+        hi = static_cast<uint32_t>(n);
+
+        if (n >= 0) {
+            lo = 0xffffffff;
+        } else {
+            lo = 1;
+        }
+    } else if (static_cast<uint32_t>(n) == 0x80000000 && d == -1) {
+        // Result is not representable in a 32-bit signed integer
+        hi = 0;
+        lo = 0x80000000;
+    } else {
+        hi = static_cast<uint32_t>(n % d);
+        lo = static_cast<uint32_t>(n / d);
+    }
+}
