@@ -59,6 +59,7 @@ public:
 	void op_bxx(Instruction instruction);
 	void op_slti(Instruction instruction);
 	void op_subu(Instruction instruction);
+	void op_sra(instruction instruction);
 
 
 	// HELPER FUNCTIONS
