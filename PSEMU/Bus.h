@@ -20,6 +20,7 @@ public:
     const Range EXPANSION_2 = Range(0x1f802000, 66);
     const Range EXPANSION_1 = Range(0x1f000000, 512 * 1024);
     const Range IRQ_CONTROL = Range(0x1f801070, 8);
+    const Range TIMERS = Range(0x1f801100, 0x30);
     
     uint32_t mask_region(uint32_t addr) {
       // Index address space in 512MB chunks
@@ -37,6 +38,9 @@ public:
             return 0x00000888;
         } else if (RAM_.contains(abs_addr)) {
             return ram.load32(RAM_.offset(abs_addr));
+        } else if (IRQ_CONTROL.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
+            return 0;
         }
 
         if (addr % 4 != 0) {
@@ -76,6 +80,9 @@ public:
         if (SPU.contains(abs_addr)) {
             std::cout << "[Bus] ERROR: Unhandled write to SPU register " << std::to_string(SPU.offset(abs_addr)) << "\n";
             //exit(0);
+            return;
+        } else if (TIMERS.contains(abs_addr)) {
+            std::cout << "[BUS] ERROR: Unhandled write to timer register " << std::to_string(TIMERS.offset(abs_addr));
             return;
         }
 
