@@ -76,6 +76,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: SUBU (R-Type)\n";
                     break;
                     
+                case (0b000011):
+                    op_sra(instruction);
+                    std::cout << "[CPU] INFO: SRA (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -661,6 +666,16 @@ void CPU::op_subu(Instruction instruction) {
     uint32_t d = instruction.rd();
 
     uint32_t v = regs[s] - regs[t]);
+
+    set_reg(d, v);
+}
+
+void CPU::op_sra(Instruction instruction) {
+    uint32_t i = instruction.sa();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
+
+    uint32_t v = ((uint32_t)regs[t]) >> i;
 
     set_reg(d, v);
 }
