@@ -101,6 +101,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: DIVU (R-Type)\n";
                     break;
                     
+                case (0b010000):
+                    op_mfhi(instruction);
+                    std::cout << "[CPU] INFO: MFHI (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -772,4 +777,10 @@ void CPU::op_divu(Instruction instruction) {
         hi = n % d;
         lo = n / d;
     }
+}
+
+void CPU::op_mfhi(Instruction instruction) {
+    uint32_t d = instruction.rd();
+
+    set_reg(d, hi);
 }
