@@ -96,6 +96,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: SRL (R-Type)\n";
                     break;
                     
+                case (0b011011):
+                    op_divu(instruction);
+                    std::cout << "[CPU] INFO: DIVU (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -750,4 +755,21 @@ void CPU::op_sltiu(Instruction instruction) {
     uint32_t v = regs[s] < i;
 
     set_reg(t, v);
+}
+
+void CPU::op_divu(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t n = regs[s];
+    uint32_t d = regs[t];
+
+    if (d == 0) {
+        // Division by zero, results are bogus
+        hi = n;
+        lo = 0xffffffff;
+    } else {
+        hi = n % d;
+        lo = n / d;
+    }
 }
