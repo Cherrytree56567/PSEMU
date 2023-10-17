@@ -680,7 +680,7 @@ void CPU::op_subu(Instruction instruction) {
     uint32_t t = instruction.rt();
     uint32_t d = instruction.rd();
 
-    uint32_t v = regs[s] - regs[t]);
+    uint32_t v = regs[s] - regs[t];
 
     set_reg(d, v);
 }
