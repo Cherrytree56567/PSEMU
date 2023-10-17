@@ -106,6 +106,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: MFHI (R-Type)\n";
                     break;
                     
+                case (0b101010):
+                    op_slt(instruction);
+                    std::cout << "[CPU] INFO: SLT (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -783,4 +788,17 @@ void CPU::op_mfhi(Instruction instruction) {
     uint32_t d = instruction.rd();
 
     set_reg(d, hi);
+}
+
+void CPU::op_slt(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t s = regs[s];
+    uint32_t t = regs[t];
+
+    uint32_t v = s < t;
+
+    set_reg(d, v);
 }
