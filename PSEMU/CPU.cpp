@@ -616,7 +616,7 @@ void CPU::op_lbu(Instruction instruction) {
 
     uint32_t addr = regs[s] + i;
 
-    uint8_t v = load8(addr);
+    uint8_t v = bus->load8(addr);
 
     // Put the load in the delay slot
     load = std::make_tuple(t, (uint32_t)v);
