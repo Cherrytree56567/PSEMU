@@ -64,6 +64,7 @@ public:
 	void op_sra(Instruction instruction);
 	void op_div(Instruction instruction);
 	void op_mflo(Instruction instruction);
+	void op_srl(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
