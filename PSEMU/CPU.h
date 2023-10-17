@@ -56,6 +56,7 @@ public:
 	void op_blez(Instruction instruction);
 	void op_lbu(Instruction instruction);
 	void op_jalr(Instruction instruction);
+	void op_bxx(Instruction instruction);
 
 
 	// HELPER FUNCTIONS
