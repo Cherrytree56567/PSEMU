@@ -547,3 +547,14 @@ void CPU::op_bgtz(Instruction instruction) {
         branch(i);
     }
 }
+
+void CPU::op_blez(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t s = instruction.rs();
+
+    uint32_t v = regs[s];
+
+    if (v <= 0) {
+        self.branch(i);
+    }
+}
