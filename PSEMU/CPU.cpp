@@ -1002,3 +1002,16 @@ void CPU::op_srlv(Instruction instruction) {
 
     set_reg(d, v);
 }
+
+void CPU::op_multu(Instruction instruction) {
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint64_t a = regs[s];
+    uint64_t b = regs[t];
+
+    uint64_t v = a * b;
+
+    hi = (v >> 32);
+    lo = v;
+}
