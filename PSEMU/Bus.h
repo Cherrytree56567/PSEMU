@@ -89,9 +89,9 @@ public:
             std::cout << "[BUS] ERROR: Unhandled write to timer register " << std::to_string(TIMERS.offset(abs_addr));
             return;
         } else if (RAM_.contains(abs_addr)) {
-            return ram.store16(offset, val);
+            return ram.store16(RAM_.offset(abs_addr), value);
         } else if (DMA.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << " " << std::to_string(val);
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << " " << std::to_string(value);
             return;
         }
 
@@ -141,10 +141,10 @@ public:
         uint32_t abs_addr = mask_region(addr);
 
         if (SPU.contains(abs_addr)) {
-            std::cout << "[BUS] ERROR: Unhandled read from SPU register " << std::to_string(abs_addr));
+            std::cout << "[BUS] ERROR: Unhandled read from SPU register " << std::to_string(abs_addr);
             return 0;
         } else if (RAM_.contains(abs_addr)) {
-            return ram.load16(offset);
+            return ram.load16(RAM_.offset(abs_addr));
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load16 into address " + std::to_string(addr));
