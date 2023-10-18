@@ -1004,13 +1004,7 @@ void CPU::op_srlv(Instruction instruction) {
 }
 
 void CPU::op_multu(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint64_t a = regs[s];
-    uint64_t b = regs[t];
-
-    uint64_t v = a * b;
+    uint64_t value = (uint64_t)regs[instruction.rs()] * (uint64_t)regs[instruction.rt()];
 
     hi = (v >> 32);
     lo = v;
