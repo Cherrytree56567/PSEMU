@@ -140,6 +140,16 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: SLLV (R-Type)\n";
                     break;
                     
+                case (0b100111):
+                    op_nor(instruction);
+                    std::cout << "[CPU] INFO: NOR (R-Type)\n";
+                    break;
+                    
+                case (0b000111):
+                    op_srav(instruction);
+                    std::cout << "[CPU] INFO: SRAV (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -959,4 +969,25 @@ void CPU::op_lh(Instruction instruction) {
 
     // Put the load in the delay slot
     load = std::make_tuple(t, v);
+}
+
+void CPU::op_nor(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t v = !(regs[s] | regs[t];
+
+    set_reg(d, v);
+}
+
+void CPU::op_srav(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    // Shift amount is truncated to 5 bits
+    uint32_t v = (regs[t] >> (regs[s] & 0x1f);
+
+    set_reg(d, v);
 }
