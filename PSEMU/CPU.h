@@ -18,7 +18,7 @@ public:
 			out_regs[i] = 0;
 		}
 		load = std::make_tuple(0,0);
-		Next_Instr.instruction = 0x0;
+		Next_Instr.instruction = 0xbfc00000;
 		just_started = true;
 		sr = 0;
 		hi = 0;
@@ -78,6 +78,10 @@ public:
 	void op_slt(Instruction instruction);
 
 	void exception(Exception cause);
+	void op_syscall(Instruction instruction);
+	void op_mtlo(Instruction instruction);
+	void op_mthi(Instruction instruction);
+	void op_rfe(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {

@@ -7,12 +7,10 @@ void CPU::tick() {
 void CPU::fetch() {
 
     Instruction instr;
-    instr.instruction = Next_Instr.instruction;
-
-    Next_Instr.instruction = bus->load32(pc);
+    instr.instruction = bus->load32(pc);
 
     current_pc = pc;
-    pc += next_pc;
+    pc = next_pc;
     next_pc += 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
@@ -111,6 +109,21 @@ void CPU::decode_execute(Instruction instruction) {
                 case (0b101010):
                     op_slt(instruction);
                     std::cout << "[CPU] INFO: SLT (R-Type)\n";
+                    break;
+
+                case (0b001100):
+                    op_syscall(instruction);
+                    std::cout << "[CPU] INFO: SYSCALL (R-Type)\n";
+                    break;
+
+                case (0b010011):
+                    op_mtlo(instruction);
+                    std::cout << "[CPU] INFO: MTLO (R-Type)\n";
+                    break;
+
+                case (0b010001):
+                    op_mthi(instruction);
+                    std::cout << "[CPU] INFO: MTHI (R-Type)\n";
                     break;
                     
                 default:
@@ -807,4 +820,51 @@ void CPU::op_slt(Instruction instruction) {
     uint32_t v = s < t;
 
     set_reg(d, v);
+}
+
+void CPU::exception(Exception causea) {
+    uint32_t handler = (sr & (1U << 22)) ? 0xbfc00180U : 0x80000080U;
+
+    uint32_t mode = sr & 0x3F;
+    sr &= ~0x3F;
+    sr |= (mode << 2) & 0x3F;
+
+    // Update `CAUSE` register with the exception code (bits [6:2])
+    cause = (static_cast<uint32_t>(causea) << 2);
+
+    // Save the current instruction address in `EPC`
+    epc = current_pc;
+
+    // Exceptions don't have a branch delay slot; we jump directly
+    // into the handler.
+    pc = handler;
+    next_pc = pc + 4;
+}
+
+void CPU::op_syscall(Instruction instruction) {
+    exception(Exception::SysCall);
+}
+
+void CPU::op_mtlo(Instruction instruction) {
+    uint32_t s = instruction.rs();
+
+    lo = regs[s];
+}
+
+void CPU::op_mthi(Instruction instruction) {
+    uint32_t s = instruction.rs();
+
+    hi = regs[s];
+}
+
+void CPU::op_rfe(Instruction instruction) {
+    if ((instruction.instruction & 0x3f) != 0b010000) {
+        std::cout << "[CPU] ERROR: Invalid cop0 instruction: " << std::to_string(instruction.instruction) << "\n";
+    }
+
+    // Restore the pre-exception mode by shifting the Interrupt
+    // Enable/User Mode stack back to its original position.
+    uint32_t mode = sr & 0x3f;
+    sr &= !0x3f;
+    sr |= mode >> 2;
 }
