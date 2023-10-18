@@ -11,7 +11,9 @@ void CPU::fetch() {
 
     Next_Instr.instruction = bus->load32(pc);
 
-    pc += 4;
+    current_pc = pc;
+    pc += next_pc;
+    next_pc += 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
