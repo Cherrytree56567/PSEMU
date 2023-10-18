@@ -31,6 +31,13 @@ void CPU::store16(uint32_t offset, uint16_t val) {
     uint8_t b0 = val;
     uint8_t b1 = (val >> 8);
 
-    data[offset + 0] = b0;
-    data[offset + 1] = b1;
+    ram[offset + 0] = b0;
+    ram[offset + 1] = b1;
+}
+
+uint16_t CPU::load16(uint32_t offset) {
+    uint16_t b0 = ram[offset + 0];
+    uint16_t b1 = ram[offset + 1];
+
+    return b0 | (b1 << 8);
 }
