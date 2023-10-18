@@ -5,7 +5,7 @@
 
 enum Exception {
     SysCall = 0x8
-}
+};
 
 class CPU {
 public:
