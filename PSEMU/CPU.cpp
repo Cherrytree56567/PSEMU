@@ -565,7 +565,11 @@ void CPU::op_mfc0(Instruction instruction) {
         v = sr;
         break;
     case 13:
-        throw std::runtime_error("[CPU] ERROR: Unhandled read from CAUSE register");
+        v = cause;
+        break;
+    case 14:
+        v = epc;
+        break;
     default:
         throw std::runtime_error("[CPU] ERROR: Unhandled read from COP0R" + std::to_string(cop_r));
     }
