@@ -21,6 +21,7 @@ public:
     const Range EXPANSION_1 = Range(0x1f000000, 512 * 1024);
     const Range IRQ_CONTROL = Range(0x1f801070, 8);
     const Range TIMERS = Range(0x1f801100, 0x30);
+    const Range DMA = Range(0x1f801080, 0x80);
     
     uint32_t mask_region(uint32_t addr) {
       // Index address space in 512MB chunks
@@ -40,6 +41,9 @@ public:
             return ram.load32(RAM_.offset(abs_addr));
         } else if (IRQ_CONTROL.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
+            return 0;
+        } else if (DMA.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA read: " << std::to_string(abs_addr);
             return 0;
         }
 
@@ -86,6 +90,9 @@ public:
             return;
         } else if (RAM_.contains(abs_addr)) {
             return ram.store16(offset, val);
+        } else if (DMA.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << " " << std::to_string(val);
+            return;
         }
 
         if (addr % 4 != 0) {
