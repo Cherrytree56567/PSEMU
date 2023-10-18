@@ -95,6 +95,7 @@ public:
 	void op_srav(Instruction instruction);
 
 	void op_srlv(Instruction instruction);
+	void op_multu(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
