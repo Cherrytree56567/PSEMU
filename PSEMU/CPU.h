@@ -4,7 +4,7 @@
 #include "Instruction.h"
 
 enum Exception {
-    SysCall = 0x8,
+    SysCall = 0x8
 }
 
 class CPU {
