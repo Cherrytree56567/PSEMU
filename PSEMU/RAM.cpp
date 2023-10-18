@@ -26,3 +26,11 @@ void RAM::store32(uint32_t offset, uint32_t value) {
     ram[offset + 2] = static_cast<uint8_t>(value >> 16);
     ram[offset + 3] = static_cast<uint8_t>(value >> 24);
 }
+
+void CPU::store16(uint32_t offset, uint16_t val) {
+    uint8_t b0 = val;
+    uint8_t b1 = (val >> 8);
+
+    data[offset + 0] = b0;
+    data[offset + 1] = b1;
+}
