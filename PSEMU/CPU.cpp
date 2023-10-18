@@ -135,6 +135,11 @@ void CPU::decode_execute(Instruction instruction) {
                     std::cout << "[CPU] INFO: MTHI (R-Type)\n";
                     break;
                     
+                case (0b000100):
+                    op_sllv(instruction);
+                    std::cout << "[CPU] INFO: SLLV (R-Type)\n";
+                    break;
+                    
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
                     exit(0);
@@ -925,3 +930,14 @@ void CPU::op_lhu(Instruction instruction) {
             exception(Exception::LoadAddressError);
     }
 }
+
+void CPU::op_sllv(Instruction instruction) {
+        uint32_t d = instruction.rd();
+        uint32_t s = instruction.rs();
+        uint32_t t = instruction.rt();
+
+        // Shift amount is truncated to 5 bits
+        uint32_t v = regs[t] << (regs[s] & 0x1f);
+
+        set_reg(d, v);
+    }
