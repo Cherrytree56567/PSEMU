@@ -3,6 +3,10 @@
 #include <tuple>
 #include "Instruction.h"
 
+enum Exception {
+    SysCall = 0x8
+};
+
 class CPU {
 public:
 	CPU(Bus* bu) : bus(bu) {
@@ -19,6 +23,9 @@ public:
 		sr = 0;
 		hi = 0;
 		lo = 0;
+		cause = 0;
+		epc = 0;
+		next_pc = pc + 4;
 	}
 
 	// CPU FUNCTIONS
@@ -70,6 +77,8 @@ public:
 	void op_mfhi(Instruction instruction);
 	void op_slt(Instruction instruction);
 
+	void exception(Exception cause);
+
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
 		out_regs[index] = value;
@@ -79,6 +88,10 @@ public:
 
 	Bus* bus;
 	uint32_t pc;
+	uint32_t next_pc;
+	uint32_t current_pc;
+	uint32_t cause;
+	uint32_t epc;
 	uint32_t regs[32];
 	uint32_t hi;
 	uint32_t lo;

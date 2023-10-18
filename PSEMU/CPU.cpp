@@ -11,7 +11,9 @@ void CPU::fetch() {
 
     Next_Instr.instruction = bus->load32(pc);
 
-    pc += 4;
+    current_pc = pc;
+    pc += next_pc;
+    next_pc += 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
@@ -563,7 +565,11 @@ void CPU::op_mfc0(Instruction instruction) {
         v = sr;
         break;
     case 13:
-        throw std::runtime_error("[CPU] ERROR: Unhandled read from CAUSE register");
+        v = cause;
+        break;
+    case 14:
+        v = epc;
+        break;
     default:
         throw std::runtime_error("[CPU] ERROR: Unhandled read from COP0R" + std::to_string(cop_r));
     }
