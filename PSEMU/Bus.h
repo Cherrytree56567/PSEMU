@@ -22,6 +22,7 @@ public:
     const Range IRQ_CONTROL = Range(0x1f801070, 8);
     const Range TIMERS = Range(0x1f801100, 0x30);
     const Range DMA = Range(0x1f801080, 0x80);
+    const Range GPU = Range(0x1f801810, 8);
     
     uint32_t mask_region(uint32_t addr) {
       // Index address space in 512MB chunks
@@ -43,7 +44,10 @@ public:
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
             return 0;
         } else if (DMA.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA read: " << std::to_string(abs_addr);
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA read: " << std::to_string(DMA.offset(abs_addr)) << "\n";
+            return 0;
+        } else if (GPU.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(GPU.offset(abs_addr)) << "\n";
             return 0;
         }
 
@@ -61,13 +65,19 @@ public:
         } else if (RAM_SIZE.contains(abs_addr)) {
             return;
         } else if (CACHE_CONTROL.contains(abs_addr)) {
-            std::cout << "[Bus] WARNING: Cache_Control not implemented.\n";
+            std::cout << "[Bus] WARNING: Cache_Control not implemented. " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
             return;
         } else if (RAM_.contains(abs_addr)) {
             ram.store32(RAM_.offset(abs_addr), value);
             return;
         } else if (IRQ_CONTROL.contains(abs_addr)) {
-            std::cout << "[Bus] INFO: IRQ control: " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " <- " << std::to_string(value) << "\n";
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control: " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+            return;
+        } else if (GPU.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU write " << std::to_string(offset) << " " << std::to_string(value) << "\n";
+            return;
+        } else if (TIMERS.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: Timer NOT IMPLEMENTED. Timer write register" << std::to_string(offset) << " " << std::to_string(value) << "\n";
             return;
         }
 
@@ -82,17 +92,20 @@ public:
     void store16(uint32_t addr, uint16_t value) {
         uint32_t abs_addr = mask_region(addr);
         if (SPU.contains(abs_addr)) {
-            std::cout << "[Bus] ERROR: Unhandled write to SPU register " << std::to_string(SPU.offset(abs_addr)) << "\n";
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. SPU write register " << std::to_string(SPU.offset(abs_addr)) << "\n";
             //exit(0);
             return;
         } else if (TIMERS.contains(abs_addr)) {
-            std::cout << "[BUS] ERROR: Unhandled write to timer register " << std::to_string(TIMERS.offset(abs_addr));
+            std::cout << "[BUS] WARNING: TIMER NOT IMPLEMENTED. Timer write register " << std::to_string(TIMERS.offset(abs_addr));
             return;
         } else if (RAM_.contains(abs_addr)) {
             return ram.store16(RAM_.offset(abs_addr), value);
         } else if (DMA.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << " " << std::to_string(value);
+            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << " " << std::to_string(value) << "\n";
             return;
+        }  else if (IRQ_CONTROL.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control write " << std::to_string(offset) << " " << std::to_string(value);
+            return 0;
         }
 
         if (addr % 4 != 0) {
@@ -145,6 +158,9 @@ public:
             return 0;
         } else if (RAM_.contains(abs_addr)) {
             return ram.load16(RAM_.offset(abs_addr));
+        } else if (IRQ_CONTROL.contains(abs_addr)) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(offset);
+            return 0;
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load16 into address " + std::to_string(addr));
