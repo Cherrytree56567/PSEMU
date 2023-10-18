@@ -19,6 +19,8 @@ public:
 		sr = 0;
 		hi = 0;
 		lo = 0;
+		cause = 0;
+		epc = 0;
 		next_pc = pc + 4;
 	}
 
@@ -81,6 +83,9 @@ public:
 	Bus* bus;
 	uint32_t pc;
 	uint32_t next_pc;
+	uint32_t current_pc;
+	uint32_t cause;
+	uint32_t epc;
 	uint32_t regs[32];
 	uint32_t hi;
 	uint32_t lo;
