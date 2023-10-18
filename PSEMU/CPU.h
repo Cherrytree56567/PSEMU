@@ -4,7 +4,11 @@
 #include "Instruction.h"
 
 enum Exception {
-    SysCall = 0x8
+    SysCall = 0x8,
+	Overflow = 0xc,
+	LoadAddressError = 0x4,
+	/// Address error on store
+	StoreAddressError = 0x5
 };
 
 class CPU {
@@ -26,6 +30,8 @@ public:
 		cause = 0;
 		epc = 0;
 		next_pc = pc + 4;
+		delay_slot = false;
+		brancha = false;
 	}
 
 	// CPU FUNCTIONS
@@ -104,5 +110,6 @@ public:
 	uint32_t sr; // COP0 Status Register
 	uint32_t out_regs[32];
 	std::tuple<uint32_t, uint32_t> load;
+	bool delay_slot, brancha;
 };
 

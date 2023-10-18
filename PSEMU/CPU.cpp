@@ -9,6 +9,9 @@ void CPU::fetch() {
     Instruction instr;
     instr.instruction = bus->load32(pc);
 
+    delay_slot = brancha;
+    brancha = false;
+
     current_pc = pc;
     pc = next_pc;
     next_pc += 4;
@@ -277,7 +280,12 @@ void CPU::op_sw(Instruction instruction) {
 
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
-    bus->store32(addr, v);
+    if (addr % 2 == 0) {
+        bus->store32(addr, v);
+    }
+    else {
+        exception(Exception::StoreAddressError);
+    }
 }
 
 void CPU::op_sll(Instruction instruction) {
@@ -326,6 +334,11 @@ void CPU::op_cop0(Instruction instruction) {
         case (0b00000):
             op_mfc0(instruction);
             std::cout << "[CPU] INFO: MFC0 (COP0-Type)\n";
+            break;
+
+        case (0b10000):
+            op_rfe(instruction);
+            std::cout << "[CPU] INFO: RFE (COP0-Type)\n";
             break;
 
         default:
@@ -425,7 +438,7 @@ void CPU::op_addi(Instruction instruction) {
 
     int32_t v;
     if (i > 0 && s_value > INT32_MAX - i) {
-        throw std::overflow_error("ADDI overflow");
+        exception(Exception::Overflow);
     }
     else if (i < 0 && s_value < INT32_MIN - i) {
         throw std::overflow_error("ADDI underflow");
@@ -455,10 +468,15 @@ void CPU::op_lw(Instruction instruction) {
 
     uint32_t addr = regs[s] + i;
 
-    uint32_t v = bus->load32(addr);
+    if (addr % 4 == 0) {
+        uint32_t v = bus->load32(addr);
 
-    // Put the load in the delay slot
-    load = std::make_tuple(t, v);
+        // Put the load in the delay slot
+        load = std::make_tuple(t, v);
+    }
+    else {
+        exception(Exception::LoadAddressError);
+    }
 }
 
 void CPU::op_sltu(Instruction instruction) {
@@ -496,7 +514,12 @@ void CPU::op_sh(Instruction instruction) {
         uint32_t addr = regs[s] + i;
         uint32_t v    = regs[t];
 
-        bus->store16(addr, (uint16_t)v);
+        if (addr % 2 == 0) {
+            bus->store16(addr, (uint16_t)v);
+        }
+        else {
+            exception(Exception::StoreAddressError);
+        }
 }
 
 void CPU::op_jal(Instruction instruction) {
@@ -610,7 +633,7 @@ void CPU::op_add(Instruction instruction) {
 
     int32_t v;
     if (s_value > 0 && t_value > INT32_MAX - s_value) {
-        throw std::overflow_error("ADD overflow");
+        exception(Exception::Overflow);
     }
     else if (s_value < 0 && t_value < INT32_MIN - s_value) {
         throw std::underflow_error("ADD underflow");
@@ -832,8 +855,12 @@ void CPU::exception(Exception causea) {
     // Update `CAUSE` register with the exception code (bits [6:2])
     cause = (static_cast<uint32_t>(causea) << 2);
 
-    // Save the current instruction address in `EPC`
     epc = current_pc;
+
+    if (delay_slot) {
+        epc = epc - 4;
+        cause |= 1 << 31;
+    }
 
     // Exceptions don't have a branch delay slot; we jump directly
     // into the handler.
