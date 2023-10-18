@@ -143,6 +143,8 @@ public:
         if (SPU.contains(abs_addr)) {
             std::cout << "[BUS] ERROR: Unhandled read from SPU register " << std::to_string(abs_addr));
             return 0;
+        } else if (RAM_.contains(abs_addr)) {
+            return ram.load16(offset);
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load16 into address " + std::to_string(addr));
