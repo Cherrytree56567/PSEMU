@@ -19,6 +19,7 @@ public:
 		sr = 0;
 		hi = 0;
 		lo = 0;
+		next_pc = pc + 4;
 	}
 
 	// CPU FUNCTIONS
@@ -79,6 +80,7 @@ public:
 
 	Bus* bus;
 	uint32_t pc;
+	uint32_t next_pc;
 	uint32_t regs[32];
 	uint32_t hi;
 	uint32_t lo;
