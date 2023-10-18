@@ -991,3 +991,14 @@ void CPU::op_srav(Instruction instruction) {
 
     set_reg(d, v);
 }
+
+void CPU::op_srlv(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    // Shift amount is truncated to 5 bits
+    uint32_t v = regs[t] >> (regs[s] & 0x1f);
+
+    set_reg(d, v);
+}
