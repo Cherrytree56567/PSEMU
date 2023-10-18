@@ -930,19 +930,19 @@ void CPU::op_rfe(Instruction instruction) {
 void CPU::op_lhu(Instruction instruction) {
 
     uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.t();
-    uint32_t s = instruction.s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
 
     uint32_t addr = regs[s] + i;
 
     // Address must be 16bit aligned
     if (addr % 2 == 0) {
-        uint16_t v = load16(addr);
+        uint16_t v = bus->load16(addr);
 
         // Put the load in the delay slot
         load = std::make_tuple(t, v);
     } else {
-            exception(Exception::LoadAddressError);
+        exception(Exception::LoadAddressError);
     }
 }
 
@@ -965,7 +965,7 @@ void CPU::op_lh(Instruction instruction) {
     uint32_t addr = regs[s] + i;
 
     // Cast as i16 to force sign extension
-    uint16_t v = load16(addr);
+    uint16_t v = bus->load16(addr);
 
     // Put the load in the delay slot
     load = std::make_tuple(t, v);
@@ -976,7 +976,7 @@ void CPU::op_nor(Instruction instruction) {
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
 
-    uint32_t v = !(regs[s] | regs[t];
+    uint32_t v = !(regs[s] | regs[t]);
 
     set_reg(d, v);
 }
