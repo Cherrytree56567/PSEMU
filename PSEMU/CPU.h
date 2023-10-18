@@ -94,6 +94,8 @@ public:
 	void op_nor(Instruction instruction);
 	void op_srav(Instruction instruction);
 
+	void op_srlv(Instruction instruction);
+
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
 		out_regs[index] = value;
