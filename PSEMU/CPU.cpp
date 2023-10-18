@@ -5,14 +5,20 @@ void CPU::tick() {
 }
 
 void CPU::fetch() {
+    current_pc = pc;
+    
+    if (current_pc % 4 != 0) {
+        // PC is not correctly aligned!
+        exception(Exception::LoadAddressError);
+        return;
+    }
 
     Instruction instr;
     instr.instruction = bus->load32(pc);
 
     delay_slot = brancha;
     brancha = false;
-
-    current_pc = pc;
+    
     pc = next_pc;
     next_pc += 4;
 
