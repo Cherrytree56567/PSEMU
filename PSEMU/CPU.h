@@ -3,6 +3,10 @@
 #include <tuple>
 #include "Instruction.h"
 
+enum Exception {
+    SysCall = 0x8,
+}
+
 class CPU {
 public:
 	CPU(Bus* bu) : bus(bu) {
@@ -72,6 +76,8 @@ public:
 	void op_divu(Instruction instruction);
 	void op_mfhi(Instruction instruction);
 	void op_slt(Instruction instruction);
+
+	void exception
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
