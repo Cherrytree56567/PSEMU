@@ -987,7 +987,7 @@ void CPU::op_srav(Instruction instruction) {
     uint32_t t = instruction.rt();
 
     // Shift amount is truncated to 5 bits
-    uint32_t v = (regs[t] >> (regs[s] & 0x1f);
+    uint32_t v = (regs[t] >> (regs[s] & 0x1f));
 
     set_reg(d, v);
 }
