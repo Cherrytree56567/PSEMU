@@ -90,6 +90,7 @@ public:
 	void op_rfe(Instruction instruction);
 	void op_lhu(Instruction instruction);
 	void op_sllv(Instruction instruction);
+	void op_lh(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
