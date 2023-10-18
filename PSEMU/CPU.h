@@ -91,6 +91,8 @@ public:
 	void op_lhu(Instruction instruction);
 	void op_sllv(Instruction instruction);
 	void op_lh(Instruction instruction);
+	void op_nor(Instruction instruction);
+	void op_srav(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
