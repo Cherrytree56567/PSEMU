@@ -136,6 +136,17 @@ public:
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load8 into address " + std::to_string(addr));
     }
+    
+    uint16_t load16(uint8_t addr) {
+        uint32_t abs_addr = mask_region(addr);
+
+        if (SPU.contains(abs_addr)) {
+            std::cout << "[BUS] ERROR: Unhandled read from SPU register " << std::to_string(abs_addr));
+            return 0;
+        }
+
+        throw std::runtime_error("[Bus] ERROR: Unhandled load16 into address " + std::to_string(addr));
+    }
 
     Bios bios;
     RAM ram;
