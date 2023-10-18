@@ -14,6 +14,7 @@ public:
 	void store8(uint32_t offset, uint8_t value) {
 		ram[offset] = value;
 	}
+	uint16_t load16(uint32_t offset);
 
 	/// Fetch the byte at `offset`
 	uint8_t load8(uint32_t offset) {
