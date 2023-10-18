@@ -84,6 +84,8 @@ public:
         } else if (TIMERS.contains(abs_addr)) {
             std::cout << "[BUS] ERROR: Unhandled write to timer register " << std::to_string(TIMERS.offset(abs_addr));
             return;
+        } else if (RAM_.contains(abs_addr)) {
+            return ram.store16(offset, val);
         }
 
         if (addr % 4 != 0) {
