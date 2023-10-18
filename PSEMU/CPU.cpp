@@ -247,6 +247,11 @@ void CPU::decode_execute(Instruction instruction) {
             std::cout << "[CPU] INFO: SLTIU (I-Type)\n";
             break;
             
+        case (0b100101):
+            op_lhu(instruction);
+            std::cout << "[CPU] INFO: LHU (I-Type)\n";
+            break;
+            
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
             exit(0);
@@ -900,4 +905,23 @@ void CPU::op_rfe(Instruction instruction) {
     uint32_t mode = sr & 0x3f;
     sr &= !0x3f;
     sr |= mode >> 2;
+}
+
+void CPU::op_lhu(Instruction instruction) {
+
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.t();
+    uint32_t s = instruction.s();
+
+    uint32_t addr = regs[s] + i;
+
+    // Address must be 16bit aligned
+    if (addr % 2 == 0) {
+        uint16_t v = load16(addr);
+
+        // Put the load in the delay slot
+        load = std::make_tuple(t, v);
+    } else {
+            exception(Exception::LoadAddressError);
+    }
 }
