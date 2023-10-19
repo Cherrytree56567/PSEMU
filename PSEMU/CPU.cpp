@@ -306,6 +306,16 @@ void CPU::decode_execute(Instruction instruction) {
             op_xori(instruction);
             std::cout << "[CPU] INFO: LH (I-Type)\n";
             break;
+
+        case (0b010001):
+            op_cop1(instruction);
+            std::cout << "[CPU] INFO: COP1 (I-Type)\n";
+            break;
+
+        case (0b010011):
+            op_cop3(instruction);
+            std::cout << "[CPU] INFO: COP3 (I-Type)\n";
+            break;
             
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
@@ -1061,4 +1071,12 @@ void CPU::op_xori(Instruction instruction) {
     uint32_t v = regs[s] ^ i;
 
     set_reg(t, v);
+}
+
+void CPU::op_cop1(Instruction) {
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_cop1(Instruction) {
+    exception(Exception::CoprocessorError);
 }
