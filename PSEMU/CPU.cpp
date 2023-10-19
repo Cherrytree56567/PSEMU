@@ -8,29 +8,31 @@ void CPU::tick() {
   fetch();
 }
 
-void CPU::fetch() {    
-    Instruction instr;
-    instr.instruction = bus->load32(pc);
-    
-    delay_slot = brancha;
-    brancha = false;
-    
+void CPU::fetch() {
     current_pc = pc;
-    pc = next_pc;
-    next_pc += 4;
 
-    set_reg(std::get<0>(load), std::get<1>(load));
-
-    load = std::make_tuple(0, 0);
-    
     if (current_pc % 4 != 0) {
         // PC is not correctly aligned!
         exception(Exception::LoadAddressError);
         return;
     }
 
+    Instruction instr;
+    instr.instruction = bus->load32(pc);
+
+    delay_slot = brancha;
+    brancha = false;
+
     decode_execute(instr);
-    just_started = false;
+
+    // Increment next PC to point to the next instruction.
+    pc = next_pc;
+    next_pc = next_pc + 4;
+
+    set_reg(std::get<0>(load), std::get<1>(load));
+
+    load = std::make_tuple(0, 0);
+
     for (int i = 0; i < 32; i++) {
         regs[i] = out_regs[i];
     }
@@ -181,7 +183,7 @@ void CPU::decode_execute(Instruction instruction) {
                     break;
                     
                 default:
-                    std::cout << "[CPU] ERROR: Unhandled Function Instruction \n" << pc;
+                    std::cout << "[CPU] ERROR: Unhandled Function Instruction \n" << instruction.function();
                     exit(0);
                     break;
             }
