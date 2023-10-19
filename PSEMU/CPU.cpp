@@ -37,9 +37,6 @@ void CPU::fetch() {
 }
 
 void CPU::decode_execute(Instruction instruction) {
-    if (just_started == true){
-        //return;
-    }
     switch (instruction.opcode()) {
         case (0b000000):
             switch (instruction.function()) {
