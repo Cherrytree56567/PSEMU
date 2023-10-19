@@ -301,6 +301,11 @@ void CPU::decode_execute(Instruction instruction) {
             op_lh(instruction);
             std::cout << "[CPU] INFO: LH (I-Type)\n";
             break;
+
+        case (0b001110):
+            op_xori(instruction);
+            std::cout << "[CPU] INFO: LH (I-Type)\n";
+            break;
             
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
@@ -491,28 +496,16 @@ void CPU::op_bne(Instruction instruction) {
 }
 
 void CPU::op_addi(Instruction instruction) {
-    int32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t imm_s = instruction.imm_s();
+    uint32_t addi = rs + imm_s;
 
-    int32_t s_value = static_cast<int32_t>(regs[s]);
-
-    int32_t v;
-    if (i > 0 && s_value > INT32_MAX - i) {
+    bool overflow = util::add_overflow(rs, imm_s, addi);
+    bool overflow = (((addi ^ rs) & (addi ^ imm_s)) & UINT32_C(0x80000000)) != 0;
+    if (!overflow)
+        set_reg(instruction.rt(), addi);
+    else
         exception(Exception::Overflow);
-    }
-    else if (i < 0 && s_value < INT32_MIN - i) {
-        throw std::overflow_error("ADDI underflow");
-    }
-    else {
-        v = s_value + i;
-    }
-
-    if (v < 0) {
-        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
-    }
-
-    set_reg(t, static_cast<uint32_t>(v));
 }
 
 void CPU::op_lw(Instruction instruction) {
@@ -685,29 +678,16 @@ void CPU::op_and(Instruction instruction) {
 }
 
 void CPU::op_add(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t rt = regs[instruction.rt()];
+    uint32_t add = rs + rt;
 
-    int32_t s_value = static_cast<int32_t>(regs[s]);
-    int32_t t_value = static_cast<int32_t>(regs[t]);
-
-    int32_t v;
-    if (s_value > 0 && t_value > INT32_MAX - s_value) {
+    bool overflow = util::add_overflow(rs, rt, add);
+    bool overflow = (((add ^ rs) & (add ^ rt)) & UINT32_C(0x80000000)) != 0;;
+    if (!overflow)
+        set_reg(instruction.rd(), add);
+    else
         exception(Exception::Overflow);
-    }
-    else if (s_value < 0 && t_value < INT32_MIN - s_value) {
-        throw std::underflow_error("ADD underflow");
-    }
-    else {
-        v = s_value + t_value;
-    }
-
-    if (v < 0) {
-        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
-    }
-
-    set_reg(d, static_cast<uint32_t>(v));
 }
 
 void CPU::op_bgtz(Instruction instruction) {
@@ -1070,5 +1050,15 @@ void CPU::op_sub(Instruction instruction) {
     if (!overflow)
         set_reg(instruction.rd(), sub);
     else
-        exception(ExceptionType::Overflow);
+        exception(Exception::Overflow);
+}
+
+void CPU::op_xori(Instruction instruction) {
+    uint32_t i = instruction.imm();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t v = regs[s] ^ i;
+
+    set_reg(t, v);
 }
