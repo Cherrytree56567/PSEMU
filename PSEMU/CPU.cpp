@@ -1,12 +1,15 @@
 #include "CPU.h"
 
+bool add_overflow(uint32_t old_value, uint32_t add_value, uint32_t new_value) {
+    return (((new_value ^ old_value) & (new_value ^ add_value)) & UINT32_C(0x80000000)) != 0;
+}
+
 void CPU::tick() {
   fetch();
 }
 
-void CPU::fetch() {
+void CPU::fetch() {    
     current_pc = pc;
-    
     if (current_pc % 4 != 0) {
         // PC is not correctly aligned!
         exception(Exception::LoadAddressError);
@@ -19,8 +22,8 @@ void CPU::fetch() {
     delay_slot = brancha;
     brancha = false;
     
+    next_pc = pc + 4;
     pc = next_pc;
-    next_pc += 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
@@ -35,7 +38,7 @@ void CPU::fetch() {
 
 void CPU::decode_execute(Instruction instruction) {
     if (just_started == true){
-        return;
+        //return;
     }
     switch (instruction.opcode()) {
         case (0b000000):
@@ -181,7 +184,7 @@ void CPU::decode_execute(Instruction instruction) {
                     break;
                     
                 default:
-                    std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
+                    std::cout << "[CPU] ERROR: Unhandled Function Instruction \n" << pc;
                     exit(0);
                     break;
             }
@@ -510,7 +513,6 @@ void CPU::op_addi(Instruction instruction) {
     uint32_t imm_s = instruction.imm_s();
     uint32_t addi = rs + imm_s;
 
-    bool overflow = util::add_overflow(rs, imm_s, addi);
     bool overflow = (((addi ^ rs) & (addi ^ imm_s)) & UINT32_C(0x80000000)) != 0;
     if (!overflow)
         set_reg(instruction.rt(), addi);
@@ -692,7 +694,6 @@ void CPU::op_add(Instruction instruction) {
     uint32_t rt = regs[instruction.rt()];
     uint32_t add = rs + rt;
 
-    bool overflow = util::add_overflow(rs, rt, add);
     bool overflow = (((add ^ rs) & (add ^ rt)) & UINT32_C(0x80000000)) != 0;;
     if (!overflow)
         set_reg(instruction.rd(), add);
@@ -1026,8 +1027,8 @@ void CPU::op_srlv(Instruction instruction) {
 void CPU::op_multu(Instruction instruction) {
     uint64_t value = (uint64_t)regs[instruction.rs()] * (uint64_t)regs[instruction.rt()];
 
-    hi = (v >> 32);
-    lo = v;
+    hi = (uint32_t)(value >> 32);
+    lo = (uint32_t)value;
 }
 
 void CPU::op_xor(Instruction instruction) {
@@ -1077,6 +1078,6 @@ void CPU::op_cop1(Instruction) {
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_cop1(Instruction) {
+void CPU::op_cop3(Instruction) {
     exception(Exception::CoprocessorError);
 }

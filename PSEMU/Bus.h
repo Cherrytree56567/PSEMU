@@ -101,13 +101,14 @@ public:
             std::cout << "[BUS] WARNING: TIMER NOT IMPLEMENTED. Timer write register " << std::to_string(TIMERS.offset(abs_addr))  << "\n";
             return;
         } else if (RAM_.contains(abs_addr)) {
-            return ram.store16(RAM_.offset(abs_addr), value);
+            ram.store16(RAM_.offset(abs_addr), value);
+            return;
         } else if (DMA.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(DMA.offset(abs_addr)) << " " << std::to_string(value) << "\n";
             return;
         }  else if (IRQ_CONTROL.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control write " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
-            return 0;
+            return;
         }
 
         if (addr % 4 != 0) {

@@ -1,3 +1,5 @@
 ﻿  CPU.cpp
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(673,55): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(758,55): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+  PSEMU.cpp
+  Generating Code...
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe

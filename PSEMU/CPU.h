@@ -16,21 +16,16 @@ class CPU {
 public:
 	CPU(Bus* bu) : bus(bu) {
 		pc = 0xbfc00000;
-		for (int i = 0; i < 32; i++) {
-			regs[i] = 0;
-		}
-		for (int i = 0; i < 32; i++) {
-			out_regs[i] = 0;
-		}
+		next_pc = pc;
+		current_pc = 0;
+		hi = 0; lo = 0;
+		memset(regs, 0, 32 * sizeof(uint32_t));
+		memset(out_regs, 0, 32 * sizeof(uint32_t));
 		load = std::make_tuple(0,0);
-		Next_Instr.instruction = 0xbfc00000;
 		just_started = true;
 		sr = 0;
-		hi = 0;
-		lo = 0;
 		cause = 0;
 		epc = 0;
-		next_pc = pc + 4;
 		delay_slot = false;
 		brancha = false;
 	}
@@ -121,7 +116,6 @@ public:
 	uint32_t regs[32];
 	uint32_t hi;
 	uint32_t lo;
-	Instruction Next_Instr;
 	bool just_started;
 	uint32_t sr; // COP0 Status Register
 	uint32_t out_regs[32];
