@@ -20,10 +20,12 @@ void Bios::newl(const char* path) {
 }
 
 uint32_t Bios::load32(uint32_t offset) {
-  uint32_t b0 = static_cast<uint32_t>(data[offset + 0]);
+    offset = static_cast<size_t>(offset);
+
+    uint32_t b0 = static_cast<uint32_t>(data[offset + 0]);
     uint32_t b1 = static_cast<uint32_t>(data[offset + 1]);
     uint32_t b2 = static_cast<uint32_t>(data[offset + 2]);
     uint32_t b3 = static_cast<uint32_t>(data[offset + 3]);
 
-    return b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
+    return (b0) | (b1 << 8) | (b2 << 16) | (b3 << 24);
 }

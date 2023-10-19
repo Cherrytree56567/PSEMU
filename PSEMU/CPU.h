@@ -15,21 +15,7 @@ enum Exception {
 
 class CPU {
 public:
-	CPU(Bus* bu) : bus(bu) {
-		pc = 0xbfc00000;
-		next_pc = pc;
-		current_pc = pc;
-		hi = 0; lo = 0;
-		memset(regs, 0, 32 * sizeof(uint32_t));
-		memset(out_regs, 0, 32 * sizeof(uint32_t));
-		load = std::make_tuple(0,0);
-		just_started = true;
-		sr = 0;
-		cause = 0;
-		epc = 0;
-		delay_slot = false;
-		brancha = false;
-	}
+	CPU(Bus* bu) : bus(bu) {}
 
 	// CPU FUNCTIONS
 	void tick();
@@ -100,6 +86,7 @@ public:
 	void op_xori(Instruction instruction);
 	void op_cop1(Instruction instruction);
 	void op_cop3(Instruction instruction);
+	void reset();
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {

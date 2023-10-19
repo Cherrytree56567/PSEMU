@@ -14,6 +14,7 @@ int main() {
     Bus bus;
     bus.bios.newl("scph1001.bin");
     CPU cpu(&bus);
+    cpu.reset();
     while (true) {
         cpu.tick();
     }

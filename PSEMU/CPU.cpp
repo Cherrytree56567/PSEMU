@@ -8,6 +8,22 @@ void CPU::tick() {
   fetch();
 }
 
+void CPU::reset() {
+    pc = 0xbfc00000;
+    next_pc = pc;
+    current_pc = pc;
+    hi = 0; lo = 0;
+    memset(regs, 0, 32 * sizeof(uint32_t));
+    memset(out_regs, 0, 32 * sizeof(uint32_t));
+    load = std::make_tuple(0, 0);
+    just_started = true;
+    sr = 0;
+    cause = 0;
+    epc = 0;
+    delay_slot = false;
+    brancha = false;
+}
+
 void CPU::fetch() {
     current_pc = pc;
 
@@ -23,22 +39,22 @@ void CPU::fetch() {
     delay_slot = brancha;
     brancha = false;
 
-    decode_execute(instr);
-
-    // Increment next PC to point to the next instruction.
+    next_pc = pc + 4;
     pc = next_pc;
-    next_pc = next_pc + 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
     load = std::make_tuple(0, 0);
 
+    decode_execute(instr);
+    just_started = false;
     for (int i = 0; i < 32; i++) {
         regs[i] = out_regs[i];
     }
 }
 
 void CPU::decode_execute(Instruction instruction) {
+    std::cout << "Instruction " << instruction.instruction << "\n";
     switch (instruction.opcode()) {
         case (0b000000):
             switch (instruction.function()) {
