@@ -100,6 +100,7 @@ public:
 	void op_break(Instruction instruction);
 	void op_mult(Instruction instruction);
 	void op_sub(Instruction instruction);
+	void op_xori(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
