@@ -1092,3 +1092,4 @@ void CPU::op_cop1(Instruction) {
 void CPU::op_cop3(Instruction) {
     exception(Exception::CoprocessorError);
 }
+
