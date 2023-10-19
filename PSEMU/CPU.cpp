@@ -169,6 +169,16 @@ void CPU::decode_execute(Instruction instruction) {
                     op_break(instruction);
                     std::cout << "[CPU] INFO: BREAK (R-Type)\n";
                     break;
+
+                case (0b011000):
+                    op_mult(instruction);
+                    std::cout << "[CPU] INFO: MULT (R-Type)\n";
+                    break;
+
+                case (0b100010):
+                    op_sub(instruction);
+                    std::cout << "[CPU] INFO: SUB (R-Type)\n";
+                    break;
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
@@ -1049,4 +1059,16 @@ void CPU::op_mult(Instruction instruction) {
 
     hi = (uint32_t)(value >> 32);
     lo = (uint32_t)value;
+}
+
+void CPU::op_sub(Instruction instruction) {
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t rt = regs[instruction.rt()];
+    uint32_t sub = rs - rt;
+
+    bool overflow = (((sub ^ rs) & (rs ^ rt)) & UINT32_C(0x80000000)) != 0;
+    if (!overflow)
+        set_reg(instruction.rd(), sub);
+    else
+        exception(ExceptionType::Overflow);
 }
