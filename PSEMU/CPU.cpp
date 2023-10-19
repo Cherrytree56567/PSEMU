@@ -149,6 +149,16 @@ void CPU::decode_execute(Instruction instruction) {
                     op_srav(instruction);
                     std::cout << "[CPU] INFO: SRAV (R-Type)\n";
                     break;
+
+                case (0b000110):
+                    op_srlv(instruction);
+                    std::cout << "[CPU] INFO: SRLV (R-Type)\n";
+                    break;
+
+                case (0b100110):
+                    op_xor(instruction);
+                    std::cout << "[CPU] INFO: XOR (R-Type)\n";
+                    break;
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
