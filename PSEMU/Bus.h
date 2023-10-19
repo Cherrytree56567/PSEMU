@@ -65,7 +65,7 @@ public:
         } else if (RAM_SIZE.contains(abs_addr)) {
             return;
         } else if (CACHE_CONTROL.contains(abs_addr)) {
-            std::cout << "[Bus] WARNING: Cache_Control not implemented. " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+            std::cout << "[Bus] WARNING: Cache Control not implemented. Cache Control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
             return;
         } else if (RAM_.contains(abs_addr)) {
             ram.store32(RAM_.offset(abs_addr), value);
@@ -93,7 +93,6 @@ public:
         uint32_t abs_addr = mask_region(addr);
         if (SPU.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. SPU write register " << std::to_string(SPU.offset(abs_addr)) << "\n";
-            //exit(0);
             return;
         } else if (TIMERS.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: TIMER NOT IMPLEMENTED. Timer write register " << std::to_string(TIMERS.offset(abs_addr))  << "\n";
@@ -119,7 +118,7 @@ public:
     void store8(uint32_t addr, uint8_t value) {
         uint32_t abs_addr = mask_region(addr);
         if (EXPANSION_2.contains(abs_addr)) {
-            std::cout << "[Bus] ERROR: Unhandled write to Expansion 2 register " << std::to_string(EXPANSION_2.offset(abs_addr)) << "\n";
+            std::cout << "[BUS] WARNING: Expansion 2 NOT IMPLEMENTED. Expansion 2 read register " << std::to_string(EXPANSION_2.offset(abs_addr)) << "\n";
             return;
         } else if (RAM_.contains(abs_addr)) {
             ram.store8(RAM_.offset(abs_addr), value);
@@ -140,7 +139,7 @@ public:
         if (BIOS.contains(abs_addr)) {
             return bios.load8(BIOS.offset(abs_addr));
         } else if (EXPANSION_1.contains(abs_addr)) {
-            std::cout << "[BUS] ERROR: Unhandled read from SPU register " << std::to_string(SPU.offset(abs_addr)) << "\n";
+            std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(SPU.offset(abs_addr)) << "\n";
             return 0xff;
         } else if (RAM_.contains(abs_addr)) {
             return ram.load8(RAM_.offset(abs_addr));
