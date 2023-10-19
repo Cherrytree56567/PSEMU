@@ -18,7 +18,7 @@ public:
 	CPU(Bus* bu) : bus(bu) {
 		pc = 0xbfc00000;
 		next_pc = pc;
-		current_pc = 0;
+		current_pc = pc;
 		hi = 0; lo = 0;
 		memset(regs, 0, 32 * sizeof(uint32_t));
 		memset(out_regs, 0, 32 * sizeof(uint32_t));
