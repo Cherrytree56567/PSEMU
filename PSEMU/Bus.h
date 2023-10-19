@@ -48,6 +48,9 @@ public:
             return 0;
         } else if (GPU.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(GPU.offset(abs_addr)) << "\n";
+            if (GPU.offset(abs_addr) == 4){
+                return 0x10000000;
+            }
             return 0;
         }
 
