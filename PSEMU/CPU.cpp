@@ -164,6 +164,11 @@ void CPU::decode_execute(Instruction instruction) {
                     op_multu(instruction);
                     std::cout << "[CPU] INFO: MULTU (R-Type)\n";
                     break;
+
+                case (0b001101):
+                    op_break(instruction);
+                    std::cout << "[CPU] INFO: BREAK (R-Type)\n";
+                    break;
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
@@ -1033,4 +1038,8 @@ void CPU::op_xor(Instruction instruction) {
     uint32_t v = regs[s] ^ regs[t];
 
     set_reg(d, v);
+}
+
+void CPU::op_break(Instruction instruction) {
+    exception(Exception::Break);
 }
