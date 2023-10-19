@@ -1043,3 +1043,10 @@ void CPU::op_xor(Instruction instruction) {
 void CPU::op_break(Instruction instruction) {
     exception(Exception::Break);
 }
+
+void CPU::op_mult(Instruction instruction) {
+    int64_t value = (int64_t)(int)regs[instruction.rs()] * (int64_t)(int)regs[instruction.rt()]; //sign extend to pass amidog cpu test
+
+    hi = (uint32_t)(value >> 32);
+    lo = (uint32_t)value;
+}
