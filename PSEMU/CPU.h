@@ -1,6 +1,7 @@
 #pragma once
 #include "Bus.h"
 #include <tuple>
+#include <cstring>
 #include "Instruction.h"
 
 enum Exception {
