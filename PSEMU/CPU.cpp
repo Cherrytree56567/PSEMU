@@ -10,7 +10,7 @@ void CPU::tick() {
 
 void CPU::reset() {
     pc = 0xbfc00000;
-    next_pc = pc;
+    next_pc = pc + 4;
     current_pc = pc;
     hi = 0; lo = 0;
     memset(regs, 0, 32 * sizeof(uint32_t));
@@ -39,8 +39,8 @@ void CPU::fetch() {
     delay_slot = brancha;
     brancha = false;
 
-    next_pc = pc + 4;
     pc = next_pc;
+    next_pc = pc + 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
@@ -401,7 +401,9 @@ void CPU::op_addiu(Instruction instruction) {
 void CPU::op_j(Instruction instruction) {
     uint32_t i = instruction.addr();
 
-    pc = (pc & 0xf0000000) | (i << 2);
+    next_pc = (pc & 0xf0000000) | (i << 2);
+
+    brancha = true;
 }
 
 void CPU::op_or(Instruction instruction) {
