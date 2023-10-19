@@ -37,8 +37,10 @@ public:
         if (BIOS.contains(abs_addr)) {
             return bios.load32(BIOS.offset(abs_addr));
         } else if (RAM_SIZE.contains(abs_addr)) {
+            std::cout << "[BUS] INFO: RAM_SIZE read " << std::to_string(RAM_SIZE.offset(abs_addr)) << "\n";
             return 0x00000888;
         } else if (RAM_.contains(abs_addr)) {
+            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load32(RAM_.offset(abs_addr));
         } else if (IRQ_CONTROL.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
@@ -48,10 +50,14 @@ public:
             return 0;
         } else if (GPU.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(GPU.offset(abs_addr)) << "\n";
-            if (GPU.offset(abs_addr) == 4){
+            switch (GPU.offset(abs_addr)) {
+            case 4:
                 return 0x10000000;
+                break;
+            default:
+                return 0;
+                break;
             }
-            return 0;
         }
 
         if (addr % 4 != 0) {
@@ -141,11 +147,13 @@ public:
         uint32_t abs_addr = mask_region(addr);
 
         if (BIOS.contains(abs_addr)) {
+            std::cout << "[BUS] INFO: BIOS read " << std::to_string(BIOS.offset(abs_addr)) << "\n";
             return bios.load8(BIOS.offset(abs_addr));
         } else if (EXPANSION_1.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(SPU.offset(abs_addr)) << "\n";
             return 0xff;
         } else if (RAM_.contains(abs_addr)) {
+            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load8(RAM_.offset(abs_addr));
         }
 
@@ -159,6 +167,7 @@ public:
             std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(SPU.offset(abs_addr)) << "\n";
             return 0;
         } else if (RAM_.contains(abs_addr)) {
+            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load16(RAM_.offset(abs_addr));
         } else if (IRQ_CONTROL.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";

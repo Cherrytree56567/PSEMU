@@ -366,15 +366,11 @@ void CPU::op_sw(Instruction instruction) {
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
-    if ((sr & 0x10000) != 0) {
-        // Cache is isolated, ignore write
-        std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
-        return;
-    }
-
+    // Assuming reg is a function that returns the value in a register
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
-    if (addr % 2 == 0) {
+
+    if (addr % 4 == 0) {
         bus->store32(addr, v);
     }
     else {
