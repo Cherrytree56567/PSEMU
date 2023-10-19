@@ -9,25 +9,25 @@ void CPU::tick() {
 }
 
 void CPU::fetch() {    
+    Instruction instr;
+    instr.instruction = bus->load32(pc);
+    
+    delay_slot = brancha;
+    brancha = false;
+    
     current_pc = pc;
+    pc = next_pc;
+    next_pc += 4;
+
+    set_reg(std::get<0>(load), std::get<1>(load));
+
+    load = std::make_tuple(0, 0);
+    
     if (current_pc % 4 != 0) {
         // PC is not correctly aligned!
         exception(Exception::LoadAddressError);
         return;
     }
-
-    Instruction instr;
-    instr.instruction = bus->load32(pc);
-
-    delay_slot = brancha;
-    brancha = false;
-    
-    next_pc = pc + 4;
-    pc = next_pc;
-
-    set_reg(std::get<0>(load), std::get<1>(load));
-
-    load = std::make_tuple(0, 0);
 
     decode_execute(instr);
     just_started = false;
