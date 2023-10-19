@@ -149,6 +149,36 @@ void CPU::decode_execute(Instruction instruction) {
                     op_srav(instruction);
                     std::cout << "[CPU] INFO: SRAV (R-Type)\n";
                     break;
+
+                case (0b000110):
+                    op_srlv(instruction);
+                    std::cout << "[CPU] INFO: SRLV (R-Type)\n";
+                    break;
+
+                case (0b100110):
+                    op_xor(instruction);
+                    std::cout << "[CPU] INFO: XOR (R-Type)\n";
+                    break;
+
+                case (0b011001):
+                    op_multu(instruction);
+                    std::cout << "[CPU] INFO: MULTU (R-Type)\n";
+                    break;
+
+                case (0b001101):
+                    op_break(instruction);
+                    std::cout << "[CPU] INFO: BREAK (R-Type)\n";
+                    break;
+
+                case (0b011000):
+                    op_mult(instruction);
+                    std::cout << "[CPU] INFO: MULT (R-Type)\n";
+                    break;
+
+                case (0b100010):
+                    op_sub(instruction);
+                    std::cout << "[CPU] INFO: SUB (R-Type)\n";
+                    break;
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n";
@@ -270,6 +300,21 @@ void CPU::decode_execute(Instruction instruction) {
         case (0b100001):
             op_lh(instruction);
             std::cout << "[CPU] INFO: LH (I-Type)\n";
+            break;
+
+        case (0b001110):
+            op_xori(instruction);
+            std::cout << "[CPU] INFO: LH (I-Type)\n";
+            break;
+
+        case (0b010001):
+            op_cop1(instruction);
+            std::cout << "[CPU] INFO: COP1 (I-Type)\n";
+            break;
+
+        case (0b010011):
+            op_cop3(instruction);
+            std::cout << "[CPU] INFO: COP3 (I-Type)\n";
             break;
             
         default:
@@ -461,28 +506,16 @@ void CPU::op_bne(Instruction instruction) {
 }
 
 void CPU::op_addi(Instruction instruction) {
-    int32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t imm_s = instruction.imm_s();
+    uint32_t addi = rs + imm_s;
 
-    int32_t s_value = static_cast<int32_t>(regs[s]);
-
-    int32_t v;
-    if (i > 0 && s_value > INT32_MAX - i) {
+    bool overflow = util::add_overflow(rs, imm_s, addi);
+    bool overflow = (((addi ^ rs) & (addi ^ imm_s)) & UINT32_C(0x80000000)) != 0;
+    if (!overflow)
+        set_reg(instruction.rt(), addi);
+    else
         exception(Exception::Overflow);
-    }
-    else if (i < 0 && s_value < INT32_MIN - i) {
-        throw std::overflow_error("ADDI underflow");
-    }
-    else {
-        v = s_value + i;
-    }
-
-    if (v < 0) {
-        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
-    }
-
-    set_reg(t, static_cast<uint32_t>(v));
 }
 
 void CPU::op_lw(Instruction instruction) {
@@ -655,29 +688,16 @@ void CPU::op_and(Instruction instruction) {
 }
 
 void CPU::op_add(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t rt = regs[instruction.rt()];
+    uint32_t add = rs + rt;
 
-    int32_t s_value = static_cast<int32_t>(regs[s]);
-    int32_t t_value = static_cast<int32_t>(regs[t]);
-
-    int32_t v;
-    if (s_value > 0 && t_value > INT32_MAX - s_value) {
+    bool overflow = util::add_overflow(rs, rt, add);
+    bool overflow = (((add ^ rs) & (add ^ rt)) & UINT32_C(0x80000000)) != 0;;
+    if (!overflow)
+        set_reg(instruction.rd(), add);
+    else
         exception(Exception::Overflow);
-    }
-    else if (s_value < 0 && t_value < INT32_MIN - s_value) {
-        throw std::underflow_error("ADD underflow");
-    }
-    else {
-        v = s_value + t_value;
-    }
-
-    if (v < 0) {
-        v = static_cast<uint32_t>(v & 0xFFFFFFFF);  // Ensure v is a positive 32-bit value
-    }
-
-    set_reg(d, static_cast<uint32_t>(v));
 }
 
 void CPU::op_bgtz(Instruction instruction) {
@@ -990,4 +1010,73 @@ void CPU::op_srav(Instruction instruction) {
     uint32_t v = (regs[t] >> (regs[s] & 0x1f));
 
     set_reg(d, v);
+}
+
+void CPU::op_srlv(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    // Shift amount is truncated to 5 bits
+    uint32_t v = regs[t] >> (regs[s] & 0x1f);
+
+    set_reg(d, v);
+}
+
+void CPU::op_multu(Instruction instruction) {
+    uint64_t value = (uint64_t)regs[instruction.rs()] * (uint64_t)regs[instruction.rt()];
+
+    hi = (v >> 32);
+    lo = v;
+}
+
+void CPU::op_xor(Instruction instruction) {
+    uint32_t d = instruction.rd();
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+
+    uint32_t v = regs[s] ^ regs[t];
+
+    set_reg(d, v);
+}
+
+void CPU::op_break(Instruction instruction) {
+    exception(Exception::Break);
+}
+
+void CPU::op_mult(Instruction instruction) {
+    int64_t value = (int64_t)(int)regs[instruction.rs()] * (int64_t)(int)regs[instruction.rt()]; //sign extend to pass amidog cpu test
+
+    hi = (uint32_t)(value >> 32);
+    lo = (uint32_t)value;
+}
+
+void CPU::op_sub(Instruction instruction) {
+    uint32_t rs = regs[instruction.rs()];
+    uint32_t rt = regs[instruction.rt()];
+    uint32_t sub = rs - rt;
+
+    bool overflow = (((sub ^ rs) & (rs ^ rt)) & UINT32_C(0x80000000)) != 0;
+    if (!overflow)
+        set_reg(instruction.rd(), sub);
+    else
+        exception(Exception::Overflow);
+}
+
+void CPU::op_xori(Instruction instruction) {
+    uint32_t i = instruction.imm();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t v = regs[s] ^ i;
+
+    set_reg(t, v);
+}
+
+void CPU::op_cop1(Instruction) {
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_cop1(Instruction) {
+    exception(Exception::CoprocessorError);
 }

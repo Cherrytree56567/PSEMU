@@ -5,10 +5,11 @@
 
 enum Exception {
     SysCall = 0x8,
-	Overflow = 0xc,
-	LoadAddressError = 0x4,
-	/// Address error on store
-	StoreAddressError = 0x5
+    Overflow = 0xc,
+    LoadAddressError = 0x4,
+    StoreAddressError = 0x5,
+    Break = 0x9,
+    CoprocessorError = 0xb
 };
 
 class CPU {
@@ -93,6 +94,16 @@ public:
 	void op_lh(Instruction instruction);
 	void op_nor(Instruction instruction);
 	void op_srav(Instruction instruction);
+
+	void op_srlv(Instruction instruction);
+	void op_multu(Instruction instruction);
+	void op_xor(Instruction instruction);
+	void op_break(Instruction instruction);
+	void op_mult(Instruction instruction);
+	void op_sub(Instruction instruction);
+	void op_xori(Instruction instruction);
+	void op_cop1(Instruction instruction);
+	void op_cop3(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
