@@ -200,7 +200,7 @@ void CPU::decode_execute(Instruction instruction) {
                     
                 default:
                     std::cout << "[CPU] ERROR: Unhandled Function Instruction \n" << instruction.function();
-                    exit(0);
+                    exception(Exception::IllegalInstruction);
                     break;
             }
             break;
@@ -322,7 +322,7 @@ void CPU::decode_execute(Instruction instruction) {
 
         case (0b001110):
             op_xori(instruction);
-            std::cout << "[CPU] INFO: LH (I-Type)\n";
+            std::cout << "[CPU] INFO: XORI (I-Type)\n";
             break;
 
         case (0b010001):
@@ -344,15 +344,65 @@ void CPU::decode_execute(Instruction instruction) {
             op_lwl(instruction);
             std::cout << "[CPU] INFO: LWL (I-Type)\n";
             break;
-            
+
         case (0b100110):
             op_lwr(instruction);
             std::cout << "[CPU] INFO: LWR (I-Type)\n";
             break;
-            
+
+        case (0b101010):
+            op_swl(instruction);
+            std::cout << "[CPU] INFO: SWL (I-Type)\n";
+            break;
+
+        case (0b101110):
+            op_swr(instruction);
+            std::cout << "[CPU] INFO: SWR (I-Type)\n";
+            break;
+
+        case (0b110000):
+            op_lwc0(instruction);
+            std::cout << "[CPU] INFO: LWC0 (I-Type)\n";
+            break;
+
+        case (0b110001):
+            op_lwc1(instruction);
+            std::cout << "[CPU] INFO: LWC1 (I-Type)\n";
+            break;
+
+        case (0b110010):
+            op_lwc2(instruction);
+            std::cout << "[CPU] INFO: LWC2 (I-Type)\n";
+            break;
+
+        case (0b110011):
+            op_lwc3(instruction);
+            std::cout << "[CPU] INFO: LWC3 (I-Type)\n";
+            break;
+
+        case (0b111000):
+            op_swc0(instruction);
+            std::cout << "[CPU] INFO: SWC0 (I-Type)\n";
+            break;
+
+        case (0b111001):
+            op_swc1(instruction);
+            std::cout << "[CPU] INFO: SWC1 (I-Type)\n";
+            break;
+
+        case (0b111010):
+            op_swc2(instruction);
+            std::cout << "[CPU] INFO: SWC2 (I-Type)\n";
+            break;
+
+        case (0b111011):
+            op_swc3(instruction);
+            std::cout << "[CPU] INFO: SWC3 (I-Type)\n";
+            break;
+
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
-            exit(0);
+            exception(Exception::IllegalInstruction);
             break;
     }
 }
@@ -1111,49 +1161,57 @@ void CPU::op_cop3(Instruction) {
 }
 
 void CPU::op_cop2(Instruction instruction) {
-    std::cout << "Unhandled GTE instruction: {" << std::to_string(instruction);
+    std::cout << "Unhandled GTE instruction: {" << std::to_string(instruction.instruction);
 }
 
 void CPU::op_lwl(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
+    int32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
-    uint32_t value = 0;
-    uint32_t addr = regs[s] + i;
+    uint32_t addr = regs[s] + static_cast<int32_t>(i);
 
+    // This instruction bypasses the load delay restriction: this
+    // instruction will merge the new contents with the value
+    // currently being loaded if need be.
     uint32_t cur_v = out_regs[t];
 
-    uint32_t aligned_addr = addr & 0xFFFFFFFC;
-    uint32_t aligned_word = bus->read(aligned_addr);
+    // Next we load the *aligned* word containing the first
+    // addressed byte
+    uint32_t aligned_addr = addr & ~3U;
+    uint32_t aligned_word = bus->load32(aligned_addr);
 
-    switch (addr & 0b11){
-        case 0:
-            value = (cur_v & 0x00ffffff) | (aligned_word << 24);
-            break;
-
-        case 1:
-            value = (cur_v & 0x0000ffff) | (aligned_word << 16);
-            break;
-            
-        case 2:
-            value = (cur_v & 0x000000ff) | (aligned_word << 8);
-            break;
-            
-        case 3:
-            value = (cur_v & 0x00000000) | (aligned_word << 0);
-            break;
+    // Depending on the address alignment, we fetch the 1, 2, 3, or
+    // 4 *most* significant bytes and put them in the target register.
+    uint32_t v;
+    switch (addr & 3U) {
+    case 0:
+        v = (cur_v & 0x00FFFFFFU) | (aligned_word << 24);
+        break;
+    case 1:
+        v = (cur_v & 0x0000FFFFU) | (aligned_word << 16);
+        break;
+    case 2:
+        v = (cur_v & 0x000000FFU) | (aligned_word << 8);
+        break;
+    case 3:
+        v = (cur_v & 0x00000000U) | (aligned_word);
+        break;
+    default:
+        throw std::runtime_error("Unreachable code");
     }
 
-    load = std::make_tuple(t, value);
+    // Put the load in the delay slot
+    load = std::make_tuple(t, v);
 }
+
 
 void CPU::op_lwr(Instruction instruction) {
     uint32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
-    uint32_t addr = get_reg(s) + i;
+    uint32_t addr = regs[s] + i;
 
     // This instruction bypasses the load delay restriction: this
     // instruction will merge the new contents with the value
@@ -1189,4 +1247,116 @@ void CPU::op_lwr(Instruction instruction) {
 
     // Put the load in the delay slot
     load = std::make_tuple(t, v);
+}
+
+void CPU::op_swl(Instruction instruction) {
+    int32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = regs[s] + i;
+    uint32_t v = regs[t];
+
+    uint32_t aligned_addr = addr & ~3U;
+
+    // Load the current value for the aligned word at the target address
+    uint32_t cur_mem = bus->load32(aligned_addr);
+
+    uint32_t mem;
+    switch (addr & 3U) {
+    case 0:
+        mem = (cur_mem & 0xFFFFFF00U) | (v >> 24);
+        break;
+    case 1:
+        mem = (cur_mem & 0xFFFF0000U) | (v >> 16);
+        break;
+    case 2:
+        mem = (cur_mem & 0xFF000000U) | (v >> 8);
+        break;
+    case 3:
+        mem = (cur_mem & 0x00000000U) | (v);
+        break;
+    default:
+        throw std::runtime_error("Unreachable code");
+    }
+
+    bus->store32(aligned_addr, mem);
+}
+
+void CPU::op_swr(Instruction instruction) {
+    int32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = regs[s] + i;
+    uint32_t v = regs[t];
+
+    uint32_t aligned_addr = addr & ~3U;
+
+    // Load the current value for the aligned word at the target address
+    uint32_t cur_mem = bus->load32(aligned_addr);
+
+    uint32_t mem;
+    switch (addr & 3U) {
+    case 0:
+        mem = (cur_mem & 0x00000000U) | (v);
+        break;
+    case 1:
+        mem = (cur_mem & 0x000000FFU) | (v << 8);
+        break;
+    case 2:
+        mem = (cur_mem & 0x0000FFFFU) | (v << 16);
+        break;
+    case 3:
+        mem = (cur_mem & 0x00FFFFFFU) | (v << 24);
+        break;
+    default:
+        throw std::runtime_error("Unreachable code");
+    }
+
+    bus->store32(aligned_addr, mem);
+}
+
+void CPU::op_lwc0(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_lwc1(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_lwc2(Instruction instruction) {
+    // Handle the GTE LWC instruction. You can customize this part.
+    // If not supported, you can throw an exception like in the Rust code.
+    // For example:
+    throw std::runtime_error("Unhandled GTE LWC: " + std::to_string(instruction.instruction));
+}
+
+void CPU::op_lwc3(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_swc0(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_swc1(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_swc2(Instruction instruction) {
+    // Handle the GTE SWC instruction. You can customize this part.
+    // If not supported, you can throw an exception like in the Rust code.
+    // For example:
+    throw std::runtime_error("Unhandled GTE SWC: " + std::to_string(instruction.instruction));
+}
+
+void CPU::op_swc3(Instruction instruction) {
+    // Not supported by this coprocessor
+    exception(Exception::CoprocessorError);
 }

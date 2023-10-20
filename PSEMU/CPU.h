@@ -10,7 +10,8 @@ enum Exception {
     LoadAddressError = 0x4,
     StoreAddressError = 0x5,
     Break = 0x9,
-    CoprocessorError = 0xb
+    CoprocessorError = 0xb,
+	IllegalInstruction = 0xa
 };
 
 class CPU {
@@ -91,6 +92,16 @@ public:
 	void op_cop2(Instruction instruction);
 	void op_lwl(Instruction instruction);
 	void op_lwr(Instruction instruction);
+	void op_swl(Instruction instruction);
+	void op_swr(Instruction instruction);
+	void op_lwc0(Instruction instruction);
+	void op_lwc1(Instruction instruction);
+	void op_lwc2(Instruction instruction);
+	void op_lwc3(Instruction instruction);
+	void op_swc0(Instruction instruction);
+	void op_swc1(Instruction instruction);
+	void op_swc2(Instruction instruction);
+	void op_swc3(Instruction instruction);
 
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
