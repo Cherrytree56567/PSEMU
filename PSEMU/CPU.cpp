@@ -564,9 +564,9 @@ void CPU::op_mtc0(Instruction instruction) {
 }
 
 void CPU::branch(uint32_t offset) {
-    offset <<= 2;
+    uint32_t offseta = offset << 2;
 
-    next_pc = pc + offset;
+    next_pc = pc + offseta;
 
     brancha = true;
 }
@@ -662,12 +662,13 @@ void CPU::op_sh(Instruction instruction) {
 }
 
 void CPU::op_jal(Instruction instruction) {
-    uint32_t ra = pc;
+    uint32_t ra = next_pc;
 
     // Store return address in $31 ($ra)
     set_reg(31, ra);
 
     op_j(instruction);
+    brancha = true;
 }
 
 void CPU::op_andi(Instruction instruction) {
@@ -701,7 +702,9 @@ void CPU::op_sb(Instruction instruction) {
 void CPU::op_jr(Instruction instruction) {
     uint32_t s = instruction.rs();
 
-    pc = regs[s];
+    next_pc = regs[s];
+    
+    brancha = true;
 }
 
 void CPU::op_lb(Instruction instruction) {
@@ -813,12 +816,13 @@ void CPU::op_jalr(Instruction instruction) {
     uint32_t d = instruction.rd();
     uint32_t s = instruction.rs();
 
-    uint32_t ra = pc;
+    uint32_t ra = next_pc;
 
     // Store return address in `d`
     set_reg(d, ra);
 
-    pc = regs[s];
+    next_pc = regs[s];
+    brancha = true;
 }
 
 void CPU::op_bxx(Instruction instruction) {
@@ -828,7 +832,7 @@ void CPU::op_bxx(Instruction instruction) {
     uint32_t instructiona = instruction.instruction;
 
     uint32_t is_bgez = (instructiona >> 16) & 1;
-    uint32_t is_link = (instructiona >> 17) & 0xf == 8;
+    uint32_t is_link = (instructiona >> 20) & 1 != 0;
 
     uint32_t v = regs[s];
 
@@ -839,15 +843,14 @@ void CPU::op_bxx(Instruction instruction) {
     // to negate the comparison above since
     // ("a >= 0" <=> "!(a < 0)"). The xor takes care of that.
     test = test ^ is_bgez;
-
-    if (is_link) {
-        uint32_t ra = pc;
-
-        // Store return address in R31
-        set_reg(31, ra);
-    }
-
+    
     if (test != 0) {
+        if (is_link) {
+            uint32_t ra = next_pc;
+
+            // Store return address in R31
+            set_reg(31, ra);
+        }
         branch(i);
     }
 }
@@ -971,10 +974,10 @@ void CPU::op_slt(Instruction instruction) {
 }
 
 void CPU::exception(Exception causea) {
-    uint32_t handler = (sr & (1U << 22)) ? 0xbfc00180U : 0x80000080U;
+    uint32_t handler = (sr & (1 << 22)) ? 0xbfc00180 : 0x80000080;
 
     uint32_t mode = sr & 0x3F;
-    sr &= ~0x3F;
+    sr &= (uint32_t)0x3F;
     sr |= (mode << 2) & 0x3F;
 
     // Update `CAUSE` register with the exception code (bits [6:2])
