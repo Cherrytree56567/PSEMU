@@ -334,6 +334,11 @@ void CPU::decode_execute(Instruction instruction) {
             op_cop3(instruction);
             std::cout << "[CPU] INFO: COP3 (I-Type)\n";
             break;
+
+        case (0b010010):
+            op_cop2(instruction);
+            std::cout << "[CPU] INFO: COP2 (I-Type)\n";
+            break;
             
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
@@ -1095,3 +1100,6 @@ void CPU::op_cop3(Instruction) {
     exception(Exception::CoprocessorError);
 }
 
+void CPU::op_cop2(Instruction instruction) {
+    std::cout << "Unhandled GTE instruction: {" << std::to_string(instruction);
+}
