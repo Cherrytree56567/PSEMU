@@ -88,6 +88,8 @@ public:
 	void op_cop3(Instruction instruction);
 	void reset();
 
+	void op_cop2(Instruction instruction);
+
 	// HELPER FUNCTIONS
 	void set_reg(uint32_t index, uint32_t value) {
 		out_regs[index] = value;
