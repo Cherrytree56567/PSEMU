@@ -339,6 +339,11 @@ void CPU::decode_execute(Instruction instruction) {
             op_cop2(instruction);
             std::cout << "[CPU] INFO: COP2 (I-Type)\n";
             break;
+
+        case (0b100010):
+            op_lwl(instruction);
+            std::cout << "[CPU] INFO: LWL (I-Type)\n";
+            break;
             
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
@@ -1102,4 +1107,38 @@ void CPU::op_cop3(Instruction) {
 
 void CPU::op_cop2(Instruction instruction) {
     std::cout << "Unhandled GTE instruction: {" << std::to_string(instruction);
+}
+
+void CPU::op_lwl(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t value = 0;
+    uint32_t addr = regs[s] + i;
+
+    uint32_t cur_v = out_regs[t];
+
+    uint32_t aligned_addr = addr & 0xFFFFFFFC;
+    uint32_t aligned_word = bus->read(aligned_addr);
+
+    switch (addr & 0b11){
+        case 0:
+            value = (cur_v & 0x00ffffff) | (aligned_word << 24);
+            break;
+
+        case 1:
+            value = (cur_v & 0x0000ffff) | (aligned_word << 16);
+            break;
+            
+        case 2:
+            value = (cur_v & 0x000000ff) | (aligned_word << 8);
+            break;
+            
+        case 3:
+            value = (cur_v & 0x00000000) | (aligned_word << 0);
+            break;
+    }
+
+    load = std::make_tuple(t, value);
 }
