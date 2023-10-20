@@ -345,6 +345,11 @@ void CPU::decode_execute(Instruction instruction) {
             std::cout << "[CPU] INFO: LWL (I-Type)\n";
             break;
             
+        case (0b100110):
+            op_lwr(instruction);
+            std::cout << "[CPU] INFO: LWR (I-Type)\n";
+            break;
+            
         default:
             std::cout << "[CPU] ERROR: Unhandled Instruction \n";
             exit(0);
@@ -1141,4 +1146,47 @@ void CPU::op_lwl(Instruction instruction) {
     }
 
     load = std::make_tuple(t, value);
+}
+
+void CPU::op_lwr(Instruction instruction) {
+    uint32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
+
+    uint32_t addr = get_reg(s) + i;
+
+    // This instruction bypasses the load delay restriction: this
+    // instruction will merge the new contents with the value
+    // currently being loaded if need be.
+    uint32_t cur_v = out_regs[t];
+
+    // Next, we load the *aligned* word containing the first
+    // addressed byte
+    uint32_t aligned_addr = addr & ~3;
+    uint32_t aligned_word = bus->load32(aligned_addr);
+
+    // Depending on the address alignment, we fetch the 1, 2, 3, or
+    // 4 *least* significant bytes and put them in the target
+    // register.
+    uint32_t v = 0;
+    switch (addr & 3) {
+        case 0:
+            v = (cur_v & 0x00000000) | (aligned_word >> 0);
+            break;
+        case 1:
+            v = (cur_v & 0xff000000) | (aligned_word >> 8);
+            break;
+        case 2:
+            v = (cur_v & 0xffff0000) | (aligned_word >> 16);
+            break;
+        case 3:
+            v = (cur_v & 0xffffff00) | (aligned_word >> 24);
+            break;
+        default:
+            // Handle any unexpected cases here
+            break;
+    }
+
+    // Put the load in the delay slot
+    load = std::make_tuple(t, v);
 }
