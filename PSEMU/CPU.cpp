@@ -564,16 +564,11 @@ void CPU::op_mtc0(Instruction instruction) {
 }
 
 void CPU::branch(uint32_t offset) {
-    // Offset immediates are always shifted two places to the
-    // right since `PC` addresses have to be aligned on 32bits at
-    // all times.
-    uint32_t offseta = offset << 2;
+    offset <<= 2;
 
-    pc = pc + offseta;
+    next_pc = pc + offset;
 
-    // We need to compensate for the hardcoded
-    // `pc.wrapping_add(4)` in `run_next_instruction`
-    pc = pc - 4;
+    brancha = true;
 }
 
 void CPU::op_bne(Instruction instruction) {
