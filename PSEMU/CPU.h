@@ -110,6 +110,33 @@ public:
 		out_regs[0] = 0;
 	}
 
+	void store32(uint32_t addr, uint32_t value) {
+		if (sr & 0x10000 != 0) {
+			// Cache is isolated, ignore write
+			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
+			return;
+		}
+		bus->store32(addr, value);
+	}
+
+	void store16(uint32_t addr, uint32_t value) {
+		if (sr & 0x10000 != 0) {
+			// Cache is isolated, ignore write
+			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
+			return;
+		}
+		bus->store16(addr, value);
+	}
+
+	void store8(uint32_t addr, uint32_t value) {
+		if (sr & 0x10000 != 0) {
+			// Cache is isolated, ignore write
+			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
+			return;
+		}
+		bus->store8(addr, value);
+	}
+
 	Bus* bus;
 	uint32_t pc;
 	uint32_t next_pc;

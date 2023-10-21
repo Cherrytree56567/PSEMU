@@ -29,3 +29,17 @@ uint32_t Bios::load32(uint32_t offset) {
 
     return (b0) | (b1 << 8) | (b2 << 16) | (b3 << 24);
 }
+
+void Bios::store32(uint32_t offset, uint32_t val) {
+    uint32_t offsetU = static_cast<size_t>(offset);
+
+    uint8_t b0 = static_cast<uint8_t>(val);
+    uint8_t b1 = static_cast<uint8_t>(val >> 8);
+    uint8_t b2 = static_cast<uint8_t>(val >> 16);
+    uint8_t b3 = static_cast<uint8_t>(val >> 24);
+
+    data[offsetU + 0] = b0;
+    data[offsetU + 1] = b1;
+    data[offsetU + 2] = b2;
+    data[offsetU + 3] = b3;
+}

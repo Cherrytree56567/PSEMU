@@ -436,7 +436,7 @@ void CPU::op_sw(Instruction instruction) {
     uint32_t v = regs[t];
 
     if (addr % 4 == 0) {
-        bus->store32(addr, v);
+        store32(addr, v);
     }
     else {
         exception(Exception::StoreAddressError);
@@ -595,12 +595,6 @@ void CPU::op_addi(Instruction instruction) {
 
 void CPU::op_lw(Instruction instruction) {
 
-    if ((sr & 0x10000) != 0) {
-        // Cache is isolated, ignore write
-        std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
-        return;
-    }
-
     uint32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
@@ -639,13 +633,6 @@ void CPU::op_addu(Instruction instruction) {
 }
 
 void CPU::op_sh(Instruction instruction) {
-
-        if ((sr & 0x10000) != 0) {
-            // Cache is isolated, ignore write
-            std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
-            return;
-        }
-
         uint32_t i = instruction.imm_s();
         uint32_t t = instruction.rt();
         uint32_t s = instruction.rs();
@@ -682,13 +669,6 @@ void CPU::op_andi(Instruction instruction) {
 }
 
 void CPU::op_sb(Instruction instruction) {
-
-    if ((sr & 0x10000) != 0) {
-        // Cache is isolated, ignore write
-        std::cout << "[CPU] INFO: Ignore store while cache is isolated\n";
-        return;
-    }
-
     uint32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
@@ -974,6 +954,7 @@ void CPU::op_slt(Instruction instruction) {
 }
 
 void CPU::exception(Exception causea) {
+    exit(11);
     uint32_t handler = (sr & (1 << 22)) ? 0xbfc00180 : 0x80000080;
 
     uint32_t mode = sr & 0x3F;
@@ -1278,7 +1259,7 @@ void CPU::op_swl(Instruction instruction) {
         throw std::runtime_error("Unreachable code");
     }
 
-    bus->store32(aligned_addr, mem);
+    store32(aligned_addr, mem);
 }
 
 void CPU::op_swr(Instruction instruction) {
@@ -1312,7 +1293,7 @@ void CPU::op_swr(Instruction instruction) {
         throw std::runtime_error("Unreachable code");
     }
 
-    bus->store32(aligned_addr, mem);
+    store32(aligned_addr, mem);
 }
 
 void CPU::op_lwc0(Instruction instruction) {
