@@ -11,7 +11,7 @@ void CPU::tick() {
 void CPU::reset() {
     pc = 0xbfc00000;
     next_pc = pc + 4;
-    current_pc = pc;
+    current_pc = 0;
     hi = 0; lo = 0;
     memset(regs, 0, 32 * sizeof(uint32_t));
     memset(out_regs, 0, 32 * sizeof(uint32_t));
@@ -36,15 +36,15 @@ void CPU::fetch() {
     Instruction instr;
     instr.instruction = bus->load32(pc);
 
-    delay_slot = brancha;
-    brancha = false;
-
     pc = next_pc;
     next_pc = pc + 4;
 
     set_reg(std::get<0>(load), std::get<1>(load));
 
     load = std::make_tuple(0, 0);
+
+    delay_slot = brancha;
+    brancha = false;
 
     decode_execute(instr);
     just_started = false;
