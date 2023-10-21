@@ -641,7 +641,7 @@ void CPU::op_sh(Instruction instruction) {
         uint32_t v    = regs[t];
 
         if (addr % 2 == 0) {
-            bus->store16(addr, (uint16_t)v);
+            store16(addr, (uint16_t)v);
         }
         else {
             exception(Exception::StoreAddressError);
@@ -676,7 +676,7 @@ void CPU::op_sb(Instruction instruction) {
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
 
-    bus->store8(addr, (uint8_t)v);
+    store8(addr, (uint8_t)v);
 }
 
 void CPU::op_jr(Instruction instruction) {
@@ -699,7 +699,7 @@ void CPU::op_lb(Instruction instruction) {
     uint8_t v = bus->load8(addr);
 
     // Put the load in the delay slot
-    load = std::make_tuple(t, v);
+    load = std::make_tuple(t, (uint8_t)v);
 }
 
 void CPU::op_beq(Instruction instruction) {
@@ -761,7 +761,7 @@ void CPU::op_bgtz(Instruction instruction) {
     uint32_t i = instruction.imm_s();
     uint32_t s = instruction.rs();
 
-    uint32_t v = regs[s];
+    int32_t v = regs[s];
 
     if (v > 0) {
         branch(i);
@@ -772,7 +772,7 @@ void CPU::op_blez(Instruction instruction) {
     uint32_t i = instruction.imm_s();
     uint32_t s = instruction.rs();
 
-    uint32_t v = regs[s];
+    int32_t v = regs[s];
 
     if (v <= 0) {
         branch(i);
@@ -814,7 +814,7 @@ void CPU::op_bxx(Instruction instruction) {
     uint32_t is_bgez = (instructiona >> 16) & 1;
     uint32_t is_link = (instructiona >> 20) & 1 != 0;
 
-    uint32_t v = regs[s];
+    int32_t v = regs[s];
 
     // Test "less than zero"
     uint32_t test = (v < 0);
@@ -840,7 +840,7 @@ void CPU::op_slti(Instruction instruction) {
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
 
-    uint32_t v = (regs[s]) < i;
+    uint32_t v = ((int32_t)regs[s]) < i;
 
     set_reg(t, v);
 }
@@ -860,7 +860,7 @@ void CPU::op_sra(Instruction instruction) {
     uint32_t t = instruction.rt();
     uint32_t d = instruction.rd();
 
-    uint32_t v = ((uint32_t)regs[t]) >> i;
+    uint32_t v = ((int32_t)regs[t]) >> i;
 
     set_reg(d, v);
 }
@@ -945,12 +945,12 @@ void CPU::op_slt(Instruction instruction) {
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
 
-    s = regs[s];
-    t = regs[t];
+    int32_t sa = regs[s];
+    int32_t ta = regs[t];
 
-    uint32_t v = s < t;
+    int32_t v = s < t;
 
-    set_reg(d, v);
+    set_reg(d, (uint32_t)v);
 }
 
 void CPU::exception(Exception causea) {
@@ -1018,7 +1018,7 @@ void CPU::op_lhu(Instruction instruction) {
         uint16_t v = bus->load16(addr);
 
         // Put the load in the delay slot
-        load = std::make_tuple(t, v);
+        load = std::make_tuple(t, (uint32_t)v);
     } else {
         exception(Exception::LoadAddressError);
     }
@@ -1046,7 +1046,7 @@ void CPU::op_lh(Instruction instruction) {
     uint16_t v = bus->load16(addr);
 
     // Put the load in the delay slot
-    load = std::make_tuple(t, v);
+    load = std::make_tuple(t, (uint32_t)v);
 }
 
 void CPU::op_nor(Instruction instruction) {
@@ -1054,7 +1054,7 @@ void CPU::op_nor(Instruction instruction) {
     uint32_t s = instruction.rs();
     uint32_t t = instruction.rt();
 
-    uint32_t v = !(regs[s] | regs[t]);
+    uint32_t v = ~(regs[s] | regs[t]);
 
     set_reg(d, v);
 }
@@ -1065,7 +1065,7 @@ void CPU::op_srav(Instruction instruction) {
     uint32_t t = instruction.rt();
 
     // Shift amount is truncated to 5 bits
-    uint32_t v = (regs[t] >> (regs[s] & 0x1f));
+    uint32_t v = ((int32_t)regs[t]) >> (regs[s] & 0x1f);
 
     set_reg(d, v);
 }
@@ -1082,10 +1082,16 @@ void CPU::op_srlv(Instruction instruction) {
 }
 
 void CPU::op_multu(Instruction instruction) {
-    uint64_t value = (uint64_t)regs[instruction.rs()] * (uint64_t)regs[instruction.rt()];
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
 
-    hi = (uint32_t)(value >> 32);
-    lo = (uint32_t)value;
+    uint64_t a = regs[s];
+    uint64_t b = regs[t];
+
+    uint32_t v = a * b;
+
+    hi = (uint32_t)(v >> 32);
+    lo = (uint32_t)v;
 }
 
 void CPU::op_xor(Instruction instruction) {
@@ -1103,10 +1109,16 @@ void CPU::op_break(Instruction instruction) {
 }
 
 void CPU::op_mult(Instruction instruction) {
-    int64_t value = (int64_t)(int)regs[instruction.rs()] * (int64_t)(int)regs[instruction.rt()]; //sign extend to pass amidog cpu test
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
 
-    hi = (uint32_t)(value >> 32);
-    lo = (uint32_t)value;
+    uint64_t a = ((uint32_t)regs[s]);
+    uint64_t b = ((uint32_t)regs[t]);
+
+    uint64_t v = (a * b);
+
+    hi = (uint32_t)(v >> 32);
+    lo = (uint32_t)v;
 }
 
 void CPU::op_sub(Instruction instruction) {
@@ -1148,7 +1160,7 @@ void CPU::op_lwl(Instruction instruction) {
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
-    uint32_t addr = regs[s] + static_cast<int32_t>(i);
+    uint32_t addr = regs[s] + i;
 
     // This instruction bypasses the load delay restriction: this
     // instruction will merge the new contents with the value
@@ -1165,16 +1177,16 @@ void CPU::op_lwl(Instruction instruction) {
     uint32_t v;
     switch (addr & 3U) {
     case 0:
-        v = (cur_v & 0x00FFFFFFU) | (aligned_word << 24);
+        v = (cur_v & 0x00FFFFFF) | (aligned_word << 24);
         break;
     case 1:
-        v = (cur_v & 0x0000FFFFU) | (aligned_word << 16);
+        v = (cur_v & 0x0000FFFF) | (aligned_word << 16);
         break;
     case 2:
-        v = (cur_v & 0x000000FFU) | (aligned_word << 8);
+        v = (cur_v & 0x000000FF) | (aligned_word << 8);
         break;
     case 3:
-        v = (cur_v & 0x00000000U) | (aligned_word);
+        v = (cur_v & 0x00000000) | (aligned_word);
         break;
     default:
         throw std::runtime_error("Unreachable code");
@@ -1236,7 +1248,7 @@ void CPU::op_swl(Instruction instruction) {
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
 
-    uint32_t aligned_addr = addr & ~3U;
+    uint32_t aligned_addr = addr & ~3;
 
     // Load the current value for the aligned word at the target address
     uint32_t cur_mem = bus->load32(aligned_addr);
@@ -1244,16 +1256,16 @@ void CPU::op_swl(Instruction instruction) {
     uint32_t mem;
     switch (addr & 3U) {
     case 0:
-        mem = (cur_mem & 0xFFFFFF00U) | (v >> 24);
+        mem = (cur_mem & 0xFFFFFF00) | (v >> 24);
         break;
     case 1:
-        mem = (cur_mem & 0xFFFF0000U) | (v >> 16);
+        mem = (cur_mem & 0xFFFF0000) | (v >> 16);
         break;
     case 2:
-        mem = (cur_mem & 0xFF000000U) | (v >> 8);
+        mem = (cur_mem & 0xFF000000) | (v >> 8);
         break;
     case 3:
-        mem = (cur_mem & 0x00000000U) | (v);
+        mem = (cur_mem & 0x00000000) | (v >> 0);
         break;
     default:
         throw std::runtime_error("Unreachable code");
@@ -1263,14 +1275,14 @@ void CPU::op_swl(Instruction instruction) {
 }
 
 void CPU::op_swr(Instruction instruction) {
-    int32_t i = instruction.imm_s();
+    uint32_t i = instruction.imm_s();
     uint32_t t = instruction.rt();
     uint32_t s = instruction.rs();
 
     uint32_t addr = regs[s] + i;
     uint32_t v = regs[t];
 
-    uint32_t aligned_addr = addr & ~3U;
+    uint32_t aligned_addr = addr & ~3;
 
     // Load the current value for the aligned word at the target address
     uint32_t cur_mem = bus->load32(aligned_addr);
@@ -1278,16 +1290,16 @@ void CPU::op_swr(Instruction instruction) {
     uint32_t mem;
     switch (addr & 3U) {
     case 0:
-        mem = (cur_mem & 0x00000000U) | (v);
+        mem = (cur_mem & 0x00000000) | (v << 0);
         break;
     case 1:
-        mem = (cur_mem & 0x000000FFU) | (v << 8);
+        mem = (cur_mem & 0x000000FF) | (v << 8);
         break;
     case 2:
-        mem = (cur_mem & 0x0000FFFFU) | (v << 16);
+        mem = (cur_mem & 0x0000FFFF) | (v << 16);
         break;
     case 3:
-        mem = (cur_mem & 0x00FFFFFFU) | (v << 24);
+        mem = (cur_mem & 0x00FFFFFF) | (v << 24);
         break;
     default:
         throw std::runtime_error("Unreachable code");

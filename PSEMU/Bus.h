@@ -12,7 +12,6 @@ public:
 
     // Memory Ranges
     const Range BIOS = Range(0x1fc00000, 512 * 1024);
-    const Range SYS_CONTROL = Range(0x1f801000, 36);
     const Range RAM_SIZE = Range(0x1f801060, 4);
     const Range CACHE_CONTROL = Range(0xfffe0130, 4);
     const Range RAM_ = Range(0x00000000, 2 * 1024 * 1024);
