@@ -48,7 +48,7 @@ public:
             std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(GPU.offset(abs_addr)) << "\n";
             switch (GPU.offset(abs_addr)) {
             case 4:
-                return 0x10000000;
+                return 0x1c000000;
                 break;
             default:
                 return 0;
@@ -166,7 +166,7 @@ public:
             return bios.load8(BIOS.offset(abs_addr));
         } else if (EXPANSION_1.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: Expansion 1 NOT IMPLEMENTED. Expansion 1 read register " << std::to_string(EXPANSION_1.offset(abs_addr)) << "\n";
-            return !0;
+            return 0;
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load8 into address " + std::to_string(addr));
