@@ -54,7 +54,7 @@ void CPU::fetch() {
 }
 
 void CPU::decode_execute(Instruction instruction) {
-    std::cout << "Instruction " << instruction.instruction << "\n";
+    std::cout << "instruction: " << instruction.instruction << "\n";
     switch (instruction.opcode()) {
         case (0b000000):
             switch (instruction.function()) {
@@ -582,15 +582,23 @@ void CPU::op_bne(Instruction instruction) {
 }
 
 void CPU::op_addi(Instruction instruction) {
-    uint32_t rs = regs[instruction.rs()];
-    uint32_t imm_s = instruction.imm_s();
-    uint32_t addi = rs + imm_s;
+    int32_t i = instruction.imm_s();
+    uint32_t t = instruction.rt();
+    uint32_t s = instruction.rs();
 
-    bool overflow = (((addi ^ rs) & (addi ^ imm_s)) & UINT32_C(0x80000000)) != 0;
-    if (!overflow)
-        set_reg(instruction.rt(), addi);
-    else
+    int32_t sValue = regs[s];
+
+    int32_t v;
+
+    // Manual overflow check
+    if ((i > 0 && sValue > INT_MAX - i) || (i < 0 && sValue < INT_MIN - i)) {
+        // Overflow occurred
         exception(Exception::Overflow);
+    }
+    else {
+        v = sValue + i;
+        set_reg(t, static_cast<uint32_t>(v));
+    }
 }
 
 void CPU::op_lw(Instruction instruction) {
