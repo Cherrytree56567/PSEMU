@@ -7,7 +7,9 @@
 
 */
 #include <iostream>
+#include "Bus.h"
 
 int main() {
+    Bus bus("scph1001.bin");
     return 0;
 }

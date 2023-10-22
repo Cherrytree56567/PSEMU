@@ -16,34 +16,22 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\CPU">
-      <UniqueIdentifier>{10b2bee1-0b11-4292-a6df-482241d17223}</UniqueIdentifier>
+    <Filter Include="Source Files\Memory">
+      <UniqueIdentifier>{4148ae56-23d8-4af5-b763-a15deb50b7e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Bus">
-      <UniqueIdentifier>{f5b7cfcd-aeaa-460d-a11b-262d54de02b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Bus\BIOS">
-      <UniqueIdentifier>{5cda58a3-18b6-4818-ae46-b3718f9260d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Bus\RAM">
-      <UniqueIdentifier>{8524c40f-742d-4742-baa0-fa4732042965}</UniqueIdentifier>
+    <Filter Include="Source Files\Memory\BIOS">
+      <UniqueIdentifier>{d2270265-5f08-40fe-b1df-b1bed0a1f1e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CPU.cpp">
-      <Filter>Source Files\CPU</Filter>
+    <ClCompile Include="BIOS.cpp">
+      <Filter>Source Files\Memory\BIOS</Filter>
     </ClCompile>
     <ClCompile Include="Bus.cpp">
-      <Filter>Source Files\Bus</Filter>
-    </ClCompile>
-    <ClCompile Include="Bios.cpp">
-      <Filter>Source Files\Bus\BIOS</Filter>
-    </ClCompile>
-    <ClCompile Include="RAM.cpp">
-      <Filter>Source Files\Bus\RAM</Filter>
+      <Filter>Source Files\Memory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,23 +40,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CPU.h">
-      <Filter>Source Files\CPU</Filter>
+    <ClInclude Include="BIOS.h">
+      <Filter>Source Files\Memory\BIOS</Filter>
     </ClInclude>
     <ClInclude Include="Bus.h">
-      <Filter>Source Files\Bus</Filter>
-    </ClInclude>
-    <ClInclude Include="Bios.h">
-      <Filter>Source Files\Bus\BIOS</Filter>
+      <Filter>Source Files\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Range.h">
-      <Filter>Source Files\Bus</Filter>
-    </ClInclude>
-    <ClInclude Include="Instruction.h">
-      <Filter>Source Files\CPU</Filter>
-    </ClInclude>
-    <ClInclude Include="RAM.h">
-      <Filter>Source Files\Bus\RAM</Filter>
+      <Filter>Source Files\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
