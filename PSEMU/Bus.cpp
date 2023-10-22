@@ -22,5 +22,28 @@ uint32_t Bus::load32(uint32_t address) {
 }
 
 void Bus::store32(uint32_t address, uint32_t value) {
-    return;
+    if (address % 4 != 0) {
+        std::cout << "[BUS] Error: Unaligned store32 address : " + std::to_string(address) << "\n";
+    }
+
+    if (auto offset = MEM_CONTROL.contains(address);offset.has_value()) {
+        switch (offset.value()) {
+            case 0: // Expansion 1 base address
+                if (value != 0x1f000000) {
+                    std::cout << "[Bus] ERROR: Bad expansion 1 base address : " << std::to_string(value) << "\n";
+                }
+                break;
+            case 4: // Expansion 2 base address
+                if (value != 0x1f802000) {
+                    std::cout << "[Bus] ERROR: Bad expansion 2 base address : " << std::to_string(value) << "\n";
+                }
+                break;
+            default:
+                std::cout << "[Bus] ERROR: Unhandled write to MEM_CONTROL Register.\n";
+                break;
+        }
+        return;
+    }
+
+    std::cout << "[BUS] Error: Unhandled store32 at address : " + std::to_string(address) << "\n";
 }

@@ -20,7 +20,7 @@ public:
 	uint32_t load32(uint32_t address) { return bus.load32(address); }
 	void store32(uint32_t address, uint32_t value) { bus.store32(address, value); }
 
-	uint32_t reg(uint32_t index) {
+	uint32_t get_reg(uint32_t index) {
 		return regs[index];
 	}
 
@@ -32,6 +32,8 @@ public:
 	}
 
 	void op_lui();
+	void op_ori();
+	void op_sw();
 private:
 	uint32_t pc;
 	Instruction instr;

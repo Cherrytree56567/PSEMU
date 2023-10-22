@@ -1,2 +1,6 @@
-﻿  CPU.cpp
+﻿  Bus.cpp
+  CPU.cpp
+  PSEMU.cpp
+  Generating Code...
+C:\Users\ronit\Desktop\PSEMU\PSEMU\Bus.cpp(22): warning C4715: 'Bus::load32': not all control paths return a value
   PSEMU.vcxproj -> C:\Users\ronit\Desktop\PSEMU\x64\Debug\PSEMU.exe

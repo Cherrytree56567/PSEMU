@@ -30,3 +30,4 @@ private:
 };
 
 const Range _BIOS = Range(0xbfc00000, 512 * 1024);
+const Range MEM_CONTROL = Range(0x1f801000, 36);
