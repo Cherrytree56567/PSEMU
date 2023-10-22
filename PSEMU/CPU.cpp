@@ -1,9 +1,5 @@
 #include "CPU.h"
 
-bool add_overflow(uint32_t old_value, uint32_t add_value, uint32_t new_value) {
-    return (((new_value ^ old_value) & (new_value ^ add_value)) & UINT32_C(0x80000000)) != 0;
-}
-
 void CPU::tick() {
   fetch();
 }
@@ -12,11 +8,12 @@ void CPU::reset() {
     pc = 0xbfc00000;
     next_pc = pc + 4;
     current_pc = 0;
-    hi = 0; lo = 0;
-    memset(regs, 0, 32 * sizeof(uint32_t));
-    memset(out_regs, 0, 32 * sizeof(uint32_t));
+    hi = 0xdeadbeef; lo = 0xdeadbeef;
+    for (int i = 0; i < 32; i++) {
+        regs[i] = 0xdeadbeef;
+        out_regs[i] = 0xdeadbeef;
+    }
     load = std::make_tuple(0, 0);
-    just_started = true;
     sr = 0;
     cause = 0;
     epc = 0;
@@ -47,7 +44,6 @@ void CPU::fetch() {
     brancha = false;
 
     decode_execute(instr);
-    just_started = false;
     for (int i = 0; i < 32; i++) {
         regs[i] = out_regs[i];
     }
@@ -754,15 +750,22 @@ void CPU::op_and(Instruction instruction) {
 }
 
 void CPU::op_add(Instruction instruction) {
-    uint32_t rs = regs[instruction.rs()];
-    uint32_t rt = regs[instruction.rt()];
-    uint32_t add = rs + rt;
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
 
-    bool overflow = (((add ^ rs) & (add ^ rt)) & UINT32_C(0x80000000)) != 0;;
-    if (!overflow)
-        set_reg(instruction.rd(), add);
-    else
+    int32_t sValue = regs[s];
+    int32_t tValue = regs[t];
+
+    // Check for integer overflow
+    if ((tValue > 0 && sValue > INT_MAX - tValue) || (tValue < 0 && sValue < INT_MIN - tValue)) {
+        // Overflow occurred
         exception(Exception::Overflow);
+    }
+    else {
+        set_reg(d, static_cast<uint32_t>(sValue + tValue));
+    }
+
 }
 
 void CPU::op_bgtz(Instruction instruction) {
@@ -1130,15 +1133,21 @@ void CPU::op_mult(Instruction instruction) {
 }
 
 void CPU::op_sub(Instruction instruction) {
-    uint32_t rs = regs[instruction.rs()];
-    uint32_t rt = regs[instruction.rt()];
-    uint32_t sub = rs - rt;
+    uint32_t s = instruction.rs();
+    uint32_t t = instruction.rt();
+    uint32_t d = instruction.rd();
 
-    bool overflow = (((sub ^ rs) & (rs ^ rt)) & UINT32_C(0x80000000)) != 0;
-    if (!overflow)
-        set_reg(instruction.rd(), sub);
-    else
+    int32_t sValue = regs[s];
+    int32_t tValue = regs[t];
+
+    // Check for integer underflow
+    if ((tValue > 0 && sValue < INT_MIN + tValue) || (tValue < 0 && sValue > INT_MAX + tValue)) {
+        // Underflow occurred
         exception(Exception::Overflow);
+    }
+    else {
+        set_reg(d, static_cast<uint32_t>(sValue - tValue));
+    }
 }
 
 void CPU::op_xori(Instruction instruction) {

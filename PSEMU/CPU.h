@@ -146,7 +146,6 @@ public:
 	uint32_t regs[32];
 	uint32_t hi;
 	uint32_t lo;
-	bool just_started;
 	uint32_t sr; // COP0 Status Register
 	uint32_t out_regs[32];
 	std::tuple<uint32_t, uint32_t> load;

@@ -35,7 +35,6 @@ public:
     uint32_t load32(uint32_t addr) {
         uint32_t abs_addr = mask_region(addr);
         if (RAM_.contains(abs_addr)) {
-            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load32(RAM_.offset(abs_addr));
         } else if (BIOS.contains(abs_addr)) {
             return bios.load32(BIOS.offset(abs_addr));
@@ -162,10 +161,8 @@ public:
         uint32_t abs_addr = mask_region(addr);
 
         if (RAM_.contains(abs_addr)) {
-            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load8(RAM_.offset(abs_addr));
         } else if (BIOS.contains(abs_addr)) {
-            std::cout << "[BUS] INFO: BIOS read " << std::to_string(BIOS.offset(abs_addr)) << "\n";
             return bios.load8(BIOS.offset(abs_addr));
         } else if (EXPANSION_1.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: Expansion 1 NOT IMPLEMENTED. Expansion 1 read register " << std::to_string(EXPANSION_1.offset(abs_addr)) << "\n";
@@ -179,7 +176,6 @@ public:
         uint32_t abs_addr = mask_region(addr);
 
         if (RAM_.contains(abs_addr)) {
-            std::cout << "[BUS] INFO: RAM read " << std::to_string(RAM_.offset(abs_addr)) << "\n";
             return ram.load16(RAM_.offset(abs_addr));
         } else if (SPU.contains(abs_addr)) {
             std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(SPU.offset(abs_addr)) << "\n";
