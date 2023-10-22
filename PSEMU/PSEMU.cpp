@@ -8,10 +8,13 @@
 */
 #include <iostream>
 #include "CPU.h"
+#include "Bus.h"
 
 int main() {
-    CPU cpu("scph1001.bin");
-
+    Bus bus;
+    bus.bios.newl("scph1001.bin");
+    CPU cpu(&bus);
+    cpu.reset();
     while (true) {
         cpu.tick();
     }

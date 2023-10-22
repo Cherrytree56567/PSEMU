@@ -120,8 +120,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,10 +129,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BIOS.cpp" />
+    <ClCompile Include="Bios.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="PSEMU.cpp" />
+    <ClCompile Include="RAM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Testing\OP_ADD\ADD_TEST.asm">
@@ -142,10 +141,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BIOS.h" />
+    <ClInclude Include="Bios.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="Instruction.h" />
+    <ClInclude Include="RAM.h" />
     <ClInclude Include="Range.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
