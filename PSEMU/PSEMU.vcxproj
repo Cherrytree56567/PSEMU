@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClCompile Include="BIOS.cpp" />
     <ClCompile Include="Bus.cpp" />
+    <ClCompile Include="CPU.cpp" />
     <ClCompile Include="PSEMU.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +144,8 @@
   <ItemGroup>
     <ClInclude Include="BIOS.h" />
     <ClInclude Include="Bus.h" />
+    <ClInclude Include="CPU.h" />
+    <ClInclude Include="Instruction.h" />
     <ClInclude Include="Range.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

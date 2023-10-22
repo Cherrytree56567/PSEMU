@@ -15,6 +15,7 @@ class Bus {
 public:
 	Bus(std::string a) : bios(a) {}
 	uint32_t load32(uint32_t address);
+	void store32(uint32_t address, uint32_t value);
 
 private:
 	BIOS bios;

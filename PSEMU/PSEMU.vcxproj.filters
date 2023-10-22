@@ -16,11 +16,14 @@
     <Filter Include="Source Files\Testing">
       <UniqueIdentifier>{394a7008-c723-4aac-8494-f8bd86545e24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Memory">
+    <Filter Include="Source Files\Bus">
       <UniqueIdentifier>{4148ae56-23d8-4af5-b763-a15deb50b7e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Memory\BIOS">
+    <Filter Include="Source Files\Bus\BIOS">
       <UniqueIdentifier>{d2270265-5f08-40fe-b1df-b1bed0a1f1e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CPU">
+      <UniqueIdentifier>{fe086226-2bca-4f93-89b0-8cce433d3011}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -28,10 +31,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BIOS.cpp">
-      <Filter>Source Files\Memory\BIOS</Filter>
+      <Filter>Source Files\Bus\BIOS</Filter>
     </ClCompile>
     <ClCompile Include="Bus.cpp">
-      <Filter>Source Files\Memory</Filter>
+      <Filter>Source Files\Bus</Filter>
+    </ClCompile>
+    <ClCompile Include="CPU.cpp">
+      <Filter>Source Files\CPU</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,13 +47,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BIOS.h">
-      <Filter>Source Files\Memory\BIOS</Filter>
+      <Filter>Source Files\Bus\BIOS</Filter>
     </ClInclude>
     <ClInclude Include="Bus.h">
-      <Filter>Source Files\Memory</Filter>
+      <Filter>Source Files\Bus</Filter>
     </ClInclude>
     <ClInclude Include="Range.h">
-      <Filter>Source Files\Memory</Filter>
+      <Filter>Source Files\Bus</Filter>
+    </ClInclude>
+    <ClInclude Include="CPU.h">
+      <Filter>Source Files\CPU</Filter>
+    </ClInclude>
+    <ClInclude Include="Instruction.h">
+      <Filter>Source Files\CPU</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

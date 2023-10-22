@@ -7,9 +7,13 @@
 
 */
 #include <iostream>
-#include "Bus.h"
+#include "CPU.h"
 
 int main() {
-    Bus bus("scph1001.bin");
+    CPU cpu("scph1001.bin");
+
+    while (true) {
+        cpu.tick();
+    }
     return 0;
 }

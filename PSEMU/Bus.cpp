@@ -20,3 +20,7 @@ uint32_t Bus::load32(uint32_t address) {
 
     std::cout << "[BUS] Error: Unhandled fetch32 at address : " + std::to_string(address) << "\n";
 }
+
+void Bus::store32(uint32_t address, uint32_t value) {
+    return;
+}
