@@ -7,6 +7,8 @@ C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(828,53): warning C4554: '&': check op
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1104,16): warning C4244: 'initializing': conversion from 'uint64_t' to 'uint32_t', possible loss of data
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1106,23): warning C4293: '>>': shift count negative or too big, undefined behavior
   DMA.cpp
+C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp(26,36): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+C:\Users\ronit\Desktop\PSEMU\PSEMU\DMA.cpp(30,33): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
   PSEMU.cpp
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(114,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(123,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
