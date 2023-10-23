@@ -8,6 +8,7 @@ public:
 	}
 
 	uint32_t get_control() { return control; }
+	void set_control(uint32_t value) { control = value; }
 
 private:
 	uint32_t control;

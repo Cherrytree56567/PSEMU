@@ -76,7 +76,7 @@ public:
             std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control: " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
         } else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
-            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << std::to_string(value) << "\n";
+            set_dma_reg(offset.value(), value);
             return;
         } else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
             std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU write " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
@@ -196,8 +196,20 @@ public:
             break;
 
         default: 
-            std::cout << "[BUS] Unhandled DMA access\n"; 
+            std::cout << "[BUS] ERROR: Unhandled DMA access\n"; 
             return 0; 
+            break;
+        }
+    }
+
+    void set_dma_reg(uint32_t offset, uint32_t value) {
+        switch (offset){
+        case 0x70:
+            dma.set_control(value);
+            break;
+
+        default: 
+            std::cout << "[BUS] ERROR: Unhandled DMA write access\n";
             break;
         }
     }
