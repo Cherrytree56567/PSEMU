@@ -5,6 +5,7 @@
 #include "Bios.h"
 #include "Range.h"
 #include "RAM.h"
+#include "DMA.h"
 
 class Bus {
 public:
@@ -20,7 +21,7 @@ public:
     const Range EXPANSION_1 = Range(0x1f000000, 512 * 1024);
     const Range IRQ_CONTROL = Range(0x1f801070, 8);
     const Range TIMERS = Range(0x1f801100, 0x30);
-    const Range DMA = Range(0x1f801080, 0x80);
+    const Range _DMA = Range(0x1f801080, 0x80);
     const Range GPU = Range(0x1f801810, 8);
     const Range MEM_CONTROL = Range(0x1f801000, 36);
     
@@ -28,25 +29,29 @@ public:
       // Index address space in 512MB chunks
       uint32_t index = (addr >> 29);
 
-      return addr & region_mask[index];
+      return (addr & region_mask[index]);
     }
 
     // Load and Store functions
     uint32_t load32(uint32_t addr) {
+
+        if (addr % 4 != 0) {
+            throw std::runtime_error("[Bus] ERROR: Unaligned load32 address " + std::to_string(addr));
+        }
+
         uint32_t abs_addr = mask_region(addr);
-        if (RAM_.contains(abs_addr)) {
-            return ram.load32(RAM_.offset(abs_addr));
-        } else if (BIOS.contains(abs_addr)) {
-            return bios.load32(BIOS.offset(abs_addr));
-        } else if (IRQ_CONTROL.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            return ram.load32(offset.value());
+        } else if (auto offset = BIOS.contains(abs_addr); offset.has_value()) {
+            return bios.load32(offset.value());
+        } else if (auto offset = IRQ_CONTROL.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(offset.value()) << "\n";
             return 0;
-        } else if (DMA.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA read: " << std::to_string(DMA.offset(abs_addr)) << "\n";
-            return 0;
-        } else if (GPU.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(GPU.offset(abs_addr)) << "\n";
-            switch (GPU.offset(abs_addr)) {
+        } else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
+            dma_reg(offset.value());
+        } else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(offset.value()) << "\n";
+            switch (offset.value()) {
             case 4:
                 return 0x1c000000;
                 break;
@@ -56,38 +61,34 @@ public:
             }
         }
 
-        if (addr % 4 != 0) {
-            throw std::runtime_error("[Bus] ERROR: Unaligned load32 address " + std::to_string(addr));
-        }
-
         throw std::runtime_error("[Bus] ERROR: Unhandled fetch32 at address " + std::to_string(addr));
     }
 
     void store32(uint32_t addr, uint32_t value) {
         uint32_t abs_addr = mask_region(addr);
-        if (RAM_.contains(abs_addr)) {
-            ram.store32(RAM_.offset(abs_addr), value);
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            ram.store32(offset.value(), value);
             return;
-        } else if (BIOS.contains(abs_addr)) {
-            bios.store32(BIOS.offset(abs_addr), value);
+        } else if (auto offset = BIOS.contains(abs_addr); offset.has_value()) {
+            bios.store32(offset.value(), value);
             return;
-        } else if (IRQ_CONTROL.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control: " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+        } else if (auto offset = IRQ_CONTROL.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control: " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
-        } else if (DMA.contains(abs_addr)) {
+        } else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
             std::cout << "[BUS] WARNING: DMA NOT IMPLEMENTED. DMA write: " << std::to_string(abs_addr) << std::to_string(value) << "\n";
             return;
-        } else if (GPU.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU write " << std::to_string(GPU.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+        } else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU write " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
-        } else if (TIMERS.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: Timer NOT IMPLEMENTED. Timer write register" << std::to_string(TIMERS.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+        } else if (auto offset = TIMERS.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: Timer NOT IMPLEMENTED. Timer write register" << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
-        } else if (CACHE_CONTROL.contains(abs_addr)) {
-            std::cout << "[Bus] WARNING: Cache Control not implemented. Cache Control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+        } else if (auto offset = CACHE_CONTROL.contains(abs_addr); offset.has_value()) {
+            std::cout << "[Bus] WARNING: Cache Control not implemented. Cache Control read " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
-        } else if (MEM_CONTROL.contains(abs_addr)) {
-            switch (MEM_CONTROL.offset(abs_addr)) {
+        } else if (auto offset = MEM_CONTROL.contains(abs_addr); offset.has_value()) {
+            switch (offset.value()) {
             case 0:
                 if (value != 0x1f000000) {
                     std::cout << "[Bus] ERROR: Bad Expansion 1 base address: " << std::to_string(value) << "\n";
@@ -99,11 +100,11 @@ public:
                 }
                 break;
             default:
-                    std::cout << "[Bus] ERROR: Unhandled write to MEM Control " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+                    std::cout << "[Bus] ERROR: Unhandled write to MEM Control " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
                     break;
             }
             return;
-        } else if (RAM_SIZE.contains(abs_addr)) {
+        } else if (auto offset = RAM_SIZE.contains(abs_addr); offset.has_value()) {
             return;
         }
 
@@ -117,17 +118,17 @@ public:
     
     void store16(uint32_t addr, uint16_t value) {
         uint32_t abs_addr = mask_region(addr);
-        if (RAM_.contains(abs_addr)) {
-            ram.store16(RAM_.offset(abs_addr), value);
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            ram.store16(offset.value(), value);
             return;
-        } else if (SPU.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU write register " << std::to_string(SPU.offset(abs_addr)) << "\n";
+        } else if (auto offset = SPU.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU write register " << std::to_string(offset.value()) << "\n";
             return;
-        } else if (TIMERS.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: TIMER NOT IMPLEMENTED. Timer write register " << std::to_string(TIMERS.offset(abs_addr))  << "\n";
+        } else if (auto offset = TIMERS.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: TIMER NOT IMPLEMENTED. Timer write register " << std::to_string(offset.value())  << "\n";
             return;
-        } else if (IRQ_CONTROL.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control write " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << " " << std::to_string(value) << "\n";
+        } else if (auto offset = IRQ_CONTROL.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control write " << std::to_string(offset.value()) << " " << std::to_string(value) << "\n";
             return;
         }
 
@@ -141,11 +142,11 @@ public:
 
     void store8(uint32_t addr, uint8_t value) {
         uint32_t abs_addr = mask_region(addr);
-        if (RAM_.contains(abs_addr)) {
-            ram.store8(RAM_.offset(abs_addr), value);
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            ram.store8(offset.value(), value);
             return;
-        } else if (EXPANSION_2.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: Expansion 2 NOT IMPLEMENTED. Expansion 2 read register " << std::to_string(EXPANSION_2.offset(abs_addr)) << "\n";
+        } else if (auto offset = EXPANSION_2.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: Expansion 2 NOT IMPLEMENTED. Expansion 2 read register " << std::to_string(offset.value()) << "\n";
             return;
         }
 
@@ -160,12 +161,12 @@ public:
     uint8_t load8(uint32_t addr) {
         uint32_t abs_addr = mask_region(addr);
 
-        if (RAM_.contains(abs_addr)) {
-            return ram.load8(RAM_.offset(abs_addr));
-        } else if (BIOS.contains(abs_addr)) {
-            return bios.load8(BIOS.offset(abs_addr));
-        } else if (EXPANSION_1.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: Expansion 1 NOT IMPLEMENTED. Expansion 1 read register " << std::to_string(EXPANSION_1.offset(abs_addr)) << "\n";
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            return ram.load8(offset.value());
+        } else if (auto offset = BIOS.contains(abs_addr); offset.has_value()) {
+            return bios.load8(offset.value());
+        } else if (auto offset = EXPANSION_1.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: Expansion 1 NOT IMPLEMENTED. Expansion 1 read register " << std::to_string(offset.value()) << "\n";
             return 0;
         }
 
@@ -175,21 +176,35 @@ public:
     uint16_t load16(uint8_t addr) {
         uint32_t abs_addr = mask_region(addr);
 
-        if (RAM_.contains(abs_addr)) {
-            return ram.load16(RAM_.offset(abs_addr));
-        } else if (SPU.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(SPU.offset(abs_addr)) << "\n";
+        if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
+            return ram.load16(offset.value());
+        } else if (auto offset = SPU.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: SPU NOT IMPLEMENTED. SPU read register " << std::to_string(offset.value()) << "\n";
             return 0;
-        } else if (IRQ_CONTROL.contains(abs_addr)) {
-            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(IRQ_CONTROL.offset(abs_addr)) << "\n";
+        } else if (auto offset = IRQ_CONTROL.contains(abs_addr); offset.has_value()) {
+            std::cout << "[BUS] WARNING: IRQ CONTROL NOT IMPLEMENTED. IRQ control read " << std::to_string(offset.value()) << "\n";
             return 0;
         }
 
         throw std::runtime_error("[Bus] ERROR: Unhandled load16 into address " + std::to_string(addr));
     }
 
+    uint32_t dma_reg(uint32_t offset) {
+        switch (offset){
+        case 0x70: 
+            return dma.get_control(); 
+            break;
+
+        default: 
+            std::cout << "[BUS] Unhandled DMA access\n"; 
+            return 0; 
+            break;
+        }
+    }
+
     Bios bios;
     RAM ram;
+    DMA dma;
 
     const uint32_t region_mask[8] = {
         0xffffffff, 0xffffffff,

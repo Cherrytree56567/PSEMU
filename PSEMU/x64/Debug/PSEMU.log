@@ -3,9 +3,10 @@
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(114,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(123,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(132,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(826,53): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1102,16): warning C4244: 'initializing': conversion from 'uint64_t' to 'uint32_t', possible loss of data
-C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1104,23): warning C4293: '>>': shift count negative or too big, undefined behavior
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(828,53): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1104,16): warning C4244: 'initializing': conversion from 'uint64_t' to 'uint32_t', possible loss of data
+C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.cpp(1106,23): warning C4293: '>>': shift count negative or too big, undefined behavior
+  DMA.cpp
   PSEMU.cpp
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(114,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence
 C:\Users\ronit\Desktop\PSEMU\PSEMU\CPU.h(123,1): warning C4554: '&': check operator precedence for possible error; use parentheses to clarify precedence

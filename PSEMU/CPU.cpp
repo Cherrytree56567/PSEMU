@@ -13,6 +13,8 @@ void CPU::reset() {
         regs[i] = 0xdeadbeef;
         out_regs[i] = 0xdeadbeef;
     }
+    out_regs[0] = 0;
+    regs[0] = 0;
     load = std::make_tuple(0, 0);
     sr = 0;
     cause = 0;
@@ -50,7 +52,7 @@ void CPU::fetch() {
 }
 
 void CPU::decode_execute(Instruction instruction) {
-    std::cout << "instruction: " << instruction.instruction << "\n";
+    std::cout << "PC: " << pc << "\n";
     switch (instruction.opcode()) {
         case (0b000000):
             switch (instruction.function()) {

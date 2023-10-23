@@ -28,6 +28,9 @@
     <Filter Include="Source Files\Bus\RAM">
       <UniqueIdentifier>{8524c40f-742d-4742-baa0-fa4732042965}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Bus\DMA">
+      <UniqueIdentifier>{3dcc3f34-d96f-4c55-abea-df2abfcfccee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PSEMU.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="RAM.cpp">
       <Filter>Source Files\Bus\RAM</Filter>
+    </ClCompile>
+    <ClCompile Include="DMA.cpp">
+      <Filter>Source Files\Bus\DMA</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +75,9 @@
     </ClInclude>
     <ClInclude Include="RAM.h">
       <Filter>Source Files\Bus\RAM</Filter>
+    </ClInclude>
+    <ClInclude Include="DMA.h">
+      <Filter>Source Files\Bus\DMA</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

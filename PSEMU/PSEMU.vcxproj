@@ -132,6 +132,7 @@
     <ClCompile Include="Bios.cpp" />
     <ClCompile Include="Bus.cpp" />
     <ClCompile Include="CPU.cpp" />
+    <ClCompile Include="DMA.cpp" />
     <ClCompile Include="PSEMU.cpp" />
     <ClCompile Include="RAM.cpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="Bios.h" />
     <ClInclude Include="Bus.h" />
     <ClInclude Include="CPU.h" />
+    <ClInclude Include="DMA.h" />
     <ClInclude Include="Instruction.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="Range.h" />

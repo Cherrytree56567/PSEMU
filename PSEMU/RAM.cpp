@@ -2,7 +2,7 @@
 
 void RAM::newl() {
 	for (int i = 0; i < (2 * 1024 * 1024); i++) {
-		ram[i] = 0x0;
+		ram[i] = 0xca;
 	}
 }
 

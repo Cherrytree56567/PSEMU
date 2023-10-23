@@ -10,11 +10,10 @@ struct Range {
 
     Range(uint32_t s, uint32_t l) : start(s), length(l) {}
 
-    inline bool contains(uint32_t addr) const {
-        return (addr >= start && addr < start + length);
-    }
-
-    inline uint32_t offset(uint32_t addr) const {
-        return addr - start;
+    std::optional<uint32_t> contains(uint32_t addr) const {
+        if (addr >= start && addr < start + length)
+            return (addr - start);
+        else
+            return std::nullopt;
     }
 };
