@@ -185,14 +185,108 @@ uint16_t Bus::load16(uint8_t addr) {
 }
 
 uint32_t Bus::dma_reg(uint32_t offset) {
-    switch (offset) {
-    case 0x70:
-        return dma.get_control();
-        break;
+    auto major = (offset & 0x70) >> 4;
+    auto minor = offset & 0xf;
+    switch (major) {
+    case 0:
+        auto channel = dma.channels[dma.from_index(major)];
 
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 1:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 2:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 3:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 4:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 5:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 6:
+        auto channel = dma.channels[dma.from_index(major)];
+
+        switch (minor) {
+        case 8:
+            return channel.control();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
+
+    case 7:
+        switch (minor) {
+        case 0:
+            return dma.get_control();
+
+        case 4:
+            return dma.interrupt();
+
+        default:
+            std::cout << "[BUS] ERROR: Unhandled DMA read at " << std::to_string(offset) << "\n";
+            exit(0);
+        }
     default:
         std::cout << "[BUS] ERROR: Unhandled DMA access\n";
-        return 0;
+        exit(0);
         break;
     }
 }
