@@ -1,5 +1,13 @@
 #include "CPU.h"
 
+bool sub_overflow(uint32_t old_value, uint32_t sub_value, uint32_t new_value) {
+    return (((new_value ^ old_value) & (old_value ^ sub_value)) & UINT32_C(0x80000000)) != 0;
+}
+
+bool add_overflow(uint32_t old_value, uint32_t add_value, uint32_t new_value) {
+    return (((new_value ^ old_value) & (new_value ^ add_value)) & UINT32_C(0x80000000)) != 0;
+}
+
 void CPU::tick() {
   fetch();
 }
@@ -32,7 +40,6 @@ void CPU::fetch() {
         return;
     }
 
-    Instruction instr;
     instr.instruction = bus->load32(pc);
 
     pc = next_pc;
@@ -57,142 +64,142 @@ void CPU::decode_execute(Instruction instruction) {
         case (0b000000):
             switch (instruction.function()) {
                 case (0b100101):
-                    op_or(instruction);
+                    op_or();
                     std::cout << "[CPU] INFO: OR (R-Type)\n";
                     break;
 
                 case (0b000000):
-                    op_sll(instruction);
+                    op_sll();
                     std::cout << "[CPU] INFO: SLL (R-Type)\n";
                     break;
                     
                 case (0b101011):
-                    op_sltu(instruction);
+                    op_sltu();
                     std::cout << "[CPU] INFO: SLTU (R-Type)\n";
                     break;
                 
                 case (0b100001):
-                    op_addu(instruction);
+                    op_addu();
                     std::cout << "[CPU] INFO: ADDU (R-Type)\n";
                     break;
 
                 case (0b001000):
-                    op_jr(instruction);
+                    op_jr();
                     std::cout << "[CPU] INFO: JR (R-Type)\n";
                     break;
 
                 case (0b100100):
-                    op_and(instruction);
+                    op_and();
                     std::cout << "[CPU] INFO: AND (R-Type)\n";
                     break;
 
                 case (0b100000):
-                    op_add(instruction);
+                    op_add();
                     std::cout << "[CPU] INFO: ADD (R-Type)\n";
                     break;
                     
                 case (0b001001):
-                    op_jalr(instruction);
+                    op_jalr();
                     std::cout << "[CPU] INFO: JALR (R-Type)\n";
                     break;
                     
                 case (0b100011):
-                    op_subu(instruction);
+                    op_subu();
                     std::cout << "[CPU] INFO: SUBU (R-Type)\n";
                     break;
                     
                 case (0b000011):
-                    op_sra(instruction);
+                    op_sra();
                     std::cout << "[CPU] INFO: SRA (R-Type)\n";
                     break;
                     
                 case (0b011010):
-                    op_div(instruction);
+                    op_div();
                     std::cout << "[CPU] INFO: DIV (R-Type)\n";
                     break;
                     
                 case (0b010010):
-                    op_mflo(instruction);
+                    op_mflo();
                     std::cout << "[CPU] INFO: MFLO (R-Type)\n";
                     break;
                     
                 case (0b000010):
-                    op_srl(instruction);
+                    op_srl();
                     std::cout << "[CPU] INFO: SRL (R-Type)\n";
                     break;
                     
                 case (0b011011):
-                    op_divu(instruction);
+                    op_divu();
                     std::cout << "[CPU] INFO: DIVU (R-Type)\n";
                     break;
                     
                 case (0b010000):
-                    op_mfhi(instruction);
+                    op_mfhi();
                     std::cout << "[CPU] INFO: MFHI (R-Type)\n";
                     break;
                     
                 case (0b101010):
-                    op_slt(instruction);
+                    op_slt();
                     std::cout << "[CPU] INFO: SLT (R-Type)\n";
                     break;
 
                 case (0b001100):
-                    op_syscall(instruction);
+                    op_syscall();
                     std::cout << "[CPU] INFO: SYSCALL (R-Type)\n";
                     break;
 
                 case (0b010011):
-                    op_mtlo(instruction);
+                    op_mtlo();
                     std::cout << "[CPU] INFO: MTLO (R-Type)\n";
                     break;
 
                 case (0b010001):
-                    op_mthi(instruction);
+                    op_mthi();
                     std::cout << "[CPU] INFO: MTHI (R-Type)\n";
                     break;
                     
                 case (0b000100):
-                    op_sllv(instruction);
+                    op_sllv();
                     std::cout << "[CPU] INFO: SLLV (R-Type)\n";
                     break;
                     
                 case (0b100111):
-                    op_nor(instruction);
+                    op_nor();
                     std::cout << "[CPU] INFO: NOR (R-Type)\n";
                     break;
                     
                 case (0b000111):
-                    op_srav(instruction);
+                    op_srav();
                     std::cout << "[CPU] INFO: SRAV (R-Type)\n";
                     break;
 
                 case (0b000110):
-                    op_srlv(instruction);
+                    op_srlv();
                     std::cout << "[CPU] INFO: SRLV (R-Type)\n";
                     break;
 
                 case (0b100110):
-                    op_xor(instruction);
+                    op_xor();
                     std::cout << "[CPU] INFO: XOR (R-Type)\n";
                     break;
 
                 case (0b011001):
-                    op_multu(instruction);
+                    op_multu();
                     std::cout << "[CPU] INFO: MULTU (R-Type)\n";
                     break;
 
                 case (0b001101):
-                    op_break(instruction);
+                    op_break();
                     std::cout << "[CPU] INFO: BREAK (R-Type)\n";
                     break;
 
                 case (0b011000):
-                    op_mult(instruction);
+                    op_mult();
                     std::cout << "[CPU] INFO: MULT (R-Type)\n";
                     break;
 
                 case (0b100010):
-                    op_sub(instruction);
+                    op_sub();
                     std::cout << "[CPU] INFO: SUB (R-Type)\n";
                     break;
                     
@@ -204,197 +211,197 @@ void CPU::decode_execute(Instruction instruction) {
             break;
 
         case (0b001001):
-            op_addiu(instruction);
+            op_addiu();
             std::cout << "[CPU] INFO: ADDIU (I-Type)\n";
             break;
 
         case (0b000010):
-            op_j(instruction);
+            op_j();
             std::cout << "[CPU] INFO: J (J-Type)\n";
             break;
 
         case (0b001111):
-            op_lui(instruction);
+            op_lui();
             std::cout << "[CPU] INFO: LUI (I-Type)\n";
             break;
 
         case (0b001101):
-            op_ori(instruction);
+            op_ori();
             std::cout << "[CPU] INFO: ORI (I-Type)\n";
             break;
 
         case (0b101011):
-            op_sw(instruction);
+            op_sw();
             std::cout << "[CPU] INFO: SW (I-Type)\n";
             break;
 
         case (0b010000):
-            op_cop0(instruction);
+            op_cop0();
             std::cout << "[CPU] INFO: COP0 (I-Type)\n";
             break;
 
         case (0b000101):
-            op_bne(instruction);
+            op_bne();
             std::cout << "[CPU] INFO: BNE (I-Type)\n";
             break;
 
         case (0b001000):
-            op_addi(instruction);
+            op_addi();
             std::cout << "[CPU] INFO: ADDI (I-Type)\n";
             break;
 
         case (0b100011):
-            op_lw(instruction);
+            op_lw();
             std::cout << "[CPU] INFO: LW (I-Type)\n";
             break;
         
         case (0b101001):
-            op_sh(instruction);
+            op_sh();
             std::cout << "[CPU] INFO: SH (I-Type)\n";
             break;
 
         case (0b000011):
-            op_jal(instruction);
+            op_jal();
             std::cout << "[CPU] INFO: JAL (I-Type)\n";
             break;
 
         case (0b001100):
-            op_andi(instruction);
+            op_andi();
             std::cout << "[CPU] INFO: ANDI (I-Type)\n";
             break;
 
         case (0b101000):
-            op_sb(instruction);
+            op_sb();
             std::cout << "[CPU] INFO: SB (I-Type)\n";
             break;
 
         case (0b100000):
-            op_lb(instruction);
+            op_lb();
             std::cout << "[CPU] INFO: LB (I-Type)\n";
             break;
 
         case (0b000100):
-            op_beq(instruction);
+            op_beq();
             std::cout << "[CPU] INFO: BEQ (I-Type)\n";
             break;
             
         case (0b000001):
-            op_bxx(instruction);
+            op_bxx();
             std::cout << "[CPU] INFO: BXX (I-Type)\n";
             break;
 
         case (0b000111):
-            op_bgtz(instruction);
+            op_bgtz();
             std::cout << "[CPU] INFO: BGTZ (I-Type)\n";
             break;
             
         case (0b000110):
-            op_blez(instruction);
+            op_blez();
             std::cout << "[CPU] INFO: BLEZ (I-Type)\n";
             break;
             
         case (0b100100):
-            op_lbu(instruction);
+            op_lbu();
             std::cout << "[CPU] INFO: LBU (I-Type)\n";
             break;
             
         case (0b001010):
-            op_slti(instruction);
+            op_slti();
             std::cout << "[CPU] INFO: SLTI (I-Type)\n";
             break;
             
         case (0b001011):
-            op_sltiu(instruction);
+            op_sltiu();
             std::cout << "[CPU] INFO: SLTIU (I-Type)\n";
             break;
             
         case (0b100101):
-            op_lhu(instruction);
+            op_lhu();
             std::cout << "[CPU] INFO: LHU (I-Type)\n";
             break;
             
         case (0b100001):
-            op_lh(instruction);
+            op_lh();
             std::cout << "[CPU] INFO: LH (I-Type)\n";
             break;
 
         case (0b001110):
-            op_xori(instruction);
+            op_xori();
             std::cout << "[CPU] INFO: XORI (I-Type)\n";
             break;
 
         case (0b010001):
-            op_cop1(instruction);
+            op_cop1();
             std::cout << "[CPU] INFO: COP1 (I-Type)\n";
             break;
 
         case (0b010011):
-            op_cop3(instruction);
+            op_cop3();
             std::cout << "[CPU] INFO: COP3 (I-Type)\n";
             break;
 
         case (0b010010):
-            op_cop2(instruction);
+            op_cop2();
             std::cout << "[CPU] INFO: COP2 (I-Type)\n";
             break;
 
         case (0b100010):
-            op_lwl(instruction);
+            op_lwl();
             std::cout << "[CPU] INFO: LWL (I-Type)\n";
             break;
 
         case (0b100110):
-            op_lwr(instruction);
+            op_lwr();
             std::cout << "[CPU] INFO: LWR (I-Type)\n";
             break;
 
         case (0b101010):
-            op_swl(instruction);
+            op_swl();
             std::cout << "[CPU] INFO: SWL (I-Type)\n";
             break;
 
         case (0b101110):
-            op_swr(instruction);
+            op_swr();
             std::cout << "[CPU] INFO: SWR (I-Type)\n";
             break;
 
         case (0b110000):
-            op_lwc0(instruction);
+            op_lwc0();
             std::cout << "[CPU] INFO: LWC0 (I-Type)\n";
             break;
 
         case (0b110001):
-            op_lwc1(instruction);
+            op_lwc1();
             std::cout << "[CPU] INFO: LWC1 (I-Type)\n";
             break;
 
         case (0b110010):
-            op_lwc2(instruction);
+            op_lwc2();
             std::cout << "[CPU] INFO: LWC2 (I-Type)\n";
             break;
 
         case (0b110011):
-            op_lwc3(instruction);
+            op_lwc3();
             std::cout << "[CPU] INFO: LWC3 (I-Type)\n";
             break;
 
         case (0b111000):
-            op_swc0(instruction);
+            op_swc0();
             std::cout << "[CPU] INFO: SWC0 (I-Type)\n";
             break;
 
         case (0b111001):
-            op_swc1(instruction);
+            op_swc1();
             std::cout << "[CPU] INFO: SWC1 (I-Type)\n";
             break;
 
         case (0b111010):
-            op_swc2(instruction);
+            op_swc2();
             std::cout << "[CPU] INFO: SWC2 (I-Type)\n";
             break;
 
         case (0b111011):
-            op_swc3(instruction);
+            op_swc3();
             std::cout << "[CPU] INFO: SWC3 (I-Type)\n";
             break;
 
@@ -403,567 +410,6 @@ void CPU::decode_execute(Instruction instruction) {
             exception(Exception::IllegalInstruction);
             break;
     }
-}
-
-void CPU::op_lui(Instruction instruction) {
-    uint32_t i = instruction.imm();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = i << 16;
-
-    set_reg(t, v);
-}
-
-void CPU::op_ori(Instruction instruction) {
-    uint32_t i = instruction.imm();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t v = regs[s] | i;
-
-    set_reg(t, v);
-}
-
-void CPU::op_sw(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    // Assuming reg is a function that returns the value in a register
-    uint32_t addr = regs[s] + i;
-    uint32_t v = regs[t];
-
-    if (addr % 4 == 0) {
-        store32(addr, v);
-    }
-    else {
-        exception(Exception::StoreAddressError);
-    }
-}
-
-void CPU::op_sll(Instruction instruction) {
-    uint32_t i = instruction.sa();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    uint32_t v = regs[t] << i;
-
-    set_reg(d, v);
-}
-
-void CPU::op_addiu(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t v = regs[s] + i;
-
-    set_reg(t, v);
-}
-
-void CPU::op_j(Instruction instruction) {
-    uint32_t i = instruction.addr();
-
-    next_pc = (pc & 0xf0000000) | (i << 2);
-
-    brancha = true;
-}
-
-void CPU::op_or(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = regs[s] | regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_cop0(Instruction instruction) {
-    switch (instruction.rs()) {
-        case (0b00100):
-            op_mtc0(instruction);
-            std::cout << "[CPU] INFO: MTC0 (COP0-Type)\n";
-            break;
-
-        case (0b00000):
-            op_mfc0(instruction);
-            std::cout << "[CPU] INFO: MFC0 (COP0-Type)\n";
-            break;
-
-        case (0b10000):
-            op_rfe(instruction);
-            std::cout << "[CPU] INFO: RFE (COP0-Type)\n";
-            break;
-
-        default:
-            throw std::runtime_error("[CPU] ERROR: Unhandled COP0 Instruction");
-            break;
-    }
-}
-
-void CPU::op_mtc0(Instruction instruction) {
-    uint32_t cpu_r = instruction.rt();
-    uint32_t cop_r = instruction.rd();
-
-    uint32_t v = regs[cpu_r];
-
-    switch (cop_r) {
-        case 3:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 5:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 6:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 7:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 9:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 11:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
-            }
-            break;
-
-        case 12:
-            sr = v;
-            break;
-
-        case 13:
-            if (v != 0) {
-                throw std::runtime_error("[CPU] ERROR: Unhandled write to CAUSE register.");
-            }
-            break;
-
-        default:
-            throw std::runtime_error("Unhandled cop0 register " + std::to_string(cop_r));
-            break;
-    }
-}
-
-void CPU::branch(uint32_t offset) {
-    uint32_t offseta = offset << 2;
-
-    next_pc = pc + offseta;
-
-    brancha = true;
-}
-
-void CPU::op_bne(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    if (regs[s] != regs[t]) {
-        branch(i);
-    }
-}
-
-void CPU::op_addi(Instruction instruction) {
-    int32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    int32_t sValue = regs[s];
-
-    int32_t v;
-
-    // Manual overflow check
-    if ((i > 0 && sValue > INT_MAX - i) || (i < 0 && sValue < INT_MIN - i)) {
-        // Overflow occurred
-        exception(Exception::Overflow);
-    }
-    else {
-        v = sValue + i;
-        set_reg(t, static_cast<uint32_t>(v));
-    }
-}
-
-void CPU::op_lw(Instruction instruction) {
-
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-
-    if (addr % 4 == 0) {
-        uint32_t v = bus->load32(addr);
-
-        // Put the load in the delay slot
-        load = std::make_tuple(t, v);
-    }
-    else {
-        exception(Exception::LoadAddressError);
-    }
-}
-
-void CPU::op_sltu(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = regs[s] < regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_addu(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    uint32_t v = regs[s] + regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_sh(Instruction instruction) {
-        uint32_t i = instruction.imm_s();
-        uint32_t t = instruction.rt();
-        uint32_t s = instruction.rs();
-
-        uint32_t addr = regs[s] + i;
-        uint32_t v    = regs[t];
-
-        if (addr % 2 == 0) {
-            store16(addr, (uint16_t)v);
-        }
-        else {
-            exception(Exception::StoreAddressError);
-        }
-}
-
-void CPU::op_jal(Instruction instruction) {
-    uint32_t ra = next_pc;
-
-    // Store return address in $31 ($ra)
-    set_reg(31, ra);
-
-    op_j(instruction);
-    brancha = true;
-}
-
-void CPU::op_andi(Instruction instruction) {
-    uint32_t i = instruction.imm();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t v = regs[s] & i;
-
-    set_reg(t, v);
-}
-
-void CPU::op_sb(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-    uint32_t v = regs[t];
-
-    store8(addr, (uint8_t)v);
-}
-
-void CPU::op_jr(Instruction instruction) {
-    uint32_t s = instruction.rs();
-
-    next_pc = regs[s];
-    
-    brancha = true;
-}
-
-void CPU::op_lb(Instruction instruction) {
-
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-
-    // Cast as i8 to force sign extension
-    uint8_t v = bus->load8(addr);
-
-    // Put the load in the delay slot
-    load = std::make_tuple(t, (uint8_t)v);
-}
-
-void CPU::op_beq(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    if (regs[s] == regs[t]) {
-        branch(i);
-    }
-}
-
-void CPU::op_mfc0(Instruction instruction) {
-    uint32_t cpu_r = instruction.rt();
-    uint32_t cop_r = instruction.rd();
-
-    uint32_t v;
-
-    switch (cop_r) {
-    case 12:
-        v = sr;
-        break;
-    case 13:
-        v = cause;
-        break;
-    case 14:
-        v = epc;
-        break;
-    default:
-        throw std::runtime_error("[CPU] ERROR: Unhandled read from COP0R" + std::to_string(cop_r));
-    }
-
-    load = std::make_tuple(cpu_r, v);
-}
-
-void CPU::op_and(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = regs[s] & regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_add(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    int32_t sValue = regs[s];
-    int32_t tValue = regs[t];
-
-    // Check for integer overflow
-    if ((tValue > 0 && sValue > INT_MAX - tValue) || (tValue < 0 && sValue < INT_MIN - tValue)) {
-        // Overflow occurred
-        exception(Exception::Overflow);
-    }
-    else {
-        set_reg(d, static_cast<uint32_t>(sValue + tValue));
-    }
-
-}
-
-void CPU::op_bgtz(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-
-    int32_t v = regs[s];
-
-    if (v > 0) {
-        branch(i);
-    }
-}
-
-void CPU::op_blez(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-
-    int32_t v = regs[s];
-
-    if (v <= 0) {
-        branch(i);
-    }
-}
-
-void CPU::op_lbu(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-
-    uint8_t v = bus->load8(addr);
-
-    // Put the load in the delay slot
-    load = std::make_tuple(t, (uint32_t)v);
-}
-
-void CPU::op_jalr(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-
-    uint32_t ra = next_pc;
-
-    // Store return address in `d`
-    set_reg(d, ra);
-
-    next_pc = regs[s];
-    brancha = true;
-}
-
-void CPU::op_bxx(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-
-    uint32_t instructiona = instruction.instruction;
-
-    uint32_t is_bgez = (instructiona >> 16) & 1;
-    uint32_t is_link = (instructiona >> 20) & 1 != 0;
-
-    int32_t v = regs[s];
-
-    // Test "less than zero"
-    uint32_t test = (v < 0);
-
-    // If the test is "greater than or equal to zero" we need
-    // to negate the comparison above since
-    // ("a >= 0" <=> "!(a < 0)"). The xor takes care of that.
-    test = test ^ is_bgez;
-    
-    if (test != 0) {
-        if (is_link) {
-            uint32_t ra = next_pc;
-
-            // Store return address in R31
-            set_reg(31, ra);
-        }
-        branch(i);
-    }
-}
-
-void CPU::op_slti(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = ((int32_t)regs[s]) < i;
-
-    set_reg(t, v);
-}
-
-void CPU::op_subu(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    uint32_t v = regs[s] - regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_sra(Instruction instruction) {
-    uint32_t i = instruction.sa();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    uint32_t v = ((int32_t)regs[t]) >> i;
-
-    set_reg(d, v);
-}
-
-void CPU::op_div(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t n = regs[s];
-    uint32_t d = regs[t];
-
-    if (d == 0) {
-        // Division by zero, results are bogus
-        hi = static_cast<uint32_t>(n);
-
-        if (n >= 0) {
-            lo = 0xffffffff;
-        } else {
-            lo = 1;
-        }
-    } else if (static_cast<uint32_t>(n) == 0x80000000 && d == -1) {
-        // Result is not representable in a 32-bit signed integer
-        hi = 0;
-        lo = 0x80000000;
-    } else {
-        hi = static_cast<uint32_t>(n % d);
-        lo = static_cast<uint32_t>(n / d);
-    }
-}
-
-void CPU::op_mflo(Instruction instruction) {
-    uint32_t d = instruction.rd();
-
-    set_reg(d, lo);
-}
-
-void CPU::op_srl(Instruction instruction) {
-    uint32_t i = instruction.sa();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    uint32_t v = regs[t] >> i;
-
-    set_reg(d, v);
-}
-
-void CPU::op_sltiu(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = regs[s] < i;
-
-    set_reg(t, v);
-}
-
-void CPU::op_divu(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t n = regs[s];
-    uint32_t d = regs[t];
-
-    if (d == 0) {
-        // Division by zero, results are bogus
-        hi = n;
-        lo = 0xffffffff;
-    } else {
-        hi = n % d;
-        lo = n / d;
-    }
-}
-
-void CPU::op_mfhi(Instruction instruction) {
-    uint32_t d = instruction.rd();
-
-    set_reg(d, hi);
-}
-
-void CPU::op_slt(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    int32_t sa = regs[s];
-    int32_t ta = regs[t];
-
-    int32_t v = s < t;
-
-    set_reg(d, (uint32_t)v);
 }
 
 void CPU::exception(Exception causea) {
@@ -990,383 +436,674 @@ void CPU::exception(Exception causea) {
     next_pc = pc + 4;
 }
 
-void CPU::op_syscall(Instruction instruction) {
-    exception(Exception::SysCall);
+void CPU::op_bxx()
+{
+    brancha = true;
+    uint32_t op = instr.rt();
+
+    bool should_link = (op & 0x1E) == 0x10;
+    bool should_branch = (int)(regs[instr.rs()] ^ (op << 31)) < 0;
+
+    if (should_link) regs[31] = next_pc;
+    if (should_branch) branch();
 }
 
-void CPU::op_mtlo(Instruction instruction) {
-    uint32_t s = instruction.rs();
+void CPU::op_swr()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    uint32_t aligned_addr = addr & 0xFFFFFFFC;
+    uint32_t aligned_load = bus->load32(aligned_addr);
 
-    lo = regs[s];
-}
-
-void CPU::op_mthi(Instruction instruction) {
-    uint32_t s = instruction.rs();
-
-    hi = regs[s];
-}
-
-void CPU::op_rfe(Instruction instruction) {
-    if ((instruction.instruction & 0x3f) != 0b010000) {
-        std::cout << "[CPU] ERROR: Invalid cop0 instruction: " << std::to_string(instruction.instruction) << "\n";
+    uint32_t value = 0;
+    switch (addr & 0b11) {
+    case 0:
+        value = regs[instr.rt()]; break;
+    case 1:
+        value = (aligned_load & 0x000000FF) | (regs[instr.rt()] << 8);
+        break;
+    case 2:
+        value = (aligned_load & 0x0000FFFF) | (regs[instr.rt()] << 16);
+        break;
+    case 3:
+        value = (aligned_load & 0x00FFFFFF) | (regs[instr.rt()] << 24);
+        break;
     }
 
-    // Restore the pre-exception mode by shifting the Interrupt
-    // Enable/User Mode stack back to its original position.
-    uint32_t mode = sr & 0x3f;
-    sr &= !0x3f;
-    sr |= mode >> 2;
+    bus->store32(aligned_addr, value);
 }
 
-void CPU::op_lhu(Instruction instruction) {
+void CPU::op_swl()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    uint32_t aligned_addr = addr & 0xFFFFFFFC;
+    uint32_t aligned_load = bus->load32(aligned_addr);
 
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
+    uint32_t value = 0;
+    switch (addr & 0b11) {
+    case 0:
+        value = (aligned_load & 0xFFFFFF00) | (regs[instr.rt()] >> 24);
+        break;
+    case 1:
+        value = (aligned_load & 0xFFFF0000) | (regs[instr.rt()] >> 16);
+        break;
+    case 2:
+        value = (aligned_load & 0xFF000000) | (regs[instr.rt()] >> 8);
+        break;
+    case 3:
+        value = regs[instr.rt()]; break;
+    }
 
-    uint32_t addr = regs[s] + i;
+    bus->store32(aligned_addr, value);
+}
 
-    // Address must be 16bit aligned
-    if (addr % 2 == 0) {
-        uint16_t v = bus->load16(addr);
+void CPU::op_lwr()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    uint32_t aligned_addr = addr & 0xFFFFFFFC;
+    uint32_t aligned_load = bus->load32(aligned_addr);
 
-        // Put the load in the delay slot
-        load = std::make_tuple(t, (uint32_t)v);
-    } else {
+    uint32_t value = 0;
+    uint32_t LRValue = regs[instr.rt()];
+
+    if (instr.rt() == std::get<0>(load)) {
+        LRValue = std::get<1>(load);
+    }
+
+    switch (addr & 0b11) {
+    case 0:
+        value = aligned_load;
+        break;
+    case 1:
+        value = (LRValue & 0xFF000000) | (aligned_load >> 8);
+        break;
+    case 2:
+        value = (LRValue & 0xFFFF0000) | (aligned_load >> 16);
+        break;
+    case 3:
+        value = (LRValue & 0xFFFFFF00) | (aligned_load >> 24);
+        break;
+    }
+
+    load = std::make_tuple(instr.rt(), value);
+}
+
+void CPU::op_lwl()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    uint32_t aligned_addr = addr & 0xFFFFFFFC;
+    uint32_t aligned_load = bus->load32(aligned_addr);
+
+    uint32_t value = 0;
+    uint32_t LRValue = regs[instr.rt()];
+
+    if (instr.rt() == std::get<0>(load)) {
+        LRValue = std::get<1>(load);
+    }
+
+    switch (addr & 0b11) {
+    case 0:
+        value = (LRValue & 0x00FFFFFF) | (aligned_load << 24);
+        break;
+    case 1:
+        value = (LRValue & 0x0000FFFF) | (aligned_load << 16);
+        break;
+    case 2:
+        value = (LRValue & 0x000000FF) | (aligned_load << 8);
+        break;
+    case 3:
+        value = aligned_load;
+        break;
+    }
+
+    load = std::make_tuple(instr.rt(), value);
+}
+
+void CPU::op_xori()
+{
+    set_reg(instr.rt(), regs[instr.rs()] ^ instr.imm());
+}
+
+void CPU::op_sub()
+{
+    uint32_t rs = regs[instr.rs()];
+    uint32_t rt = regs[instr.rt()];
+    uint32_t sub = rs - rt;
+
+    bool overflow = sub_overflow(rs, rt, sub);
+    if (!overflow)
+        set_reg(instr.rd(), sub);
+    else
+        exception(Exception::Overflow);
+}
+
+void CPU::op_mult()
+{
+    int64_t value = (int64_t)(int)regs[instr.rs()] * (int64_t)(int)regs[instr.rt()]; //sign extend to pass amidog cpu test
+
+    hi = (uint32_t)(value >> 32);
+    lo = (uint32_t)value;
+}
+
+void CPU::op_break()
+{
+    exception(Exception::Break);
+}
+
+void CPU::op_xor()
+{
+    set_reg(instr.rd(), regs[instr.rs()] ^ regs[instr.rt()]);
+}
+
+void CPU::op_multu()
+{
+    uint64_t value = (uint64_t)regs[instr.rs()] * (uint64_t)regs[instr.rt()]; //sign extend to pass amidog cpu test
+
+    hi = (uint32_t)(value >> 32);
+    lo = (uint32_t)value;
+}
+
+void CPU::op_srlv()
+{
+    set_reg(instr.rd(), regs[instr.rt()] >> (int)(regs[instr.rs()] & 0x1F));
+}
+
+void CPU::op_srav()
+{
+    set_reg(instr.rd(), (uint32_t)((int)regs[instr.rt()] >> (int)(regs[instr.rs()] & 0x1F)));
+}
+
+void CPU::op_nor()
+{
+    set_reg(instr.rd(), ~(regs[instr.rs()] | regs[instr.rt()]));
+}
+
+void CPU::op_lh() {
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    uint32_t value = (uint32_t)(short)bus->load16(addr);
+    load = std::make_tuple(instr.rt(), value);
+}
+
+void CPU::op_sllv()
+{
+    set_reg(instr.rd(), regs[instr.rt()] << (int)(regs[instr.rs()] & 0x1F));
+}
+
+void CPU::op_lhu()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+    if ((addr % 2) == 0) {
+        uint32_t value = bus->load16(addr);
+        load = std::make_tuple(instr.rt(), value);
+    }
+    else {
         exception(Exception::LoadAddressError);
     }
 }
 
-void CPU::op_sllv(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
+void CPU::op_rfe()
+{
+    uint32_t mode = sr & 0x3F;
 
-    // Shift amount is truncated to 5 bits
-    uint32_t v = regs[t] << (regs[s] & 0x1f);
-
-    set_reg(d, v);
+    /* Shift kernel/user mode bits back. */
+    sr &= ~(uint32_t)0xF;
+    sr |= mode >> 2;
 }
 
-void CPU::op_lh(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-
-    // Cast as i16 to force sign extension
-    uint16_t v = bus->load16(addr);
-
-    // Put the load in the delay slot
-    load = std::make_tuple(t, (uint32_t)v);
+void CPU::op_mthi()
+{
+    hi = regs[instr.rs()];
 }
 
-void CPU::op_nor(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint32_t v = ~(regs[s] | regs[t]);
-
-    set_reg(d, v);
+void CPU::op_mtlo()
+{
+    lo = regs[instr.rs()];
 }
 
-void CPU::op_srav(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    // Shift amount is truncated to 5 bits
-    uint32_t v = ((int32_t)regs[t]) >> (regs[s] & 0x1f);
-
-    set_reg(d, v);
+void CPU::op_syscall()
+{
+    exception(Exception::SysCall);
 }
 
-void CPU::op_srlv(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    // Shift amount is truncated to 5 bits
-    uint32_t v = regs[t] >> (regs[s] & 0x1f);
-
-    set_reg(d, v);
+void CPU::op_slt()
+{
+    bool condition = (int)regs[instr.rs()] < (int)regs[instr.rt()];
+    set_reg(instr.rd(), condition ? 1u : 0u);
 }
 
-void CPU::op_multu(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint64_t a = regs[s];
-    uint64_t b = regs[t];
-
-    uint32_t v = a * b;
-
-    hi = (uint32_t)(v >> 32);
-    lo = (uint32_t)v;
+void CPU::op_mfhi()
+{
+    set_reg(instr.rd(), hi);
 }
 
-void CPU::op_xor(Instruction instruction) {
-    uint32_t d = instruction.rd();
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
+void CPU::op_divu()
+{
+    uint32_t n = regs[instr.rs()];
+    uint32_t d = regs[instr.rt()];
 
-    uint32_t v = regs[s] ^ regs[t];
-
-    set_reg(d, v);
-}
-
-void CPU::op_break(Instruction instruction) {
-    exception(Exception::Break);
-}
-
-void CPU::op_mult(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-
-    uint64_t a = ((uint32_t)regs[s]);
-    uint64_t b = ((uint32_t)regs[t]);
-
-    uint64_t v = (a * b);
-
-    hi = (uint32_t)(v >> 32);
-    lo = (uint32_t)v;
-}
-
-void CPU::op_sub(Instruction instruction) {
-    uint32_t s = instruction.rs();
-    uint32_t t = instruction.rt();
-    uint32_t d = instruction.rd();
-
-    int32_t sValue = regs[s];
-    int32_t tValue = regs[t];
-
-    // Check for integer underflow
-    if ((tValue > 0 && sValue < INT_MIN + tValue) || (tValue < 0 && sValue > INT_MAX + tValue)) {
-        // Underflow occurred
-        exception(Exception::Overflow);
+    if (d == 0) {
+        hi = n;
+        lo = 0xFFFFFFFF;
     }
     else {
-        set_reg(d, static_cast<uint32_t>(sValue - tValue));
+        hi = n % d;
+        lo = n / d;
     }
 }
 
-void CPU::op_xori(Instruction instruction) {
-    uint32_t i = instruction.imm();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t v = regs[s] ^ i;
-
-    set_reg(t, v);
+void CPU::op_sltiu()
+{
+    bool condition = regs[instr.rs()] < instr.imm_s();
+    set_reg(instr.rt(), condition ? 1u : 0u);
 }
 
-void CPU::op_cop1(Instruction) {
-    exception(Exception::CoprocessorError);
+void CPU::op_srl()
+{
+    set_reg(instr.rd(), regs[instr.rt()] >> (int)instr.sa());
 }
 
-void CPU::op_cop3(Instruction) {
-    exception(Exception::CoprocessorError);
+void CPU::op_mflo()
+{
+    set_reg(instr.rd(), lo);
 }
 
-void CPU::op_cop2(Instruction instruction) {
-    std::cout << "Unhandled GTE instruction: {" << std::to_string(instruction.instruction);
+void CPU::op_div()
+{
+    int n = (int)regs[instr.rs()];
+    int d = (int)regs[instr.rt()];
+
+    if (d == 0) {
+        hi = (uint32_t)n;
+        if (n >= 0) {
+            lo = 0xFFFFFFFF;
+        }
+        else {
+            lo = 1;
+        }
+    }
+    else if ((uint32_t)n == 0x80000000 && d == -1) {
+        hi = 0;
+        lo = 0x80000000;
+    }
+    else {
+        hi = (uint32_t)(n % d);
+        lo = (uint32_t)(n / d);
+    }
 }
 
-void CPU::op_lwl(Instruction instruction) {
-    int32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
+void CPU::op_sra()
+{
+    set_reg(instr.rd(), (uint32_t)((int)regs[instr.rt()] >> (int)instr.sa()));
+}
 
-    uint32_t addr = regs[s] + i;
+void CPU::op_subu()
+{
+    set_reg(instr.rd(), regs[instr.rs()] - regs[instr.rt()]);
+}
 
-    // This instruction bypasses the load delay restriction: this
-    // instruction will merge the new contents with the value
-    // currently being loaded if need be.
-    uint32_t cur_v = out_regs[t];
+void CPU::op_slti()
+{
+    bool condition = (int)regs[instr.rs()] < (int)instr.imm_s();
+    set_reg(instr.rt(), condition ? 1u : 0u);
+}
 
-    // Next we load the *aligned* word containing the first
-    // addressed byte
-    uint32_t aligned_addr = addr & ~3U;
-    uint32_t aligned_word = bus->load32(aligned_addr);
+void CPU::branch()
+{
+    next_pc = pc + (instr.imm_s() << 2);
+    brancha = true;
+}
 
-    // Depending on the address alignment, we fetch the 1, 2, 3, or
-    // 4 *most* significant bytes and put them in the target register.
+void CPU::op_jalr()
+{
+    set_reg(instr.rd(), next_pc);
+    op_jr();
+}
+
+void CPU::op_lbu()
+{
+    uint32_t value = bus->load8(regs[instr.rs()] + instr.imm_s());
+    load = std::make_tuple(instr.rt(), value);
+}
+
+void CPU::op_blez()
+{
+    brancha = true;
+    if (((int)regs[instr.rs()]) <= 0) {
+        branch();
+    }
+}
+
+void CPU::op_bgtz()
+{
+    brancha = true;
+    if (((int)regs[instr.rs()]) > 0) {
+        branch();
+    }
+}
+
+void CPU::op_add()
+{
+    uint32_t rs = regs[instr.rs()];
+    uint32_t rt = regs[instr.rt()];
+    uint32_t add = rs + rt;
+
+    bool overflow = add_overflow(rs, rt, add);
+    if (!overflow)
+        set_reg(instr.rd(), add);
+    else
+        exception(Exception::Overflow);
+}
+
+void CPU::op_and()
+{
+    set_reg(instr.rd(), regs[instr.rs()] & regs[instr.rt()]);
+}
+
+void CPU::op_mfc0() {
+    uint32_t cpu_r = instr.rt();
+    uint32_t cop_r = instr.rd();
+
     uint32_t v;
-    switch (addr & 3U) {
-    case 0:
-        v = (cur_v & 0x00FFFFFF) | (aligned_word << 24);
+
+    switch (cop_r) {
+    case 12:
+        v = sr;
         break;
-    case 1:
-        v = (cur_v & 0x0000FFFF) | (aligned_word << 16);
+    case 13:
+        v = cause;
         break;
-    case 2:
-        v = (cur_v & 0x000000FF) | (aligned_word << 8);
-        break;
-    case 3:
-        v = (cur_v & 0x00000000) | (aligned_word);
+    case 14:
+        v = epc;
         break;
     default:
-        throw std::runtime_error("Unreachable code");
+        throw std::runtime_error("[CPU] ERROR: Unhandled read from COP0R" + std::to_string(cop_r));
     }
 
-    // Put the load in the delay slot
-    load = std::make_tuple(t, v);
+    load = std::make_tuple(cpu_r, v);
 }
 
-
-void CPU::op_lwr(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-
-    // This instruction bypasses the load delay restriction: this
-    // instruction will merge the new contents with the value
-    // currently being loaded if need be.
-    uint32_t cur_v = out_regs[t];
-
-    // Next, we load the *aligned* word containing the first
-    // addressed byte
-    uint32_t aligned_addr = addr & ~3;
-    uint32_t aligned_word = bus->load32(aligned_addr);
-
-    // Depending on the address alignment, we fetch the 1, 2, 3, or
-    // 4 *least* significant bytes and put them in the target
-    // register.
-    uint32_t v = 0;
-    switch (addr & 3) {
-        case 0:
-            v = (cur_v & 0x00000000) | (aligned_word >> 0);
-            break;
-        case 1:
-            v = (cur_v & 0xff000000) | (aligned_word >> 8);
-            break;
-        case 2:
-            v = (cur_v & 0xffff0000) | (aligned_word >> 16);
-            break;
-        case 3:
-            v = (cur_v & 0xffffff00) | (aligned_word >> 24);
-            break;
-        default:
-            // Handle any unexpected cases here
-            break;
-    }
-
-    // Put the load in the delay slot
-    load = std::make_tuple(t, v);
-}
-
-void CPU::op_swl(Instruction instruction) {
-    int32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-    uint32_t v = regs[t];
-
-    uint32_t aligned_addr = addr & ~3;
-
-    // Load the current value for the aligned word at the target address
-    uint32_t cur_mem = bus->load32(aligned_addr);
-
-    uint32_t mem;
-    switch (addr & 3U) {
-    case 0:
-        mem = (cur_mem & 0xFFFFFF00) | (v >> 24);
-        break;
-    case 1:
-        mem = (cur_mem & 0xFFFF0000) | (v >> 16);
-        break;
-    case 2:
-        mem = (cur_mem & 0xFF000000) | (v >> 8);
-        break;
-    case 3:
-        mem = (cur_mem & 0x00000000) | (v >> 0);
-        break;
-    default:
-        throw std::runtime_error("Unreachable code");
-    }
-
-    store32(aligned_addr, mem);
-}
-
-void CPU::op_swr(Instruction instruction) {
-    uint32_t i = instruction.imm_s();
-    uint32_t t = instruction.rt();
-    uint32_t s = instruction.rs();
-
-    uint32_t addr = regs[s] + i;
-    uint32_t v = regs[t];
-
-    uint32_t aligned_addr = addr & ~3;
-
-    // Load the current value for the aligned word at the target address
-    uint32_t cur_mem = bus->load32(aligned_addr);
-
-    uint32_t mem;
-    switch (addr & 3U) {
-    case 0:
-        mem = (cur_mem & 0x00000000) | (v << 0);
-        break;
-    case 1:
-        mem = (cur_mem & 0x000000FF) | (v << 8);
-        break;
-    case 2:
-        mem = (cur_mem & 0x0000FFFF) | (v << 16);
-        break;
-    case 3:
-        mem = (cur_mem & 0x00FFFFFF) | (v << 24);
-        break;
-    default:
-        throw std::runtime_error("Unreachable code");
-    }
-
-    store32(aligned_addr, mem);
-}
-
-void CPU::op_lwc0(Instruction instruction) {
+void CPU::op_lwc0() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_lwc1(Instruction instruction) {
+void CPU::op_lwc1() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_lwc2(Instruction instruction) {
+void CPU::op_lwc2() {
     // Handle the GTE LWC instruction. You can customize this part.
     // If not supported, you can throw an exception like in the Rust code.
     // For example:
-    throw std::runtime_error("Unhandled GTE LWC: " + std::to_string(instruction.instruction));
+    throw std::runtime_error("Unhandled GTE LWC: " + std::to_string(instr.instruction));
 }
 
-void CPU::op_lwc3(Instruction instruction) {
+void CPU::op_lwc3() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_swc0(Instruction instruction) {
+void CPU::op_swc0() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_swc1(Instruction instruction) {
+void CPU::op_swc1() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
 }
 
-void CPU::op_swc2(Instruction instruction) {
+void CPU::op_swc2() {
     // Handle the GTE SWC instruction. You can customize this part.
     // If not supported, you can throw an exception like in the Rust code.
     // For example:
-    throw std::runtime_error("Unhandled GTE SWC: " + std::to_string(instruction.instruction));
+    throw std::runtime_error("Unhandled GTE SWC: " + std::to_string(instr.instruction));
 }
 
-void CPU::op_swc3(Instruction instruction) {
+void CPU::op_swc3() {
     // Not supported by this coprocessor
     exception(Exception::CoprocessorError);
+}
+
+void CPU::op_beq()
+{
+    brancha = true;
+    if (regs[instr.rs()] == regs[instr.rt()]) {
+        branch();
+    }
+}
+
+void CPU::op_lb()
+{
+    uint32_t value = (uint32_t)(int8_t)bus->load8(regs[instr.rs()] + instr.imm_s());
+    load = std::make_tuple(instr.rt(), value);
+}
+
+void CPU::op_jr()
+{
+    brancha = true;
+    next_pc = regs[instr.rs()];
+}
+
+void CPU::op_sb()
+{
+    bus->store8(regs[instr.rs()] + instr.imm_s(), (uint8_t)regs[instr.rt()]);
+}
+
+void CPU::op_andi()
+{
+    set_reg(instr.rt(), regs[instr.rs()] & instr.imm());
+}
+
+void CPU::op_jal()
+{
+    set_reg(31, next_pc);
+    op_j();
+}
+
+void CPU::op_sh()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+
+    if ((addr % 4) == 0) {
+        bus->store16(addr, (uint16_t)regs[instr.rt()]);
+    }
+    else {
+        exception(Exception::StoreAddressError);
+    }
+}
+
+void CPU::op_addu()
+{
+    set_reg(instr.rd(), regs[instr.rs()] + regs[instr.rt()]);
+}
+
+void CPU::op_sltu()
+{
+    bool condition = regs[instr.rs()] < regs[instr.rt()];
+    set_reg(instr.rd(), condition ? 1u : 0u);
+}
+
+void CPU::op_lw()
+{
+    uint32_t addr = regs[instr.rs()] + instr.imm_s();
+
+    if ((addr & 0x3) == 0) {
+        uint32_t value = bus->load32(addr);
+        load = std::make_tuple(instr.rt(), value);
+    }
+    else {
+        exception(Exception::LoadAddressError);
+    }
+}
+
+void CPU::op_addi()
+{
+    uint32_t rs = regs[instr.rs()];
+    uint32_t imm_s = instr.imm_s();
+    uint32_t addi = rs + imm_s;
+
+    bool overflow = add_overflow(rs, imm_s, addi);
+    if (!overflow)
+        set_reg(instr.rt(), addi);
+    else
+        exception(Exception::Overflow);
+}
+// TODO
+void CPU::op_bne()
+{
+    uint32_t rs = instr.rs();
+    uint32_t rt = instr.rt();
+
+    brancha = true;
+    if (regs[rs] != regs[rt]) {
+        branch();
+    }
+}
+
+void CPU::op_mtc0() {
+    uint32_t cpu_r = instr.rt();
+    uint32_t cop_r = instr.rd();
+
+    uint32_t v = regs[cpu_r];
+
+    switch (cop_r) {
+    case 3:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 5:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 6:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 7:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 9:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 11:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to COP0 Register" + std::to_string(cop_r));
+        }
+        break;
+
+    case 12:
+        sr = v;
+        break;
+
+    case 13:
+        if (v != 0) {
+            throw std::runtime_error("[CPU] ERROR: Unhandled write to CAUSE register.");
+        }
+        break;
+
+    default:
+        throw std::runtime_error("Unhandled cop0 register " + std::to_string(cop_r));
+        break;
+    }
+}
+
+void CPU::op_or()
+{
+    set_reg(instr.rd(), regs[instr.rs()] | regs[instr.rt()]);
+}
+
+void CPU::op_j()
+{
+    brancha = true;
+    next_pc = (next_pc & 0xF0000000) | (instr.addr() << 2);
+}
+
+void CPU::op_addiu()
+{
+    uint32_t rt = instr.rt();
+    uint32_t rs = instr.rs();
+    uint32_t imm = instr.imm_s();
+
+    set_reg(instr.rt(), regs[instr.rs()] + instr.imm_s());
+}
+
+void CPU::op_sll()
+{
+    uint32_t rd = instr.rd();
+    uint32_t rt = instr.rt();
+    uint32_t sa = instr.sa();
+
+    set_reg(instr.rd(), regs[instr.rt()] << (int)instr.sa());
+}
+
+void CPU::op_sw()
+{
+    uint32_t r = instr.rs();
+    uint32_t i = instr.imm_s();
+    uint32_t addr = regs[r] + i;
+
+    if ((addr & 0x3) == 0) {
+        bus->store32(addr, regs[instr.rt()]);
+    }
+    else {
+        exception(Exception::StoreAddressError);
+    }
+}
+
+void CPU::op_lui()
+{
+    set_reg(instr.rt(), instr.imm() << 16);
+}
+
+void CPU::op_ori()
+{
+    set_reg(instr.rt(), regs[instr.rs()] | instr.imm());
+}
+
+void CPU::op_cop0() {
+    switch (instr.rs()) {
+    case (0b00100):
+        op_mtc0();
+        std::cout << "[CPU] INFO: MTC0 (COP0-Type)\n";
+        break;
+
+    case (0b00000):
+        op_mfc0();
+        std::cout << "[CPU] INFO: MFC0 (COP0-Type)\n";
+        break;
+
+    case (0b10000):
+        op_rfe();
+        std::cout << "[CPU] INFO: RFE (COP0-Type)\n";
+        break;
+
+    default:
+        throw std::runtime_error("[CPU] ERROR: Unhandled COP0 Instruction");
+        break;
+    }
+}
+
+void CPU::op_cop1() {
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_cop3() {
+    exception(Exception::CoprocessorError);
+}
+
+void CPU::op_cop2() {
+    std::cout << "Unhandled GTE instruction: {" << std::to_string(instr.instruction);
 }

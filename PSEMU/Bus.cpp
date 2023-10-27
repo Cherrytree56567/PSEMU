@@ -187,10 +187,9 @@ uint16_t Bus::load16(uint8_t addr) {
 uint32_t Bus::dma_reg(uint32_t offset) {
     auto major = (offset & 0x70) >> 4;
     auto minor = offset & 0xf;
+    auto channel = dma.channels[dma.from_index(major)];
     switch (major) {
     case 0:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -201,8 +200,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 1:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -213,8 +210,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 2:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -225,8 +220,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 3:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -237,8 +230,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 4:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -249,8 +240,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 5:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
@@ -261,8 +250,6 @@ uint32_t Bus::dma_reg(uint32_t offset) {
         }
 
     case 6:
-        auto channel = dma.channels[dma.from_index(major)];
-
         switch (minor) {
         case 8:
             return channel.control();
