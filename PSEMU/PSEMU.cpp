@@ -18,8 +18,5 @@ int main() {
     while (true) {
         cpu.tick();
     }
-    for (int i = 0; i < 2 * 1024 * 1024; i++) {
-        std::cout << bus.ram.load32(i) << "\n";
-    }
     return 0;
 }

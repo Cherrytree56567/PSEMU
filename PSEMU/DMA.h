@@ -55,10 +55,14 @@ public:
 		chop_cpu_sz = 0;
 		dummy = 0;
 		base = 0;
+		block_size = 0;
+		block_count = 0;
 	}
 
 	uint32_t control();
 	void set_control(uint32_t val);
+	uint32_t block_control();
+	void set_block_control(uint32_t val);
 	uint32_t get_base() { return base; };
 	void set_base(uint32_t value) {
 		base = value & 0xffffff;
@@ -76,6 +80,8 @@ private:
 	uint8_t chop_cpu_sz;
 	uint8_t dummy;
 	uint32_t base;
+	uint16_t block_size;
+	uint16_t block_count;
 };
 
 class DMA {

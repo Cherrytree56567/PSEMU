@@ -16,10 +16,10 @@ void CPU::reset() {
     pc = 0xbfc00000;
     next_pc = pc + 4;
     current_pc = 0;
-    hi = 0xdeadbeef; lo = 0xdeadbeef;
+    hi = 0; lo = 0;
     for (int i = 0; i < 32; i++) {
-        regs[i] = 0xdeadbeef;
-        out_regs[i] = 0xdeadbeef;
+        regs[i] = 0;
+        out_regs[i] = 0;
     }
     out_regs[0] = 0;
     regs[0] = 0;
@@ -32,16 +32,9 @@ void CPU::reset() {
 }
 
 void CPU::fetch() {
-    current_pc = pc;
-
-    if (current_pc % 4 != 0) {
-        // PC is not correctly aligned!
-        exception(Exception::LoadAddressError);
-        return;
-    }
-
     instr.instruction = bus->load32(pc);
 
+    current_pc = pc;
     pc = next_pc;
     next_pc = pc + 4;
 
@@ -438,14 +431,34 @@ void CPU::exception(Exception causea) {
 
 void CPU::op_bxx()
 {
-    brancha = true;
-    uint32_t op = instr.rt();
+    auto i = instr.imm_s();
+    auto s = instr.rs();
 
-    bool should_link = (op & 0x1E) == 0x10;
-    bool should_branch = (int)(regs[instr.rs()] ^ (op << 31)) < 0;
+    auto instruction = instr.instruction;
 
-    if (should_link) regs[31] = next_pc;
-    if (should_branch) branch();
+    auto is_bgez = (instruction >> 16) & 1;
+    auto is_link = (instruction >> 20) & 1 != 0;
+
+    auto v = (int32_t)regs[s];
+
+    // Test "less than zero"
+    auto test = (uint32_t)(v < 0);
+
+    // If the test is "greater than or equal to zero" we need to
+    // negate the comparison above ("a >= 0" <=> "!(a < 0)"). The
+    // xor takes care of that.
+    test = test ^ is_bgez;
+
+    if (test != 0) {
+        if (is_link){
+            auto ra = next_pc;
+
+            // Store return address in R31
+            set_reg(31, ra);
+        }
+
+        branch();
+    }
 }
 
 void CPU::op_swr()
@@ -469,7 +482,7 @@ void CPU::op_swr()
         break;
     }
 
-    bus->store32(aligned_addr, value);
+    store32(aligned_addr, value);
 }
 
 void CPU::op_swl()
@@ -493,7 +506,7 @@ void CPU::op_swl()
         value = regs[instr.rt()]; break;
     }
 
-    bus->store32(aligned_addr, value);
+    store32(aligned_addr, value);
 }
 
 void CPU::op_lwr()
@@ -887,7 +900,7 @@ void CPU::op_jr()
 
 void CPU::op_sb()
 {
-    bus->store8(regs[instr.rs()] + instr.imm_s(), (uint8_t)regs[instr.rt()]);
+    store8(regs[instr.rs()] + instr.imm_s(), (uint8_t)regs[instr.rt()]);
 }
 
 void CPU::op_andi()
@@ -906,7 +919,7 @@ void CPU::op_sh()
     uint32_t addr = regs[instr.rs()] + instr.imm_s();
 
     if ((addr % 4) == 0) {
-        bus->store16(addr, (uint16_t)regs[instr.rt()]);
+        store16(addr, (uint16_t)regs[instr.rt()]);
     }
     else {
         exception(Exception::StoreAddressError);
@@ -1056,7 +1069,7 @@ void CPU::op_sw()
     uint32_t addr = regs[r] + i;
 
     if ((addr & 0x3) == 0) {
-        bus->store32(addr, regs[instr.rt()]);
+        store32(addr, regs[instr.rt()]);
     }
     else {
         exception(Exception::StoreAddressError);

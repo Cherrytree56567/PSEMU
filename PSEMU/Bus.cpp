@@ -26,7 +26,7 @@ uint32_t Bus::load32(uint32_t addr) {
         return 0;
     }
     else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
-        dma_reg(offset.value());
+        //dma_reg(offset.value());
     }
     else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
         std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(offset.value()) << "\n";
@@ -58,7 +58,7 @@ void Bus::store32(uint32_t addr, uint32_t value) {
         return;
     }
     else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
-        set_dma_reg(offset.value(), value);
+        //set_dma_reg(offset.value(), value);
         return;
     }
     else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {

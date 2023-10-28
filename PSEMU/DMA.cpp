@@ -97,3 +97,16 @@ void DMAChannel::set_control(uint32_t val) {
 
 	dummy = (uint8_t)((val >> 29) & 3);
 }
+
+uint32_t DMAChannel::block_control() {
+	auto bs = (uint32_t)block_size;
+	auto bc = (uint32_t)block_count;
+
+	return (bc << 16) | bs;
+}
+
+/// Set value of the Block Control register
+void DMAChannel::set_block_control(uint32_t val) {
+	block_size = (uint16_t)val;
+	block_count = (uint16_t)(val >> 16);
+}
