@@ -28,7 +28,8 @@ enum Port {
 	/// Extension port
 	Pio = 5,
 	/// Used to clear the ordering table
-	Otc = 6
+	Otc = 6,
+	NUL = 100
 };
 
 // DMA transfer synchronization mode
@@ -60,6 +61,7 @@ public:
 	}
 
 	uint32_t control();
+	bool active();
 	void set_control(uint32_t val);
 	uint32_t block_control();
 	void set_block_control(uint32_t val);
@@ -67,9 +69,6 @@ public:
 	void set_base(uint32_t value) {
 		base = value & 0xffffff;
 	}
-
-
-private:
 	bool enable;
 	Direction direction;
 	Step step;

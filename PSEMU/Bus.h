@@ -41,6 +41,7 @@ public:
     uint16_t load16(uint8_t addr);
 
     uint32_t dma_reg(uint32_t offset);
+    void do_dma(Port port);
 
     void set_dma_reg(uint32_t offset, uint32_t value);
 

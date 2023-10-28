@@ -279,13 +279,192 @@ uint32_t Bus::dma_reg(uint32_t offset) {
 }
 
 void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
-    switch (offset) {
-    case 0x70:
-        dma.set_control(value);
+    auto major = (offset & 0x70) >> 4;
+    auto minor = offset & 0xf;
+
+    Port active_port;
+    switch (major) {
+        // Per-channel registers
+        // 0-6
+        case 0:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor){
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 1:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 2:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 3:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 4:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 5:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        case 6:
+            auto port = dma.from_index(major);
+            auto channel = dma.channels[port];
+
+            switch (minor) {
+            case 0: channel.set_base(value);
+            case 4: channel.set_block_control(value);
+            case 8: channel.set_control(value);
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+
+            if (channel.active()) {
+                active_port = port;
+            }
+            else {
+                active_port = Port::NUL;
+            }
+            break;
+        // Common DMA registers
+        case 7:
+            switch (minor) {
+            case 0: 
+                dma.set_control(value);
+
+            case 4:
+                dma.set_interrupt(value);
+            
+            default:
+                std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+                exit(0);
+            }
+            active_port = Port::NUL;
+            break;
+        default:
+           std::cout << "[BUS] ERROR: Unhandled DMA write at " << std::to_string(offset) << "\n";
+           exit(0);
+    };
+
+    if (active_port != Port::NUL) {
+        do_dma(active_port); // Call your do_dma function with the active_port.
+    }
+}
+
+void Bus::do_dma(Port port) {
+    // DMA transfer has been started, for now let's
+    // process everything in one pass (i.e. no
+    // chopping or priority handling)
+    switch (dma.channels[port].sync) {
+    case Sync::LinkedList:
+        std::cout << "[BUS] ERROR: Linked list mode unsupported\n";
+        exit(0);
         break;
 
     default:
-        std::cout << "[BUS] ERROR: Unhandled DMA write access\n";
+        std::cout << "[BUS] UNIMPLEMENTED: DO DMA BLOCK\n";
+        exit(0);
+        //do_dma_block(port);
         break;
     }
 }

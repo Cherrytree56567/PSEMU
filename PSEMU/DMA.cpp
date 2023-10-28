@@ -110,3 +110,15 @@ void DMAChannel::set_block_control(uint32_t val) {
 	block_size = (uint16_t)val;
 	block_count = (uint16_t)(val >> 16);
 }
+
+bool DMAChannel::active() {
+	// In manual sync mode the CPU must set the "trigger" bit
+	// to start the transfer.
+	bool trigger;
+	switch (sync){
+	case Sync::Manual: trigger = trigger;
+	default: trigger = true;
+	};
+
+	enable&& trigger;
+}
