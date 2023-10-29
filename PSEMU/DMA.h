@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <iostream>
+#include <optional>
 
 enum Direction {
 	ToRam = 0,
@@ -63,6 +64,8 @@ public:
 	uint32_t control();
 	bool active();
 	void set_control(uint32_t val);
+	std::optional<uint32_t> transfer_size();
+	void done();
 	uint32_t block_control();
 	void set_block_control(uint32_t val);
 	uint32_t get_base() { return base; };

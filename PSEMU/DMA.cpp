@@ -114,11 +114,39 @@ void DMAChannel::set_block_control(uint32_t val) {
 bool DMAChannel::active() {
 	// In manual sync mode the CPU must set the "trigger" bit
 	// to start the transfer.
-	bool trigger;
-	switch (sync){
-	case Sync::Manual: trigger = trigger;
-	default: trigger = true;
-	};
+	auto triggera = [&]() {
+		switch (sync) {
+		case Sync::Manual:
+			return trigger;
+		default:
+			return true;
+		}
+		}();
 
-	enable&& trigger;
+	return enable&& triggera;
 }
+
+std::optional<uint32_t> DMAChannel::transfer_size() {
+	auto bs = (uint32_t)block_size;
+	auto bc = (uint32_t)block_count;
+
+	switch (sync) {
+	case Sync::Manual:
+		return bs;
+
+	case Sync::Request:
+		return bc * bs;
+
+	case Sync::LinkedList:
+		return std::nullopt;
+	}
+}
+
+void DMAChannel::done() {
+	enable = false;
+	trigger = false;
+
+	// XXX Need to set the correct value for the other fields
+	// (in particular interrupts)
+}
+

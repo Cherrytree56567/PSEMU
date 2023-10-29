@@ -26,7 +26,7 @@ uint32_t Bus::load32(uint32_t addr) {
         return 0;
     }
     else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
-        //dma_reg(offset.value());
+        dma_reg(offset.value());
     }
     else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
         std::cout << "[BUS] WARNING: GPU NOT IMPLEMENTED. GPU read " << std::to_string(offset.value()) << "\n";
@@ -58,7 +58,7 @@ void Bus::store32(uint32_t addr, uint32_t value) {
         return;
     }
     else if (auto offset = _DMA.contains(abs_addr); offset.has_value()) {
-        //set_dma_reg(offset.value(), value);
+        set_dma_reg(offset.value(), value);
         return;
     }
     else if (auto offset = GPU.contains(abs_addr); offset.has_value()) {
@@ -283,13 +283,12 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
     auto minor = offset & 0xf;
 
     Port active_port;
+    auto port = dma.from_index(major);
+    auto channel = dma.channels[port];
     switch (major) {
         // Per-channel registers
         // 0-6
         case 0:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor){
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -307,9 +306,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 1:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -327,9 +323,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 2:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -347,9 +340,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 3:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -367,9 +357,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 4:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -387,9 +374,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 5:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -407,9 +391,6 @@ void Bus::set_dma_reg(uint32_t offset, uint32_t value) {
             }
             break;
         case 6:
-            auto port = dma.from_index(major);
-            auto channel = dma.channels[port];
-
             switch (minor) {
             case 0: channel.set_base(value);
             case 4: channel.set_block_control(value);
@@ -462,9 +443,72 @@ void Bus::do_dma(Port port) {
         break;
 
     default:
-        std::cout << "[BUS] UNIMPLEMENTED: DO DMA BLOCK\n";
-        exit(0);
-        //do_dma_block(port);
+        do_dma_block(port);
         break;
     }
+}
+
+void Bus::do_dma_block(Port port) {
+    auto channel = dma.channels[port];
+
+    auto increment = [&]() {
+        switch (channel.step) {
+        case Step::Increment:
+            return 4;
+        case Step::Decrement:
+            return -4;
+        }
+    }();
+
+    auto addr = channel.get_base();
+
+    // Transfer size in words
+    auto remsz = [&]() {
+        auto transferSize = channel.transfer_size();
+        if (transferSize.has_value()) {
+            return transferSize.value();
+        }
+        else {
+            throw std::runtime_error("[Bus] ERROR: Couldn't figure out DMA block transfer size");
+        }
+    }();
+
+    while (remsz > 0) {
+        // Not sure what happens if address is
+        // bogus... Mednafen just masks addr this way, maybe
+        // that's how the hardware behaves (i.e. the RAM
+        // address wraps and the two LSB are ignored, seems
+        // reasonable enough
+        auto cur_addr = addr & 0x1ffffc;
+
+        switch (channel.direction){
+        case Direction::FromRam:
+            throw std::runtime_error("[Bus] ERROR: Unhandled DMA direction");
+
+        case Direction::ToRam:
+            uint32_t src_word;
+            switch (port) {
+                // Clear ordering table
+            case Port::Otc:
+                switch (remsz) {
+                    // Last entry contains the end
+                    // of table marker
+                case 1:
+                    src_word = (uint32_t)0xffffff;
+                    // Pointer to the previous entry
+                default:
+                    uint32_t a = addr - (uint32_t)4;
+                    src_word = (a & 0x1fffff);
+                };
+            default:
+                throw std::runtime_error("[Bus] ERROR: Unhandled DMA source port");
+            };
+            ram.store32(cur_addr, src_word);
+        }
+
+        addr = addr + increment;
+        remsz -= 1;
+    }
+
+    channel.done();
 }
