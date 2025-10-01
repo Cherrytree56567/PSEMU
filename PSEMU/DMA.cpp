@@ -1,4 +1,5 @@
 #include "DMA.h"
+#include "Bits.h"
 
 bool DMA::irq() {
 	auto channel_irq = channel_irq_flags & channel_irq_en;
@@ -23,11 +24,11 @@ void DMA::set_interrupt(uint32_t value) {
 	// Unknown what bits [5:0] do
 	irq_dummy = (uint8_t)(value & 0x3f);
 
-	force_irq = (value >> 15) & 1 != 0;
+	force_irq = ANY_BIT_SET(value, 1 << 15);
 
 	channel_irq_en = (uint8_t)((value >> 16) & 0x7f);
 
-	irq_en = (value >> 23) & 1 != 0;
+	irq_en = ANY_BIT_SET(value, 1 << 23);
 
 	// Writing 1 to a flag resets it
 	auto ack = (uint8_t)((value >> 24) & 0x3f);
@@ -51,25 +52,17 @@ uint32_t DMAChannel::control() {
 }
 
 void DMAChannel::set_control(uint32_t val) {
-	switch (val & 1 != 0) {
-	case true: 
+	if (ANY_BIT_SET(val, 1))
 		direction = Direction::FromRam;
-		break;
-	case false:
+	else
 		direction = Direction::ToRam;
-		break;
-	};
 
-	switch ((val >> 1) & 1 != 0) {
-	case true:
+	if (ANY_BIT_SET(val, 2))
 		step = Step::Decrement;
-		break;
-	case false:
+	else
 		step = Step::Increment;
-		break;
-	};
 
-	chop = (val >> 8) & 1 != 0;
+	chop = ANY_BIT_SET(val, 1 << 8);
 
 	switch ((val >> 9) & 3) {
 	case 0:
@@ -92,8 +85,8 @@ void DMAChannel::set_control(uint32_t val) {
 	chop_dma_sz = (uint8_t)((val >> 16) & 7);
 	chop_cpu_sz = (uint8_t)((val >> 20) & 7);
 
-	enable = (val >> 24) & 1 != 0;
-	trigger = (val >> 28) & 1 != 0;
+	enable = ANY_BIT_SET(val, 1 << 24);
+	trigger = ANY_BIT_SET(val, 1 << 28);
 
 	dummy = (uint8_t)((val >> 29) & 3);
 }
@@ -140,6 +133,8 @@ std::optional<uint32_t> DMAChannel::transfer_size() {
 	case Sync::LinkedList:
 		return std::nullopt;
 	}
+
+	return 0;
 }
 
 void DMAChannel::done() {
