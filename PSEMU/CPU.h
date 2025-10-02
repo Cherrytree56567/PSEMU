@@ -3,6 +3,7 @@
 #include <tuple>
 #include <cstring>
 #include "Instruction.h"
+#include "Bits.h"
 
 enum Exception {
     SysCall = 0x8,
@@ -111,7 +112,7 @@ public:
 	}
 
 	void store32(uint32_t addr, uint32_t value) {
-		if (sr & 0x10000 != 0) {
+		if (ANY_BIT_SET(sr, 0x10000)) {
 			// Cache is isolated, ignore write
 			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
 			return;
@@ -120,7 +121,7 @@ public:
 	}
 
 	void store16(uint32_t addr, uint32_t value) {
-		if (sr & 0x10000 != 0) {
+		if (ANY_BIT_SET(sr, 0x10000)) {
 			// Cache is isolated, ignore write
 			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
 			return;
@@ -129,7 +130,7 @@ public:
 	}
 
 	void store8(uint32_t addr, uint32_t value) {
-		if (sr & 0x10000 != 0) {
+		if (ANY_BIT_SET(sr, 0x10000)) {
 			// Cache is isolated, ignore write
 			std::cout << "[CPU] INFO: Ignore load while cache is isolated\n";
 			return;

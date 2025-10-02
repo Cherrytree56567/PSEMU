@@ -28,7 +28,7 @@ void RAM::store32(uint32_t offset, uint32_t value) {
 }
 
 void RAM::store16(uint32_t offset, uint16_t val) {
-    uint8_t b0 = val;
+    uint8_t b0 = static_cast<uint8_t>(val);
     uint8_t b1 = (val >> 8);
 
     ram[offset + 0] = b0;

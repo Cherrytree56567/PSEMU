@@ -436,8 +436,8 @@ void CPU::op_bxx()
 
     auto instruction = instr.instruction;
 
-    auto is_bgez = (instruction >> 16) & 1;
-    auto is_link = (instruction >> 20) & 1 != 0;
+    auto is_bgez = ANY_BIT_SET(instruction, 1 << 16);
+    auto is_link = ANY_BIT_SET(instruction, 1 << 20);
 
     auto v = (int32_t)regs[s];
 
@@ -447,7 +447,7 @@ void CPU::op_bxx()
     // If the test is "greater than or equal to zero" we need to
     // negate the comparison above ("a >= 0" <=> "!(a < 0)"). The
     // xor takes care of that.
-    test = test ^ is_bgez;
+    test = test ^ (is_bgez ? 1 : 0);
 
     if (test != 0) {
         if (is_link){

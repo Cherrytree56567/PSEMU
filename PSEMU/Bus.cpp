@@ -458,6 +458,8 @@ void Bus::do_dma_block(Port port) {
         case Step::Decrement:
             return -4;
         }
+
+        return 0;
     }();
 
     auto addr = channel.get_base();
