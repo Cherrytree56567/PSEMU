@@ -32,3 +32,8 @@ jobs:
       run: |
            cmake -S PSEMU -B build -DCMAKE_CXX_COMPILER=g++-13
            cmake --build build
+
+    - name: Test (R3000 CPU, no BIOS needed)
+      run: |
+           cd PSEMU
+           make test
