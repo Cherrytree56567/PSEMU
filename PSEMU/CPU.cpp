@@ -406,7 +406,6 @@ void CPU::decode_execute(Instruction instruction) {
 }
 
 void CPU::exception(Exception causea) {
-    if (regs[1] == 10) exit(0);
     uint32_t handler = (sr & (1 << 22)) ? 0xbfc00180 : 0x80000080;
 
     uint32_t mode = sr & 0x3F;
