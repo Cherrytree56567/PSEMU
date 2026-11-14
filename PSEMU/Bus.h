@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "Bios.h"
+#include "BIOS.h"
 #include "Range.h"
 #include "RAM.h"
 #include "DMA.h"
