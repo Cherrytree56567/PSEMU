@@ -8,25 +8,27 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Install Dependencies
-      run: sudo apt install gcc-10 g++-10
+      run: |
+           sudo apt-get update
+           sudo apt-get install -y g++-13 cmake
 
     - name: Initialize Sub-modules
       run: |
         git submodule init
         git submodule update
     
-    - name: Build
+    - name: Build (make)
       run: |
            cd PSEMU
            make
-      
-    - name: Run PSEMU.elf
+
+    - name: Build (cmake)
       run: |
-           cd PSEMU
-           ./PSEMU.elf
+           cmake -S PSEMU -B build -DCMAKE_CXX_COMPILER=g++-13
+           cmake --build build
