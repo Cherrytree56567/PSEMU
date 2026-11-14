@@ -166,7 +166,7 @@ uint8_t Bus::load8(uint32_t addr) {
     throw std::runtime_error("[Bus] ERROR: Unhandled load8 into address " + std::to_string(addr));
 }
 
-uint16_t Bus::load16(uint8_t addr) {
+uint16_t Bus::load16(uint32_t addr) {
     uint32_t abs_addr = mask_region(addr);
 
     if (auto offset = RAM_.contains(abs_addr); offset.has_value()) {
