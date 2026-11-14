@@ -37,6 +37,11 @@ test: $(TEST_RUNNER)
 	@if ./$(TEST_RUNNER) --load $(TEST_BASE) --expect t2=31 $(TEST_DIR)/basic.bin; then \
 		echo "ERROR: runner passed with a wrong expectation"; exit 1; \
 	else echo "ok: runner failed as it should"; fi
+	@echo 'Checking that a trap with $$at == 10 (CPU::exception calls exit(0)) is a failure'
+	@printf '\012\000\001\064\014\000\000\000\000\000\000\000' > $(TEST_DIR)/at10.tmp
+	@if ./$(TEST_RUNNER) --load $(TEST_BASE) $(TEST_DIR)/at10.tmp; then \
+		rm -f $(TEST_DIR)/at10.tmp; echo "ERROR: runner passed after exit(0) in CPU::exception"; exit 1; \
+	else rm -f $(TEST_DIR)/at10.tmp; echo "ok: runner failed as it should"; fi
 
 # Rebuilds the committed test binary from its assembly source.
 test-bin:

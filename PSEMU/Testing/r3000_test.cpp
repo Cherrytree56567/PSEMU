@@ -11,15 +11,17 @@
 //     --verbose            keep the CPU's own per-instruction logging
 //
 // Exit status: 0 all expectations hold, 1 an expectation failed or the run did not
-// finish cleanly (CPU exception, bus error, instruction limit), 2 bad usage.
+// finish cleanly (CPU exception, bus error, instruction limit, process exit), 2 bad usage.
 
 #include <cstdint>
 #include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <cstdlib>
 #include <stdexcept>
 #include <string>
+#include <unistd.h>
 #include <vector>
 
 #include "../Bus.h"
@@ -76,6 +78,19 @@ std::string hex32(uint32_t v) {
     char buf[16];
     snprintf(buf, sizeof buf, "0x%08x", v);
     return buf;
+}
+
+// CPU::exception calls exit(0) whenever $at is 10. If that happens while the program
+// runs, the process would end with success without the expectations ever being checked.
+// Turn it into a failure.
+bool program_running = false;
+
+void fail_if_exit_during_run() {
+    if (!program_running) return;
+    const char msg[] = "FAIL run: process exited during the run (CPU::exception exits when $at is 10)\n";
+    ssize_t ignored = write(2, msg, sizeof msg - 1);
+    (void)ignored;
+    _exit(1);
 }
 
 } // namespace
@@ -157,6 +172,8 @@ int main(int argc, char** argv) {
 
     uint64_t executed = 0;
     std::string run_error;
+    std::atexit(fail_if_exit_during_run);
+    program_running = true;
     try {
         while (cpu.pc != end_addr) {
             if (executed == max_instructions) {
@@ -175,6 +192,7 @@ int main(int argc, char** argv) {
     } catch (const std::exception& e) {
         run_error = e.what();
     }
+    program_running = false;
     std::cout.rdbuf(saved_cout);
 
     int failures = 0;
