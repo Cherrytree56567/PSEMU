@@ -42,13 +42,20 @@ test: $(TEST_RUNNER)
 	@if ./$(TEST_RUNNER) --load $(TEST_BASE) $(TEST_DIR)/at10.tmp; then \
 		rm -f $(TEST_DIR)/at10.tmp; echo "ERROR: runner passed after exit(0) in CPU::exception"; exit 1; \
 	else rm -f $(TEST_DIR)/at10.tmp; echo "ok: runner failed as it should"; fi
+	@echo "Checking that SH works at halfword-aligned addresses"
+	./$(TEST_RUNNER) --load $(TEST_BASE) --expect s1=0xbeef1234 --expect-mem 0x80020100=0xbeef1234 $(TEST_DIR)/halfword_store.bin
+	@echo "Checking that SH at an odd address raises a store address error and stores nothing"
+	./$(TEST_RUNNER) --load $(TEST_BASE) --expect-exception 5 --expect-mem 0x80020100=0xcacacaca $(TEST_DIR)/halfword_store_unaligned.bin
 
-# Rebuilds the committed test binary from its assembly source.
+# Rebuilds every committed test binary from its assembly source.
 test-bin:
-	$(MIPS_PREFIX)as -march=r3000 -o $(TEST_DIR)/basic.o $(TEST_DIR)/basic.s
-	$(MIPS_PREFIX)ld -Ttext=$(TEST_BASE) -e start -o $(TEST_DIR)/basic.elf $(TEST_DIR)/basic.o
-	$(MIPS_PREFIX)objcopy -O binary -j .text $(TEST_DIR)/basic.elf $(TEST_DIR)/basic.bin
-	rm -f $(TEST_DIR)/basic.o $(TEST_DIR)/basic.elf
+	@for s in $(TEST_DIR)/*.s; do \
+		b=$${s%.s}; echo "assembling $$s"; \
+		$(MIPS_PREFIX)as -march=r3000 -o $$b.o $$s && \
+		$(MIPS_PREFIX)ld -Ttext=$(TEST_BASE) -e start -o $$b.elf $$b.o && \
+		$(MIPS_PREFIX)objcopy -O binary -j .text $$b.elf $$b.bin && \
+		rm -f $$b.o $$b.elf || exit 1; \
+	done
 
 clean:
 	rm -f $(EXECUTABLE) $(TEST_RUNNER)

@@ -8,6 +8,9 @@
 //     --max N              fail if more than N instructions run (default 100000)
 //     --expect REG=VALUE   after the run, REG (zero, t0, s1, r17, hi, lo, ...) must equal VALUE
 //     --expect-mem A=VALUE after the run, the 32-bit word at address A must equal VALUE
+//     --expect-exception N the run must end with a CPU exception with code N (4 = load address
+//                          error, 5 = store address error, 8 = syscall); without this option any
+//                          exception is a failure
 //     --verbose            keep the CPU's own per-instruction logging
 //
 // Exit status: 0 all expectations hold, 1 an expectation failed or the run did not
@@ -62,7 +65,7 @@ uint32_t read_reg(const CPU& cpu, const std::string& name) {
 
 int usage() {
     std::cerr << "usage: r3000_test [--load ADDR] [--end ADDR] [--max N] [--verbose]\n"
-                 "                  [--expect REG=VALUE]... [--expect-mem ADDR=VALUE]... program.bin\n";
+                 "                  [--expect REG=VALUE]... [--expect-mem ADDR=VALUE]...\n                  [--expect-exception N] program.bin\n";
     return 2;
 }
 
@@ -101,6 +104,8 @@ int main(int argc, char** argv) {
     uint32_t end_addr = 0;
     uint64_t max_instructions = 100000;
     bool verbose = false;
+    bool have_exception = false;
+    uint32_t expect_exception = 0;
     std::vector<RegExpect> reg_expects;
     std::vector<MemExpect> mem_expects;
     std::string path;
@@ -117,6 +122,7 @@ int main(int argc, char** argv) {
             else if (arg == "--end") { end_addr = parse_u32(need_value()); have_end = true; }
             else if (arg == "--max") max_instructions = std::stoull(need_value(), nullptr, 0);
             else if (arg == "--verbose") verbose = true;
+            else if (arg == "--expect-exception") { expect_exception = parse_u32(need_value()); have_exception = true; }
             else if (arg == "--expect") {
                 if (!split_pair(need_value(), key, value)) throw std::invalid_argument("--expect wants REG=VALUE");
                 reg_expects.push_back({key, parse_u32(value)});
@@ -171,6 +177,7 @@ int main(int argc, char** argv) {
     }
 
     uint64_t executed = 0;
+    int64_t caught_exception = -1;
     std::string run_error;
     std::atexit(fail_if_exit_during_run);
     program_running = true;
@@ -183,6 +190,10 @@ int main(int argc, char** argv) {
             }
             cpu.tick();
             executed++;
+            if (cpu.cause != 0 && have_exception) {
+                caught_exception = (cpu.cause >> 2) & 0x1f;
+                break;
+            }
             if (cpu.cause != 0) {
                 run_error = "CPU exception, cause code " + std::to_string((cpu.cause >> 2) & 0x1f) +
                             " at pc " + hex32(cpu.epc);
@@ -199,6 +210,13 @@ int main(int argc, char** argv) {
     if (!run_error.empty()) {
         std::cout << "FAIL run: " << run_error << "\n";
         failures++;
+    }
+    if (have_exception && run_error.empty()) {
+        bool ok = caught_exception == static_cast<int64_t>(expect_exception);
+        std::cout << (ok ? "ok   " : "FAIL ") << "exception: expected code " << expect_exception;
+        if (caught_exception < 0) std::cout << ", none was raised\n";
+        else std::cout << ", got code " << caught_exception << " at pc " << hex32(cpu.epc) << "\n";
+        if (!ok) failures++;
     }
     std::cout << "ran " << executed << " instructions, final pc " << hex32(cpu.pc) << "\n";
 
