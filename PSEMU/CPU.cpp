@@ -918,7 +918,7 @@ void CPU::op_sh()
 {
     uint32_t addr = regs[instr.rs()] + instr.imm_s();
 
-    if ((addr % 4) == 0) {
+    if ((addr % 2) == 0) {
         store16(addr, (uint16_t)regs[instr.rt()]);
     }
     else {

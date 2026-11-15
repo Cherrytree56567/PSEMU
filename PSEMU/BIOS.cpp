@@ -1,4 +1,4 @@
-#include "Bios.h"
+#include "BIOS.h"
 
 void Bios::newl(const char* path) {
   std::ifstream file(path, std::ios::binary);
