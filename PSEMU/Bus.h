@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include "Bios.h"
+#include "BIOS.h"
 #include "Range.h"
 #include "RAM.h"
 #include "DMA.h"
@@ -38,7 +38,7 @@ public:
 
     uint8_t load8(uint32_t addr);
     
-    uint16_t load16(uint8_t addr);
+    uint16_t load16(uint32_t addr);
 
     uint32_t dma_reg(uint32_t offset);
     void do_dma(Port port);
